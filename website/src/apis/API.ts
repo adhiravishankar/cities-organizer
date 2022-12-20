@@ -1,4 +1,4 @@
-import { post } from '@tkrotoff/fetch';
+import { get, post } from '@tkrotoff/fetch';
 
 export class API {
   baseURL: string;
@@ -11,7 +11,7 @@ export class API {
     const formData = new FormData();
     formData.set('username', username);
     formData.set('password', password);
-    return post(process.env.BASE_URL + '/login', formData).text();
+    return post(this.baseURL + '/login', formData).text();
   }
 
   async signup(username: string, password: string, name: string): Promise<string> {
@@ -19,10 +19,12 @@ export class API {
     formData.set('username', username);
     formData.set('password', password);
     formData.set('name', name);
-    return post(process.env.BASE_URL + '/signup', formData).text();
+    return post(this.baseURL + '/signup', formData).text();
   }
 
-
+  async metros(): Promise<unknown> {
+    return get(this.baseURL + '/metros').json();
+  }
 
 }
 

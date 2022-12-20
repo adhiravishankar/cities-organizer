@@ -1,15 +1,15 @@
 export interface Metro {
 
-  id: number;
+  ID: number;
 
-  name: string;
+  Name: string;
 
-  extended_name: string;
+  ExtendedName: string;
 
-  population: number;
+  Population: number;
 
-  notes: string;
+  Notes: string;
 
-  featured_image: string;
+  FeaturedImage: string;
 
 }

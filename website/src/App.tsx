@@ -1,8 +1,21 @@
-import { Login } from './pages/Login';
-import { createContext } from 'react';
-import { API } from './apis/API';
+import { MetrosPage } from './pages/metros/MetrosPage';
+import { AppStore } from './stores/AppStore';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { MetroPage } from './pages/metros/MetroPage';
 
 export function App() {
-  const api = new API(process.env.BASE_URL);
-  return (<Login />);
+  const store = new AppStore();
+
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <MetrosPage store={ store }/>,
+    },
+    {
+      path: 'metros/:metro',
+      element: <MetroPage />,
+    },
+  ]);
+
+  return <RouterProvider router={ router } />;
 }

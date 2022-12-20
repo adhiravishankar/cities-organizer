@@ -18,7 +18,7 @@ export function Login(props: LoginProps) {
   const { handleSubmit, control } = useForm<LoginInputs>({ defaultValues: { username: '', password: '' } });
 
   const onSubmit = useCallback<SubmitHandler<LoginInputs>>(async (data: LoginInputs) => {
-    await props.api.login(data.username, data.password);
+
   }, [props.api]);
 
   return (
