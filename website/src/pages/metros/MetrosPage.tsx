@@ -15,7 +15,7 @@ export const MetrosPage = observer<MetrosPageProps>((props: MetrosPageProps) => 
 
   return (
     <Fragment>
-      <NavBar name="Metros" />
+      <NavBar editIcon={ false } name="Metros" />
       <Container>
         <Grid container>
           <Paper>
