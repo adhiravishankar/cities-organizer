@@ -1,6 +1,7 @@
-import { AppStore } from './stores/AppStore';
 import { RouterProvider } from 'react-router-dom';
+
 import { createRouter } from './routes/routes';
+import { AppStore } from './stores/AppStore';
 
 export function App() {
   const store = new AppStore();

@@ -1,7 +1,9 @@
+import { Container } from '@mui/material';
+import { Fragment, useCallback } from 'react';
 import { useParams } from 'react-router';
-import { AppStore } from '../../stores/AppStore';
-import {Fragment, useCallback, useEffect} from 'react';
+
 import { NavBar } from '../../layouts/NavBar';
+import { AppStore } from '../../stores/AppStore';
 
 type MetroParams = {
   metro: string;
@@ -22,6 +24,9 @@ export function MetroPage(props: MetroProps) {
   return (
     <Fragment>
       <NavBar editIcon={ true } id={ metro.ID } onEdit={ editMetro } name={ metro.Name } />
+      <Container>
+        
+      </Container>
     </Fragment>
   );
 }

@@ -34,7 +34,6 @@ func main() {
 	router := gin.Default()
 	router.Use(CORSMiddleware())
 
-	router.GET("/hello/:name", login)
 	router.POST("/login", login)
 	router.POST("/signup", signup)
 	router.GET("/metros", metros)

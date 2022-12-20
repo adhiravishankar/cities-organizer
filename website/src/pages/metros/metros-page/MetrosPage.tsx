@@ -1,8 +1,10 @@
-import { AppStore } from '../../stores/AppStore';
-import { Fragment, useEffect } from 'react';
+import { Container } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { Breadcrumbs, Container, Grid, Paper } from '@mui/material';
-import { NavBar } from '../../layouts/NavBar';
+import { Fragment, useEffect } from 'react';
+
+import { NavBar } from '../../../layouts/NavBar';
+import { AppStore } from '../../../stores/AppStore';
+import { MetroList } from './MetroList';
 
 export interface MetrosPageProps {
   store: AppStore;
@@ -17,13 +19,7 @@ export const MetrosPage = observer<MetrosPageProps>((props: MetrosPageProps) => 
     <Fragment>
       <NavBar editIcon={ false } name="Metros" />
       <Container>
-        <Grid container>
-          <Paper>
-            <Breadcrumbs>
-
-            </Breadcrumbs>
-          </Paper>
-        </Grid>
+        <MetroList store={ props.store } />
       </Container>
     </Fragment>
   );

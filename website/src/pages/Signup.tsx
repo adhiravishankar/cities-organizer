@@ -2,7 +2,8 @@ import { Box, Button, Grid, Stack, TextField, Typography } from '@mui/material';
 import { blue } from '@mui/material/colors';
 import { useCallback } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import {API} from "../apis/API";
+
+import { API } from '../apis/API';
 
 interface SignupInputs {
   name: string;

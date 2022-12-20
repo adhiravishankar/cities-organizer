@@ -1,5 +1,5 @@
-import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import { useCallback } from 'react';
 
 export interface NavBarProps {

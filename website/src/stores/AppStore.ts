@@ -1,6 +1,7 @@
 import { flow, makeObservable, observable } from 'mobx';
-import { Metro } from '../interfaces/Metro';
+
 import { API } from '../apis/API';
+import { Metro } from '../interfaces/Metro';
 
 export class AppStore {
   api: API;

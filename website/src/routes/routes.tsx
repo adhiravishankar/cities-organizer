@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { MetrosPage } from '../pages/metros/MetrosPage';
+
 import { MetroPage } from '../pages/metros/MetroPage';
+import { MetrosPage } from '../pages/metros/metros-page/MetrosPage';
 import { AppStore } from '../stores/AppStore';
 
 export function createRouter(store: AppStore) {
