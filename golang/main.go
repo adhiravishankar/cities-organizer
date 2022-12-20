@@ -32,6 +32,7 @@ func main() {
 	// Creates a gin router with default middleware:
 	// logger and recovery (crash-free) middleware
 	router := gin.Default()
+	router.Use(CORSMiddleware())
 
 	router.GET("/hello/:name", login)
 	router.POST("/login", login)
