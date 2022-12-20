@@ -37,6 +37,8 @@ func main() {
 	router.POST("/login", login)
 	router.POST("/signup", signup)
 	router.GET("/metros", metros)
+	router.GET("/cities", cities)
+	router.GET("/neighborhoods", neighborhoods)
 
 	err = router.Run(":7001")
 	if err != nil {
