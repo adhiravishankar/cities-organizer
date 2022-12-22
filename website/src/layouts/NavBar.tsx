@@ -9,12 +9,12 @@ export interface NavBarProps {
 
   editIcon: boolean;
 
-  onEdit?: (id: number) => void;
+  onEdit?: () => void;
 }
 
 export function NavBar(props: NavBarProps) {
   const onClick = useCallback(() => {
-    props.onEdit(props.id);
+    props.onEdit();
   }, [props.onEdit, props.id]);
 
   const editIcon = props.editIcon ? <IconButton onClick={ onClick }><EditIcon sx={{ color: 'white' }} /></IconButton>

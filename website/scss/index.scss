@@ -3,3 +3,13 @@
 html, body, #root {
   height: 100%
 }
+
+.dropzone-wrapper {
+  display: flex;
+  height: 100%;
+
+  .dropzone-text {
+    text-align: center;
+    margin: auto 0;
+  }
+}

@@ -1,4 +1,4 @@
-import { get, post } from '@tkrotoff/fetch';
+import { get, post, put } from '@tkrotoff/fetch';
 
 export class API {
   baseURL: string;
@@ -24,6 +24,25 @@ export class API {
 
   async metros(): Promise<unknown> {
     return get(this.baseURL + '/metros').json();
+  }
+
+  async getMetro(): Promise<unknown> {
+    return get(this.baseURL + '/metro/:metro').json();
+  }
+
+  async editMetro(id: number, name: string, extendedName: string, population: number): Promise<Response> {
+    const formData = new FormData();
+    formData.set('name', name);
+    formData.set('extended_name', extendedName);
+    formData.set('population', population.toString());
+    return put(this.baseURL + '/metros/' + id, formData);
+  }
+  
+  async uploadPicForMetro(id: number, picture: File): Promise<string> {
+    console.log('file upload 4');
+    const formData = new FormData();
+    formData.set('picture', picture);
+    return post(this.baseURL + '/metros/' + id + '/upload', formData).text();
   }
 
 }
