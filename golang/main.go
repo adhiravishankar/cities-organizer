@@ -13,6 +13,7 @@ import (
 )
 
 var database *sql.DB
+var s3Client *s3.Client
 
 func main() {
 	err := godotenv.Load()
@@ -41,7 +42,7 @@ func main() {
 	}
 
 	// Using the Config value, create the DynamoDB client
-	s3Client := s3.NewFromConfig(cfg)
+	s3Client = s3.NewFromConfig(cfg)
 
 	// Creates a gin router with default middleware:
 	// logger and recovery (crash-free) middleware

@@ -1,10 +1,15 @@
 package main
 
 import (
+	"context"
 	"github.com/Masterminds/squirrel"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"github.com/kr/pretty"
 	"log"
+	"path/filepath"
 )
 
 type Metro struct {
@@ -67,13 +72,24 @@ func addMetroPicture(c *gin.Context) {
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	fileExt := filepath.Ext(file.Filename)
 	pictureFile, err := file.Open()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	pictureFileName := uuid.New().String()
+	pictureFileName := "/metros/" + uuid.New().String() + fileExt
+	s3Object := s3.PutObjectInput{
+		Body:          pictureFile,
+		Bucket:        aws.String("cities-organizer-photos"),
+		Key:           aws.String(pictureFileName),
+		ContentLength: file.Size,
+	}
+	putObjectOutput, err := s3Client.PutObject(context.TODO(), &s3Object)
+	if err != nil {
+		log.Fatal(err)
+	}
+	pretty.Println(putObjectOutput)
 
 	result, err := squirrel.Insert("metro_pictures").Columns("metro_id", "picture_url").
 		Values(c.Param("metro")).RunWith(database).Exec()
