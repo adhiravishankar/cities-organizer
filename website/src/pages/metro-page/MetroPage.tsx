@@ -3,10 +3,10 @@ import { CSSProperties, Fragment, useCallback } from 'react';
 import { Card, Container, Modal } from 'react-bootstrap';
 import { useParams } from 'react-router';
 
-import { ImageItem } from '../../../components/ImageItem';
-import { Metro } from '../../../interfaces/Metro';
-import { NavBar } from '../../../layouts/NavBar';
-import { AppStore } from '../../../stores/AppStore';
+import { ImageItem } from '../../components/ImageItem';
+import { Metro } from '../../interfaces/Metro';
+import { NavBar } from '../../layouts/NavBar';
+import { AppStore } from '../../stores/AppStore';
 import { AddPics } from './AddPics';
 import { EditMetro } from './EditMetro';
 
@@ -58,7 +58,7 @@ export const MetroPage = observer<MetroProps>((props: MetroProps) => {
         <Card>
           <Card.Title>Images</Card.Title>
           <Card.Text>
-            <ImageList cols={ 2 }>{ picsJSX }</ImageList>
+            <div>{ picsJSX }</div>
           </Card.Text>
         </Card>
       </Container>

@@ -1,4 +1,5 @@
 @use 'vendors';
+@use '../node_modules/material-colors/dist/colors.scss';
 
 html, body, #root {
   height: 100%
@@ -12,4 +13,10 @@ html, body, #root {
     text-align: center;
     margin: auto 0;
   }
+}
+
+.auth-box-wrapper {
+  justify-content: center;
+  height: 100%;
+  background-color: colors.$md-blue-900;
 }

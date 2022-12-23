@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { Button, Form, Row } from 'react-bootstrap';
 import { Controller, useForm } from 'react-hook-form';
 
-import { Metro } from '../../../interfaces/Metro';
+import { Metro } from '../../interfaces/Metro';
 
 
 export interface EditMetroProps {

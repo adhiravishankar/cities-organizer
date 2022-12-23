@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
-import { API } from '../apis/API';
+import { AppStore } from '../stores/AppStore';
 
 interface LoginInputs {
   username: string;
@@ -11,7 +11,7 @@ interface LoginInputs {
 }
 
 interface LoginProps {
-  api: API;
+  store: AppStore;
 }
 
 export function Login(props: LoginProps) {
@@ -20,7 +20,7 @@ export function Login(props: LoginProps) {
 
   const onSubmit = useCallback<SubmitHandler<LoginInputs>>(async (data: LoginInputs) => {
 
-  }, [props.api]);
+  }, [props.store.api]);
 
   return (
     <div style={{ height: '100%', backgroundColor: MaterialColors.blue['900'], justifyContent: 'center' }}>
