@@ -12,15 +12,6 @@ import (
 	"path/filepath"
 )
 
-type Metro struct {
-	ID            int64
-	Name          string
-	ExtendedName  string
-	Population    int64
-	Notes         string
-	FeaturedImage string
-}
-
 func metros(c *gin.Context) {
 	sql, _, _ := squirrel.Select("*").From("metros").ToSql()
 	rows, err := database.Query(sql)
@@ -42,18 +33,39 @@ func metros(c *gin.Context) {
 }
 
 func getMetro(c *gin.Context) {
-	var metro Metro
+	var metro DetailedMetro
 	row := squirrel.Select("*").Where(squirrel.Eq{"id": c.Param("metro")}).From("metros").RunWith(database).QueryRow()
 	err := row.Scan(&metro.ID, &metro.Name, &metro.ExtendedName, &metro.Population, &metro.Notes, &metro.FeaturedImage)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	metro.Pics = internalGetMetroPics(c)
 	c.JSON(200, metro)
+}
+
+func insertMetro(c *gin.Context) {
+	result, err := squirrel.Insert("metros").
+		Columns("name", "extended_name", "population", "featured_image").
+		Values(c.PostForm("name"), c.PostForm("extended_name"), c.PostForm("population"), c.PostForm("featured_image")).
+		RunWith(database).Exec()
+	if err != nil {
+		log.Fatal(err)
+	}
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		log.Fatal(err)
+	}
+	if rowsAffected > 0 {
+		c.String(200, "success")
+	}
 }
 
 func editMetro(c *gin.Context) {
 	result, err := squirrel.Update("metros").Set("name", c.PostForm("name")).
-		Set("extended_name", c.PostForm("extended_name")).Set("population", c.PostForm("population")).
+		Set("extended_name", c.PostForm("extended_name")).
+		Set("population", c.PostForm("population")).
+		Set("featured_image", c.PostForm("featured_image")).
 		Where(squirrel.Eq{"id": c.Param("metro")}).RunWith(database).Exec()
 	if err != nil {
 		log.Fatal(err)
@@ -108,6 +120,10 @@ func addMetroPicture(c *gin.Context) {
 }
 
 func getMetroPictures(c *gin.Context) {
+	c.JSON(200, internalGetMetroPics(c))
+}
+
+func internalGetMetroPics(c *gin.Context) []string {
 	rows, err := squirrel.Select("picture_url").From("metro_pictures").
 		Where(squirrel.Eq{"metro_id": c.Param("metro")}).RunWith(database).Query()
 	if err != nil {
@@ -124,5 +140,20 @@ func getMetroPictures(c *gin.Context) {
 		picList = append(picList, pic)
 	}
 
-	c.JSON(200, picList)
+	return picList
+}
+
+func deleteMetro(c *gin.Context) {
+	result, err := squirrel.Delete("metros").Where(squirrel.Eq{"id": c.Param("metro")}).RunWith(database).
+		Exec()
+	if err != nil {
+		log.Fatal(err)
+	}
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		log.Fatal(err)
+	}
+	if rowsAffected > 0 {
+		c.String(200, "success")
+	}
 }

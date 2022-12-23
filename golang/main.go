@@ -33,10 +33,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// Using the SDK's default configuration, loading additional config
-	// and credentials values from the environment variables, shared
-	// credentials, and shared configuration files
-
 	// Creates a gin router with default middleware:
 	// logger and recovery (crash-free) middleware
 	router := gin.Default()
@@ -54,13 +50,33 @@ func main() {
 
 	router.POST("/login", login)
 	router.POST("/signup", signup)
+
+	// Metros CRUD API
 	router.GET("/metros", metros)
+	router.POST("/metros", insertMetro)
 	router.GET("/metros/:metro", getMetro)
 	router.GET("/metros/:metro/pics", getMetroPictures)
 	router.POST("/metros/:metro/upload", addMetroPicture)
 	router.PUT("/metros/:metro", editMetro)
+	router.DELETE("/metros/:metro", deleteMetro)
+
+	// Cities CRUD API
 	router.GET("/cities", cities)
+	router.POST("/cities", insertCity)
+	router.GET("/cities/:city", getCity)
+	router.GET("/cities/:city/pics", getCityPictures)
+	router.POST("/cities/:city/upload", addCityPicture)
+	router.PUT("/cities/:city", editCity)
+	router.DELETE("/cities/:city", deleteCity)
+
+	// Neighborhoods CRUD API
 	router.GET("/neighborhoods", neighborhoods)
+	router.POST("/neighborhoods", insertNeighborhood)
+	router.GET("/neighborhoods/:neighborhood", getMetro)
+	router.GET("/neighborhoods/:neighborhood/pics", getNeighborhoodPictures)
+	router.POST("/neighborhoods/:neighborhood/upload", addNeighborhoodPicture)
+	router.PUT("/neighborhoods/:neighborhood", editNeighborhood)
+	router.DELETE("/neighborhoods/:neighborhood", deleteNeighborhood)
 
 	err = router.Run(":7001")
 	if err != nil {
