@@ -1,4 +1,3 @@
-import { ImageListItem } from '@mui/material';
 
 export interface ImageItemProps {
   source: string;
@@ -9,12 +8,12 @@ export interface ImageItemProps {
 export const ImageItem = (image: ImageItemProps) => {
   const { name, source } = image;
   return (
-    <ImageListItem key={ name }>
+    <div key={ name }>
       <img
         src={ source }
         alt={ name }
         loading="lazy"
       />
-    </ImageListItem>
+    </div>
   );
 };

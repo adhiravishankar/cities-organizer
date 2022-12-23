@@ -1,6 +1,6 @@
-import { Box, Button, Grid, Stack, TextField, Typography } from '@mui/material';
-import { blue } from '@mui/material/colors';
+import MaterialColors from 'material-colors';
 import { useCallback } from 'react';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 import { API } from '../apis/API';
@@ -23,23 +23,23 @@ export function Login(props: LoginProps) {
   }, [props.api]);
 
   return (
-    <Stack direction="column" justifyContent="center" sx={{ height: '100%', bgcolor: blue[900] }}>
-      <Box sx={ { m: 'auto', p: '1rem', width: '20rem', bgcolor: 'white', borderRadius: 1 } }>
-        <Typography variant="h3" gutterBottom>Login</Typography>
+    <div style={{ height: '100%', backgroundColor: MaterialColors.blue['900'], justifyContent: 'center' }}>
+      <div style={ { margin: 'auto', padding: '1rem', width: '20rem', backgroundColor: 'white', borderRadius: 1 } }>
+        <h3>Login</h3>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Controller name="username" control={control} render={({ field }) => <TextField { ...field } id="username" label="Username" variant="standard" fullWidth /> }/>
-          <Controller name="password" control={control} render={({ field }) => <TextField { ...field } id="password" label="Password" variant="standard" type="password" fullWidth /> } />
-          <Grid container justifyContent="flex-end" sx={ { mt: '1rem' } } spacing={2}>
-            <Grid item>
+          <Controller name="username" control={control} render={({ field }) => <Form.Control { ...field } id="username" placeholder="Username" /> }/>
+          <Controller name="password" control={control} render={({ field }) => <Form.Control { ...field } id="password" placeholder="Password" type="password" /> } />
+          <Row justifyContent="flex-end" sx={ { mt: '1rem' } } spacing={2}>
+            <Col>
               <Button variant="outlined">Cancel</Button>
-            </Grid>
-            <Grid item>
+            </Col>
+            <Col>
               <Button variant="contained" type="submit">Submit</Button>
-            </Grid>
-          </Grid>
+            </Col>
+          </Row>
         </form>
-      </Box>
-    </Stack>
+      </div>
+    </div>
   );
 }
 

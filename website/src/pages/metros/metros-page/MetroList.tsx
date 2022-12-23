@@ -1,4 +1,3 @@
-import { ImageList } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 
 import { Metro } from '../../../interfaces/Metro';

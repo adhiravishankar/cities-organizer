@@ -1,14 +1,14 @@
-import {Box, Card, CardContent, CardHeader, Container, Grid, ImageList, ImageListItem, Modal} from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { Fragment, useCallback } from 'react';
+import { CSSProperties, Fragment, useCallback } from 'react';
+import { Card, Container, Modal } from 'react-bootstrap';
 import { useParams } from 'react-router';
 
+import { ImageItem } from '../../../components/ImageItem';
 import { Metro } from '../../../interfaces/Metro';
 import { NavBar } from '../../../layouts/NavBar';
 import { AppStore } from '../../../stores/AppStore';
 import { AddPics } from './AddPics';
 import { EditMetro } from './EditMetro';
-import {ImageItem} from "../../../components/ImageItem";
 
 type MetroParams = {
   metro: string;
@@ -18,16 +18,16 @@ interface MetroProps {
   store: AppStore;
 }
 
-const metroPopupStyle = {
+const metroPopupStyle: CSSProperties = {
   width: '20rem',
   height: '20rem',
-  bgcolor: 'white',
+  backgroundColor: 'white',
   transform: 'translate(-50%, -50%)',
-  p: '1rem',
+  padding: '1rem',
   position: 'absolute' as 'absolute',
   border: '0.1rem solid #000',
-  borderRadius: 2,
-  boxShadow: 24,
+  borderRadius: '2rem',
+  boxShadow: '2rem',
   top: '50%',
   left: '50%',
 };
@@ -56,16 +56,16 @@ export const MetroPage = observer<MetroProps>((props: MetroProps) => {
       <NavBar editIcon={ true } id={ metro.ID } onEdit={ openEditingScreen } name={ metro.Name } />
       <Container>
         <Card>
-          <CardHeader title="Images" />
-          <CardContent>
+          <Card.Title>Images</Card.Title>
+          <Card.Text>
             <ImageList cols={ 2 }>{ picsJSX }</ImageList>
-          </CardContent>
+          </Card.Text>
         </Card>
       </Container>
       <Modal open={ store.modalOpen }>
-        <Box sx={ metroPopupStyle }>
+        <div style={ metroPopupStyle }>
           <EditMetro metro={ metro } editMetro={ editMetro } />
-        </Box>
+        </div>
       </Modal>
       <Modal open={ store.imagesUploadModalOpen }>
         <AddPics fileUpload={ fileUpload } />

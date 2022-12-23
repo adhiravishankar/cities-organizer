@@ -1,6 +1,6 @@
-import { Container } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { Fragment, useEffect } from 'react';
+import { Container } from 'react-bootstrap';
 
 import { NavBar } from '../../../layouts/NavBar';
 import { AppStore } from '../../../stores/AppStore';
