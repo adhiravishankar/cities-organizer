@@ -8,17 +8,21 @@ export class AppStore {
 
   modalOpen: boolean;
 
+  imagesUploadModalOpen: boolean;
+
   metrosMap: Map<number, Metro> = observable.map();
 
-  metrosPics: string[] = observable.array();
+  pics: string[] = observable.array();
 
   constructor() {
     this.api = new API(process.env.BASE_URL);
     makeObservable(this, {
+      imagesUploadModalOpen: observable,
       modalOpen: observable,
       metrosMap: observable,
       fetchMetros: flow,
       editMetro: flow,
+      fetchMetroPics: flow,
       uploadPicForMetro: flow,
     });
   }
@@ -27,6 +31,11 @@ export class AppStore {
     const genericMetros: unknown = yield this.api.metros();
     const metros = genericMetros as Metro[];
     metros.forEach((metro: Metro) => this.metrosMap.set(metro.ID, metro));
+  }
+
+  *fetchMetroPics(id: number) {
+    const pics: unknown = yield this.api.getMetroPics(id);
+    this.pics = pics as string[];
   }
 
   *editMetro(id: number, name: string, extendedName: string, population: number) {
@@ -38,10 +47,9 @@ export class AppStore {
   }
 
   *uploadPicForMetro(id: number, file: File) {
-    console.log('file upload 3');
     const success: string = yield this.api.uploadPicForMetro(id, file);
     if (success && success.length === 0) {
-      this.metrosPics.push(success);
+      this.fetchMetroPics(id);
     }
   }
 

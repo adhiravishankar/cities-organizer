@@ -1,9 +1,9 @@
 package main
 
 import (
-	"context"
 	"database/sql"
-	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/gin-gonic/gin"
 	"github.com/go-sql-driver/mysql"
@@ -36,23 +36,27 @@ func main() {
 	// Using the SDK's default configuration, loading additional config
 	// and credentials values from the environment variables, shared
 	// credentials, and shared configuration files
-	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion("us-east-2"))
-	if err != nil {
-		log.Fatalf("unable to load SDK config, %v", err)
-	}
-
-	// Using the Config value, create the DynamoDB client
-	s3Client = s3.NewFromConfig(cfg)
 
 	// Creates a gin router with default middleware:
 	// logger and recovery (crash-free) middleware
 	router := gin.Default()
 	router.Use(CORSMiddleware())
 
+	awsAccessKey := os.Getenv("AWS_ACCESS_KEY")
+	awsAccessSecret := os.Getenv("AWS_ACCESS_SECRET")
+	awsCredentials := credentials.NewStaticCredentialsProvider(awsAccessKey, awsAccessSecret, "")
+	options := s3.Options{
+		Region:      "us-east-2",
+		Credentials: aws.NewCredentialsCache(awsCredentials),
+	}
+
+	s3Client = s3.New(options)
+
 	router.POST("/login", login)
 	router.POST("/signup", signup)
 	router.GET("/metros", metros)
 	router.GET("/metros/:metro", getMetro)
+	router.GET("/metros/:metro/pics", getMetroPictures)
 	router.POST("/metros/:metro/upload", addMetroPicture)
 	router.PUT("/metros/:metro", editMetro)
 	router.GET("/cities", cities)

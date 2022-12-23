@@ -26,8 +26,12 @@ export class API {
     return get(this.baseURL + '/metros').json();
   }
 
-  async getMetro(): Promise<unknown> {
-    return get(this.baseURL + '/metro/:metro').json();
+  async getMetro(id: number): Promise<unknown> {
+    return get(this.baseURL + '/metros/' + id).json();
+  }
+
+  async getMetroPics(id: number): Promise<unknown> {
+    return get(this.baseURL + '/metros/' + id + '/pics').json();
   }
 
   async editMetro(id: number, name: string, extendedName: string, population: number): Promise<Response> {
@@ -39,7 +43,6 @@ export class API {
   }
   
   async uploadPicForMetro(id: number, picture: File): Promise<string> {
-    console.log('file upload 4');
     const formData = new FormData();
     formData.set('picture', picture);
     return post(this.baseURL + '/metros/' + id + '/upload', formData).text();

@@ -16,8 +16,10 @@ export function createRouter(store: AppStore) {
     },
     {
       path: 'metros/:metro',
-      loader: async () => {
+      loader: async ({ params }) => {
         await store.fetchMetros();
+        // @ts-ignore
+        await store.fetchMetroPics(params.metro);
         return null;
       },
       element: <MetroPage store={store}/>,

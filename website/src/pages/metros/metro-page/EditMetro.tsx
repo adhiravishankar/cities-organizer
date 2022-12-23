@@ -12,17 +12,18 @@ export interface EditMetroProps {
 }
 
 export function EditMetro(props: EditMetroProps) {
+  const { editMetro, metro } = props;
 
   const { handleSubmit, control } = useForm<Metro>({ defaultValues: props.metro });
 
   const onSubmit = useCallback((data: Metro) => {
-    props.editMetro(data);
-  }, [props.editMetro]);
+    editMetro(data);
+  }, [editMetro]);
 
   return (
     <form>
       <Grid container>
-        <Typography variant="h4" sx={{ mb: '1rem' }}>{`Edit ${ props.metro.Name }`}</Typography>
+        <Typography variant="h4" sx={{ mb: '1rem' }}>{`Edit ${ metro.Name }`}</Typography>
         <Controller name="Name" control={control} render={({ field }) => <TextField { ...field } id="name" label="Name" variant="standard" fullWidth /> }/>
         <Controller name="ExtendedName" control={control} render={({ field }) => <TextField { ...field } id="extended_name" label="Extended Name" variant="standard" fullWidth /> }/>
         <Controller name="Population" control={control} render={({ field }) => <TextField { ...field } id="population" label="Population" variant="standard" fullWidth type="number" /> }/>

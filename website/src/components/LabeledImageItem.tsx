@@ -1,20 +1,24 @@
 import { ImageListItem, ImageListItemBar } from '@mui/material';
 
-import { Metro } from '../../../interfaces/Metro';
+export interface LabeledImageItemProps {
+  source: string;
+
+  name: string;
+}
 
 
-
-export const MetroItem = (metro: Metro) => {
+export const LabeledImageItem = (image: LabeledImageItemProps) => {
+  const { name, source } = image;
   return (
-    <ImageListItem key={metro.FeaturedImage}>
+    <ImageListItem key={ name }>
       <img
-        src={metro.FeaturedImage}
-        alt={metro.Name}
+        src={ source }
+        alt={ name }
         loading="lazy"
       />
       <ImageListItemBar
         sx={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)' }}
-        title={metro.Name}
+        title={ name }
         position="top"
         actionPosition="left"
       />

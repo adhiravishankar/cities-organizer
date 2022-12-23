@@ -1,6 +1,7 @@
-import { Box } from '@mui/material';
-import { useDropzone } from 'react-dropzone';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
+import { Box } from '@mui/material';
+import { useCallback } from 'react';
+import { useDropzone } from 'react-dropzone';
 
 export interface AddPicsProps {
   fileUpload: (file: File) => void;
@@ -20,11 +21,10 @@ const metroPopupStyle = {
 };
 
 export function AddPics(props: AddPicsProps) {
-  const dropzone = useDropzone();
-  dropzone.acceptedFiles.forEach((file: File) => {
-    console.log('file upload 1');
-    props.fileUpload(file);
-  });
+  const onDropAccepted = useCallback((files: File[]) => {
+    files.forEach((file: File) => props.fileUpload(file));
+  }, [props.fileUpload]);
+  const dropzone = useDropzone({ onDropAccepted });
   const text = dropzone.isDragActive ? 'Drop the files here...' : 'Drag n\' drop a file here or click to select a file';
 
   return (

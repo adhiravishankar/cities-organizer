@@ -1,13 +1,14 @@
-import {Box, Container, Modal } from '@mui/material';
+import {Box, Card, CardContent, CardHeader, Container, Grid, ImageList, ImageListItem, Modal} from '@mui/material';
+import { observer } from 'mobx-react-lite';
 import { Fragment, useCallback } from 'react';
 import { useParams } from 'react-router';
 
 import { Metro } from '../../../interfaces/Metro';
 import { NavBar } from '../../../layouts/NavBar';
 import { AppStore } from '../../../stores/AppStore';
+import { AddPics } from './AddPics';
 import { EditMetro } from './EditMetro';
-import {observer} from "mobx-react-lite";
-import {AddPics} from "./AddPics";
+import {ImageItem} from "../../../components/ImageItem";
 
 type MetroParams = {
   metro: string;
@@ -32,34 +33,41 @@ const metroPopupStyle = {
 };
 
 export const MetroPage = observer<MetroProps>((props: MetroProps) => {
+  const { store } = props;
   const params = useParams<MetroParams>();
-  const metro = props.store.metrosMap.get(Number.parseInt(params.metro));
+  const metro = store.metrosMap.get(Number.parseInt(params.metro));
 
   const openEditingScreen = useCallback(() => {
-    props.store.modalOpen = true;
-  }, [props.store]);
+    store.modalOpen = true;
+  }, [store]);
 
   const editMetro = useCallback((newMetro: Metro) => {
-    props.store.editMetro(newMetro.ID, newMetro.Name, newMetro.ExtendedName, newMetro.Population);
-  }, [props.store]);
+    store.editMetro(newMetro.ID, newMetro.Name, newMetro.ExtendedName, newMetro.Population);
+  }, [store]);
 
   const fileUpload = useCallback((file: File) => {
-    console.log('file upload 2');
-    props.store.uploadPicForMetro(metro.ID, file);
-  }, [props.store, metro]);
+    store.uploadPicForMetro(metro.ID, file);
+  }, [store, metro]);
+
+  const picsJSX = store.pics.map((pic: string) => <ImageItem source={ pic } name={ pic } />);
 
   return (
     <Fragment>
       <NavBar editIcon={ true } id={ metro.ID } onEdit={ openEditingScreen } name={ metro.Name } />
       <Container>
-        
+        <Card>
+          <CardHeader title="Images" />
+          <CardContent>
+            <ImageList cols={ 2 }>{ picsJSX }</ImageList>
+          </CardContent>
+        </Card>
       </Container>
-      <Modal open={ props.store.modalOpen }>
+      <Modal open={ store.modalOpen }>
         <Box sx={ metroPopupStyle }>
           <EditMetro metro={ metro } editMetro={ editMetro } />
         </Box>
       </Modal>
-      <Modal open={ true }>
+      <Modal open={ store.imagesUploadModalOpen }>
         <AddPics fileUpload={ fileUpload } />
       </Modal>
     </Fragment>
