@@ -1,3 +1,5 @@
+import { Friend } from './Friend';
+
 export interface Metro {
 
   ID: number;
@@ -12,4 +14,10 @@ export interface Metro {
 
   FeaturedImage: string;
 
+}
+
+export interface DetailedMetro extends Metro {
+  Pics: string[];
+
+  Friends: Friend[];
 }

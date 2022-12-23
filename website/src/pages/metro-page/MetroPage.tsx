@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react-lite';
 import { CSSProperties, Fragment, useCallback } from 'react';
-import { Card, Container, Modal } from 'react-bootstrap';
+import { Container, Modal  } from 'react-bootstrap';
 import { useParams } from 'react-router';
 
-import { ImageItem } from '../../components/ImageItem';
+import { ImagesCard } from '../../components/ImagesCard';
 import { Metro } from '../../interfaces/Metro';
 import { NavBar } from '../../layouts/NavBar';
 import { AppStore } from '../../stores/AppStore';
@@ -17,20 +17,6 @@ type MetroParams = {
 interface MetroProps {
   store: AppStore;
 }
-
-const metroPopupStyle: CSSProperties = {
-  width: '20rem',
-  height: '20rem',
-  backgroundColor: 'white',
-  transform: 'translate(-50%, -50%)',
-  padding: '1rem',
-  position: 'absolute' as 'absolute',
-  border: '0.1rem solid #000',
-  borderRadius: '2rem',
-  boxShadow: '2rem',
-  top: '50%',
-  left: '50%',
-};
 
 export const MetroPage = observer<MetroProps>((props: MetroProps) => {
   const { store } = props;
@@ -49,23 +35,15 @@ export const MetroPage = observer<MetroProps>((props: MetroProps) => {
     store.uploadPicForMetro(metro.ID, file);
   }, [store, metro]);
 
-  const picsJSX = store.pics.map((pic: string) => <ImageItem source={ pic } name={ pic } />);
 
   return (
     <Fragment>
       <NavBar editIcon={ true } id={ metro.ID } onEdit={ openEditingScreen } name={ metro.Name } />
-      <Container>
-        <Card>
-          <Card.Title>Images</Card.Title>
-          <Card.Text>
-            <div>{ picsJSX }</div>
-          </Card.Text>
-        </Card>
+      <Container className="cities-container">
+        <ImagesCard pics={ store.pics } />
       </Container>
-      <Modal open={ store.modalOpen }>
-        <div style={ metroPopupStyle }>
-          <EditMetro metro={ metro } editMetro={ editMetro } />
-        </div>
+      <Modal show={ true || store.modalOpen }>
+        <EditMetro metro={ metro } editMetro={ editMetro } pics={ store.pics } />
       </Modal>
       <Modal open={ store.imagesUploadModalOpen }>
         <AddPics fileUpload={ fileUpload } />

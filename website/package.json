@@ -2,7 +2,8 @@
   "name": "@adhiravishankar/cities-organizer-website",
   "version": "1.0.0",
   "scripts": {
-    "build": "redrun --series build:tsc build:sass build:parcel",
+    "build": "redrun --series build:components build:parcel",
+    "build:components": "redrun --parallel build:sass build:tsc",
     "build:sass": "node sass-compile.js",
     "build:tsc": "tsc -p .",
     "build:parcel": "parcel build/index.html",
@@ -22,6 +23,7 @@
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.41.0",
+    "react-pdf": "^6.2.0",
     "react-router": "^6.5.0",
     "react-router-dom": "^6.5.0",
     "swr": "^2.0.0"
