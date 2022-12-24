@@ -13,8 +13,7 @@ import (
 )
 
 func cities(c *gin.Context) {
-	sql, _, _ := squirrel.Select("*").From("cities").ToSql()
-	rows, err := database.Query(sql)
+	rows, err := squirrel.Select("*").From("cities").RunWith(database).Query()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -51,14 +50,16 @@ func insertCity(c *gin.Context) {
 
 func getCity(c *gin.Context) {
 	var city NullableCity
-	row := squirrel.Select("*").Where(squirrel.Eq{"id": c.Param("city")}).From("cities").RunWith(database).QueryRow()
-	err := row.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population)
+	row := squirrel.Select("*").Where(squirrel.Eq{"id": c.Param("city")}).From("cities").
+		RunWith(database).QueryRow()
+	err := row.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population, &city.FeaturedImage)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	newCity := convertNullableDetailedCityItem(city)
 	newCity.Pics = internalGetCityPics(c)
+	newCity.Neighborhoods = internalGetNeighborhoodsForCities(c.Param("city"))
 	c.JSON(200, newCity)
 }
 
@@ -155,4 +156,27 @@ func internalGetCityPics(c *gin.Context) []string {
 	}
 
 	return picList
+}
+
+func internalGetNeighborhoodsForCities(city string) []Neighborhood {
+	rows, err := squirrel.Select("*").From("neighborhoods").Where(squirrel.Eq{"city_id": city}).
+		RunWith(database).Query()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var neighborhoodList []NullableNeighborhood
+	for rows.Next() {
+		var neighborhood NullableNeighborhood
+		err := rows.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.MetroID, &neighborhood.Name,
+			&neighborhood.FeaturedImage, &neighborhood.HighSchoolScore, &neighborhood.MiddleSchoolScore,
+			&neighborhood.ElementarySchoolScore, &neighborhood.Address, &neighborhood.MinimumValue,
+			&neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft)
+		if err != nil {
+			log.Fatal(err)
+		}
+		neighborhoodList = append(neighborhoodList, neighborhood)
+	}
+
+	return convertNullableNeighborhoodList(neighborhoodList)
 }

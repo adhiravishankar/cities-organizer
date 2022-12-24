@@ -41,7 +41,7 @@ export function LabeledImagesCard(props: LabeledImagesCardProps) {
           <Card.Title>{ name }</Card.Title>
           <div className="card-add" onClick={ onItemAddClickHandler }><i className="fas fa-plus" /></div>
         </Card.Header>
-        <Card.Text>{ itemsJSX }</Card.Text>
+        <Card.Body>{ itemsJSX }</Card.Body>
       </Card>
     </Row>
   );

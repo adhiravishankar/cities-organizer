@@ -2,6 +2,7 @@ import { action, flow, makeObservable, observable } from 'mobx';
 
 import { API } from '../apis/API';
 import {DetailedMetro, Metro} from '../interfaces/Metro';
+import {DetailedCity} from "../interfaces/DetailedCity";
 
 export class AppStore {
   api: API;
@@ -18,6 +19,8 @@ export class AppStore {
 
   selectedMetro: DetailedMetro;
 
+  selectedCity: DetailedCity;
+
   constructor() {
     this.api = new API(process.env.BASE_URL);
     makeObservable(this, {
@@ -25,9 +28,11 @@ export class AppStore {
       editingModalOpen: observable,
       metrosMap: observable,
       selectedMetro: observable,
+      selectedCity: observable,
       uploadPicsModalOpen: observable,
       fetchMetros: flow,
       fetchMetro: flow,
+      fetchCity: flow,
       editMetro: flow,
       fetchMetroPics: flow,
       uploadPicForMetro: flow,
@@ -45,6 +50,13 @@ export class AppStore {
     const metro = yield this.api.getMetro(id);
     this.selectedMetro = metro as DetailedMetro;
     this.pics = this.selectedMetro.Pics;
+  }
+
+  *fetchCity(id: number) {
+    const city = yield this.api.getCity(id);
+    this.selectedCity = city as DetailedCity;
+    console.log(this.selectedCity);
+    this.pics = this.selectedCity.Pics;
   }
 
   *fetchMetroPics(id: number) {

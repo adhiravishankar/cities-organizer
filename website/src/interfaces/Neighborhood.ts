@@ -3,6 +3,10 @@ export interface Neighborhood {
 
   CityID: number;
 
+  MetroID: number;
+
+  FeaturedImage: string;
+
   Link: string;
 
   Name: string;

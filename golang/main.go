@@ -72,7 +72,7 @@ func main() {
 	// Neighborhoods CRUD API
 	router.GET("/neighborhoods", neighborhoods)
 	router.POST("/neighborhoods", insertNeighborhood)
-	router.GET("/neighborhoods/:neighborhood", getMetro)
+	router.GET("/neighborhoods/:neighborhood", getNeighborhood)
 	router.GET("/neighborhoods/:neighborhood/pics", getNeighborhoodPictures)
 	router.POST("/neighborhoods/:neighborhood/upload", addNeighborhoodPicture)
 	router.PUT("/neighborhoods/:neighborhood", editNeighborhood)

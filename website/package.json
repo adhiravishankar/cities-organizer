@@ -22,8 +22,7 @@
     "react-pdf": "^6.2.0",
     "react-router": "^6.5.0",
     "react-router-dom": "^6.5.0",
-    "swr": "^2.0.0",
-    "ts-debounce": "^4.0.0"
+    "swr": "^2.0.0"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.8.2",

@@ -25,11 +25,11 @@ export function ImagesCard(props: ImagesCardProps) {
           <Card.Title>Images</Card.Title>
           <div className="card-add" onClick={ props.openAddPics }><i className="fas fa-plus" /></div>
         </Card.Header>
-        <Card.Text>
+        <Card.Body>
           <Stack className="images-stack" gap={1} direction="horizontal">
             { imagesJSX }
           </Stack>
-        </Card.Text>
+        </Card.Body>
       </Card>
     </Row>
   );

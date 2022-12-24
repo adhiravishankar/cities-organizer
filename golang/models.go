@@ -36,6 +36,7 @@ type DetailedCity struct {
 	Population    int64
 	FeaturedImage string
 	Pics          []string
+	Neighborhoods []Neighborhood
 }
 
 type Neighborhood struct {

@@ -1,7 +1,8 @@
 @use '../node_modules/material-colors/dist/colors.scss';
 
 .images-stack {
-  overflow-x: scroll;
+  overflow-x: auto;
+  height: 14rem;
 }
 
 .images-card {
@@ -9,21 +10,21 @@
 }
 
 .image-item {
-  height: 20rem;
+  height: 15rem;
 }
 
 .labeled-image-item {
-  height: 20rem;
-  width: 30rem;
+  height: 14rem;
+  width: 20rem;
 }
 
 .no-image-item {
-  height: 20rem;
-  width: 30rem;
+  height: 14rem;
+  width: 20rem;
 
   .image {
-    height: 17rem;
-    width: 30rem;
+    height: 12rem;
+    width: 20rem;
     background-color: colors.$md-blue-900;
     color: white;
     text-align: center;
@@ -31,7 +32,7 @@
 
     i {
       margin: auto;
-      font-size: 10rem;
+      font-size: 7rem;
     }
   }
 

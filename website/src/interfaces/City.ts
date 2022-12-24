@@ -9,7 +9,3 @@ export interface City {
 
   MetroID: number;
 }
-
-export interface DetailedCity {
-  Pics: string[]
-}

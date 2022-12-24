@@ -38,9 +38,10 @@ func getNeighborhood(c *gin.Context) {
 	row := squirrel.Select("*").
 		Where(squirrel.Eq{"id": c.Param("neighborhood")}).From("neighborhoods").RunWith(database).QueryRow()
 
-	err := row.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.Name, &neighborhood.HighSchoolScore,
-		&neighborhood.MiddleSchoolScore, &neighborhood.ElementarySchoolScore, &neighborhood.Address,
-		&neighborhood.MinimumValue, &neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft)
+	err := row.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.MetroID, &neighborhood.Name,
+		&neighborhood.FeaturedImage, &neighborhood.HighSchoolScore, &neighborhood.MiddleSchoolScore,
+		&neighborhood.ElementarySchoolScore, &neighborhood.Address, &neighborhood.MinimumValue,
+		&neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft)
 
 	if err != nil {
 		log.Fatal(err)

@@ -192,9 +192,9 @@ func internalGetNeighborhoodsForMetros(metro string) []Neighborhood {
 	for rows.Next() {
 		var neighborhood NullableNeighborhood
 		err := rows.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.MetroID, &neighborhood.Name,
-			&neighborhood.HighSchoolScore, &neighborhood.MiddleSchoolScore, &neighborhood.ElementarySchoolScore,
-			&neighborhood.Address, &neighborhood.MinimumValue, &neighborhood.MaximumValue, &neighborhood.MinSqft,
-			&neighborhood.MaxSqft)
+			&neighborhood.FeaturedImage, &neighborhood.HighSchoolScore, &neighborhood.MiddleSchoolScore,
+			&neighborhood.ElementarySchoolScore, &neighborhood.Address, &neighborhood.MinimumValue,
+			&neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft)
 		if err != nil {
 			log.Fatal(err)
 		}

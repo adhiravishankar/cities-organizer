@@ -7080,11 +7080,6 @@ try-to-catch@^3.0.0, try-to-catch@^3.0.1:
   resolved "https://registry.npmjs.org/try-to-catch/-/try-to-catch-3.0.1.tgz"
   integrity sha512-hOY83V84Hx/1sCzDSaJA+Xz2IIQOHRvjxzt+F0OjbQGPZ6yLPLArMA0gw/484MlfUkQbCpKYMLX3VDCAjWKfzQ==
 
-ts-debounce@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/ts-debounce/-/ts-debounce-4.0.0.tgz#33440ef64fab53793c3d546a8ca6ae539ec15841"
-  integrity sha512-+1iDGY6NmOGidq7i7xZGA4cm8DAa6fqdYcvO5Z6yBevH++Bdo9Qt/mN0TzHUgcCcKv1gmh9+W5dHqz8pMWbCbg==
-
 ts-jest@^29.0.3:
   version "29.0.3"
   resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-29.0.3.tgz#63ea93c5401ab73595440733cefdba31fcf9cb77"

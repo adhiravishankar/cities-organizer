@@ -49,5 +49,9 @@ export class API {
     return post(this.baseURL + '/metros/' + id + '/upload', formData).text();
   }
 
+  async getCity(id: number): Promise<unknown> {
+    return get(this.baseURL + '/cities/' + id).json();
+  }
+
 }
 
