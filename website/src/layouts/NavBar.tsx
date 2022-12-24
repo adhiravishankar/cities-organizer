@@ -25,8 +25,7 @@ export function NavBar(props: NavBarProps) {
         <Navbar.Brand>{ name }</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-          </Nav>
+          <Nav className="me-auto" />
           <Nav className="nav-right">
             { editIconJSX }
           </Nav>

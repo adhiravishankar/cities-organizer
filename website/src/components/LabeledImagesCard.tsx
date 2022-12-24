@@ -10,16 +10,23 @@ export interface LabeledImagesCardProps {
   errorMessage: string;
 
   onClick: (id: number) => void;
-  
+
+  onItemAddClick: () => void;
+
   items: LabeledImage[];
 }
 
 export function LabeledImagesCard(props: LabeledImagesCardProps) {
-  const { errorMessage, items, name, onClick } = props;
+  const { errorMessage, items, name, onClick, onItemAddClick } = props;
 
   const onClickHandler = useCallback((id: number) => {
     onClick(id);
   }, [onClick]);
+
+  const onItemAddClickHandler = useCallback(() => {
+    onItemAddClick();
+  }, [onItemAddClick]);
+
 
   const itemsJSX = (items === null || items === undefined) ? <span>{ errorMessage }</span> : (
     <Stack className="images-stack" gap={1} direction="horizontal">
@@ -30,7 +37,10 @@ export function LabeledImagesCard(props: LabeledImagesCardProps) {
   return (
     <Row>
       <Card className="images-card">
-        <Card.Title>{ name }</Card.Title>
+        <Card.Header>
+          <Card.Title>{ name }</Card.Title>
+          <div className="card-add" onClick={ onItemAddClickHandler }><i className="fas fa-plus" /></div>
+        </Card.Header>
         <Card.Text>{ itemsJSX }</Card.Text>
       </Card>
     </Row>

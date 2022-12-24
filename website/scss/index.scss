@@ -30,3 +30,10 @@ html, body, #root {
   color: white;
   font-size: 1rem;
 }
+
+.card-header {
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: none;
+}

@@ -8,6 +8,8 @@ export class AppStore {
 
   editingModalOpen: boolean;
 
+  uploadPicsModalOpen: boolean;
+
   imagesUploadModalOpen: boolean;
 
   metrosMap: Map<number, Metro> = observable.map();
@@ -23,6 +25,7 @@ export class AppStore {
       editingModalOpen: observable,
       metrosMap: observable,
       selectedMetro: observable,
+      uploadPicsModalOpen: observable,
       fetchMetros: flow,
       fetchMetro: flow,
       editMetro: flow,
@@ -40,7 +43,6 @@ export class AppStore {
 
   *fetchMetro(id: number) {
     const metro = yield this.api.getMetro(id);
-    console.log(metro);
     this.selectedMetro = metro as DetailedMetro;
     this.pics = this.selectedMetro.Pics;
   }
@@ -67,6 +69,10 @@ export class AppStore {
 
   editingModalVisibilityChange(visibility: boolean) {
     this.editingModalOpen = visibility;
+  }
+
+  uploadPicsModalVisibilityChange(visibility: boolean) {
+    this.uploadPicsModalOpen = visibility;
   }
 
 }

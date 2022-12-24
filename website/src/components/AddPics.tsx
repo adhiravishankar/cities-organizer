@@ -1,22 +1,14 @@
-import { CSSProperties, useCallback } from 'react';
+import { useCallback } from 'react';
+import { Modal } from 'react-bootstrap';
 import { useDropzone } from 'react-dropzone';
 
 export interface AddPicsProps {
+  onCloseModal: () => void;
+
+  shown: boolean;
+
   fileUpload: (file: File) => void;
 }
-
-const metroPopupStyle: CSSProperties = {
-  width: '20rem',
-  height: '20rem',
-  backgroundColor: 'white',
-  transform: 'translate(-50%, -50%)',
-  position: 'absolute' as 'absolute',
-  border: '0.1rem solid #000',
-  borderRadius: '2rem',
-  boxShadow: '2rem',
-  top: '50%',
-  left: '50%',
-};
 
 export function AddPics(props: AddPicsProps) {
   const onDropAccepted = useCallback((files: File[]) => {
@@ -26,15 +18,18 @@ export function AddPics(props: AddPicsProps) {
   const text = dropzone.isDragActive ? 'Drop the files here...' : 'Drag n\' drop a file here or click to select a file';
 
   return (
-    <div style={ metroPopupStyle }>
+    <Modal show={ props.shown } onHide={ props.onCloseModal }>
+      <Modal.Header closeButton={ true }>
+        <Modal.Title>Add Pictures</Modal.Title>
+      </Modal.Header>
       <div {...dropzone.getRootProps()} className="dropzone-wrapper">
         <input {...dropzone.getInputProps()} />
         <div className="dropzone-text">
           <p>{ text }</p>
-          <i className="fas fa-upload" style={{ fontSize: '4rem' }} />
+          <i className="fas fa-upload" />
         </div>
       </div>
-    </div>
+    </Modal>
   );
   
 }
