@@ -170,7 +170,7 @@ func internalGetCitiesForMetro(c *gin.Context, metro string) []City {
 	var cityList []City
 	for rows.Next() {
 		var city City
-		err := rows.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population)
+		err := rows.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population, &city.FeaturedImage)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -190,9 +190,10 @@ func internalGetNeighborhoodsForMetros(c *gin.Context, metro string) []Neighborh
 	var neighborhoodList []Neighborhood
 	for rows.Next() {
 		var neighborhood Neighborhood
-		err := rows.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.Name, &neighborhood.HighSchoolScore,
-			&neighborhood.MiddleSchoolScore, &neighborhood.ElementarySchoolScore, &neighborhood.Address,
-			&neighborhood.MinimumValue, &neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft)
+		err := rows.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.MetroID, &neighborhood.Name,
+			&neighborhood.HighSchoolScore, &neighborhood.MiddleSchoolScore, &neighborhood.ElementarySchoolScore,
+			&neighborhood.Address, &neighborhood.MinimumValue, &neighborhood.MaximumValue, &neighborhood.MinSqft,
+			&neighborhood.MaxSqft)
 		if err != nil {
 			log.Fatal(err)
 		}
