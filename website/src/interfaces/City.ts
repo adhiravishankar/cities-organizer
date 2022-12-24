@@ -1,3 +1,5 @@
+import { Neighborhood } from './Neighborhood';
+
 export interface City {
   ID: number;
 
@@ -8,4 +10,10 @@ export interface City {
   FeaturedImage: string;
 
   MetroID: number;
+}
+
+export interface DetailedCity extends City {
+  Pics: string[]
+
+  Neighborhoods: Neighborhood[]
 }

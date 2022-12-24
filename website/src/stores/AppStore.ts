@@ -1,9 +1,9 @@
 import { action, flow, makeObservable, observable } from 'mobx';
 
 import { API } from '../apis/API';
-import { DetailedCity } from '../interfaces/DetailedCity';
+import {City, DetailedCity} from '../interfaces/City';
 import { DetailedMetro, Metro } from '../interfaces/Metro';
-import { DetailedNeighborhood } from '../interfaces/Neighborhood';
+import { DetailedNeighborhood, Neighborhood } from '../interfaces/Neighborhood';
 
 export class AppStore {
   api: API;
@@ -15,6 +15,10 @@ export class AppStore {
   imagesUploadModalOpen: boolean;
 
   metrosMap: Map<number, Metro> = observable.map();
+
+  citiesMap: Map<number, City> = observable.map();
+
+  neighborhoodsMap: Map<number, Neighborhood> = observable.map();
 
   pics: string[] = observable.array();
 
@@ -30,11 +34,16 @@ export class AppStore {
       imagesUploadModalOpen: observable,
       editingModalOpen: observable,
       metrosMap: observable,
+      citiesMap: observable,
+      neighborhoodsMap: observable,
       selectedMetro: observable,
       selectedCity: observable,
       selectedNeighborhood: observable,
       uploadPicsModalOpen: observable,
+      initialize: flow,
       fetchMetros: flow,
+      fetchCities: flow,
+      fetchNeighborhoods: flow,
       fetchMetro: flow,
       fetchCity: flow,
       fetchNeighborhood: flow,
@@ -45,10 +54,28 @@ export class AppStore {
     });
   }
 
+  *initialize() {
+    yield this.fetchMetros();
+    yield this.fetchCities();
+    yield this.fetchNeighborhoods();
+  }
+
   *fetchMetros() {
     const genericMetros: unknown = yield this.api.metros();
     const metros = genericMetros as Metro[];
     metros.forEach((metro: Metro) => this.metrosMap.set(metro.ID, metro));
+  }
+
+  *fetchCities() {
+    const citiesArray: unknown = yield this.api.cities();
+    const cities = citiesArray as City[];
+    cities.forEach((city: City) => this.citiesMap.set(city.ID, city));
+  }
+
+  *fetchNeighborhoods() {
+    const neighborhoodsArray: unknown = yield this.api.neighborhoods();
+    const neighborhoods = neighborhoodsArray as Neighborhood[];
+    neighborhoods.forEach((neighboorhood: Neighborhood) => this.neighborhoodsMap.set(neighboorhood.ID, neighboorhood));
   }
 
   *fetchMetro(id: number) {

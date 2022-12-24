@@ -7,6 +7,7 @@ import { ImagesCard } from '../../components/ImagesCard';
 import { NavBar } from '../../layouts/NavBar';
 import { AppStore } from '../../stores/AppStore';
 import { EditNeighborhood } from './EditNeighborhood';
+import {Breadcrumbs} from "../../layouts/Breadcrumbs";
 
 interface NeighborhoodProps {
   store: AppStore;
@@ -32,11 +33,24 @@ export const NeighborhoodPage = observer<NeighborhoodProps>((props: Neighborhood
     store.uploadPicForMetro(selectedNeighborhood.ID, file);
   }, [store, selectedNeighborhood]);
 
+  const metroName = store.metrosMap.get(selectedNeighborhood.MetroID)?.Name;
+  const cityName = store.citiesMap.get(selectedNeighborhood.CityID)?.Name;
+  const neighboorhoodName = selectedNeighborhood?.Name;
+
   return (
     <Fragment>
       <NavBar editIcon={ true } id={ selectedNeighborhood.ID } onEdit={ openEditingScreen } name={ selectedNeighborhood.Name } />
       <Container className="cities-container">
         <Stack direction="vertical" gap={3}>
+          <Breadcrumbs
+            cityID={ selectedNeighborhood.CityID }
+            metroID={ selectedNeighborhood.MetroID }
+            neighborhoodID={ selectedNeighborhood.ID }
+            metro={ metroName }
+            city={ cityName }
+            neighborhood={ neighboorhoodName }
+            active="neighborhood"
+          />
           <ImagesCard
             errorMessage="No images are currently attached."
             openAddPics={ openUploadPicsScreen }

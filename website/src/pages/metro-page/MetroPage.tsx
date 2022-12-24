@@ -9,6 +9,7 @@ import { LabeledImagesCard } from '../../components/LabeledImagesCard';
 import { LabeledImage } from '../../interfaces/Base';
 import { City } from '../../interfaces/City';
 import { Neighborhood } from '../../interfaces/Neighborhood';
+import { Breadcrumbs } from '../../layouts/Breadcrumbs';
 import { NavBar } from '../../layouts/NavBar';
 import { AppStore } from '../../stores/AppStore';
 import { EditMetro } from './EditMetro';
@@ -62,11 +63,18 @@ export const MetroPage = observer<MetroProps>((props: MetroProps) => {
     selectedMetro.Cities
       .map<LabeledImage>((city: City) => { return { id: city.ID, label: city.Name, source: city.FeaturedImage }; });
 
+  const metroName = selectedMetro.Name;
+
   return (
     <Fragment>
       <NavBar editIcon={ true } id={ metro.ID } onEdit={ openEditingScreen } name={ selectedMetro.Name } />
       <Container className="cities-container">
         <Stack direction="vertical" gap={3}>
+          <Breadcrumbs
+            active="metro"
+            metroID={ selectedMetro.ID }
+            metro={ metroName }
+          />
           <ImagesCard
             errorMessage="No images are currently attached."
             openAddPics={ openUploadPicsScreen }

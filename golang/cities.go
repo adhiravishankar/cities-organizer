@@ -21,14 +21,14 @@ func cities(c *gin.Context) {
 	var cityList []NullableCity
 	for rows.Next() {
 		var city NullableCity
-		err := rows.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population)
+		err := rows.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population, &city.FeaturedImage)
 		if err != nil {
 			log.Fatal(err)
 		}
 		cityList = append(cityList, city)
 	}
 
-	c.JSON(200, cityList)
+	c.JSON(200, convertNullableCityList(cityList))
 }
 
 func insertCity(c *gin.Context) {

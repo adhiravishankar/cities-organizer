@@ -21,9 +21,10 @@ func neighborhoods(c *gin.Context) {
 	var neighborhoodList []NullableNeighborhood
 	for rows.Next() {
 		var neighborhood NullableNeighborhood
-		err := rows.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.Name, &neighborhood.HighSchoolScore,
-			&neighborhood.MiddleSchoolScore, &neighborhood.ElementarySchoolScore, &neighborhood.Address,
-			&neighborhood.MinimumValue, &neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft)
+		err := rows.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.MetroID, &neighborhood.Name,
+			&neighborhood.FeaturedImage, &neighborhood.HighSchoolScore, &neighborhood.MiddleSchoolScore,
+			&neighborhood.ElementarySchoolScore, &neighborhood.Address, &neighborhood.MinimumValue,
+			&neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft)
 		if err != nil {
 			log.Fatal(err)
 		}

@@ -11,6 +11,7 @@ import { Neighborhood } from '../../interfaces/Neighborhood';
 import { NavBar } from '../../layouts/NavBar';
 import { AppStore } from '../../stores/AppStore';
 import { EditCity } from './EditCity';
+import {Breadcrumbs} from "../../layouts/Breadcrumbs";
 
 interface CityProps {
   store: AppStore;
@@ -46,11 +47,21 @@ export const CityPage = observer<CityProps>((props: CityProps) => {
     selectedCity.Neighborhoods
       .map<LabeledImage>((neighborhood: Neighborhood) => { return { id: neighborhood.ID, label: neighborhood.Name, source: neighborhood.FeaturedImage }; });
 
+  const metroName = store.metrosMap.get(selectedCity.MetroID)?.Name;
+  const cityName = selectedCity.Name;
+
   return (
     <Fragment>
       <NavBar editIcon={ true } id={ selectedCity.ID } onEdit={ openEditingScreen } name={ selectedCity.Name } />
       <Container className="cities-container">
         <Stack direction="vertical" gap={3}>
+          <Breadcrumbs
+            active="metro"
+            metroID={ selectedCity.MetroID }
+            cityID={ selectedCity.ID }
+            metro={ metroName }
+            city={ cityName }
+          />
           <ImagesCard
             errorMessage="No images are currently attached."
             openAddPics={ openUploadPicsScreen }

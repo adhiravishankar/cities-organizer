@@ -26,6 +26,14 @@ export class API {
     return get(this.baseURL + '/metros').json();
   }
 
+  async cities(): Promise<unknown> {
+    return get(this.baseURL + '/cities').json();
+  }
+
+  async neighborhoods(): Promise<unknown> {
+    return get(this.baseURL + '/neighborhoods').json();
+  }
+
   async getMetro(id: number): Promise<unknown> {
     return get(this.baseURL + '/metros/' + id).json();
   }
@@ -48,6 +56,7 @@ export class API {
     formData.set('picture', picture);
     return post(this.baseURL + '/metros/' + id + '/upload', formData).text();
   }
+
   async getCity(id: number): Promise<unknown> {
     return get(this.baseURL + '/cities/' + id).json();
   }
