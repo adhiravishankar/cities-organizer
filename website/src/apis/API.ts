@@ -57,6 +57,18 @@ export class API {
     return post(this.baseURL + '/metros/' + id + '/upload', formData).text();
   }
 
+  async uploadPicForCity(id: number, picture: File): Promise<string> {
+    const formData = new FormData();
+    formData.set('picture', picture);
+    return post(this.baseURL + '/cities/' + id + '/upload', formData).text();
+  }
+
+  async uploadPicForNeighborhood(id: number, picture: File): Promise<string> {
+    const formData = new FormData();
+    formData.set('picture', picture);
+    return post(this.baseURL + '/neighborhoods/' + id + '/upload', formData).text();
+  }
+
   async getCity(id: number): Promise<unknown> {
     return get(this.baseURL + '/cities/' + id).json();
   }

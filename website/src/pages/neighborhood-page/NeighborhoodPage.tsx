@@ -4,10 +4,10 @@ import { Container, Stack } from 'react-bootstrap';
 
 import { AddPics } from '../../components/AddPics';
 import { ImagesCard } from '../../components/ImagesCard';
+import { Breadcrumbs } from '../../layouts/Breadcrumbs';
 import { NavBar } from '../../layouts/NavBar';
 import { AppStore } from '../../stores/AppStore';
 import { EditNeighborhood } from './EditNeighborhood';
-import {Breadcrumbs} from "../../layouts/Breadcrumbs";
 
 interface NeighborhoodProps {
   store: AppStore;
@@ -30,7 +30,7 @@ export const NeighborhoodPage = observer<NeighborhoodProps>((props: Neighborhood
   }, [store]);
 
   const fileUpload = useCallback((file: File) => {
-    store.uploadPicForMetro(selectedNeighborhood.ID, file);
+    store.uploadPicForNeighborhood(selectedNeighborhood.ID, file);
   }, [store, selectedNeighborhood]);
 
   const metroName = store.metrosMap.get(selectedNeighborhood.MetroID)?.Name;

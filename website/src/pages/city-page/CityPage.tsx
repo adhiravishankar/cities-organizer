@@ -8,10 +8,10 @@ import { ImagesCard } from '../../components/ImagesCard';
 import { LabeledImagesCard } from '../../components/LabeledImagesCard';
 import { LabeledImage } from '../../interfaces/Base';
 import { Neighborhood } from '../../interfaces/Neighborhood';
+import { Breadcrumbs } from '../../layouts/Breadcrumbs';
 import { NavBar } from '../../layouts/NavBar';
 import { AppStore } from '../../stores/AppStore';
 import { EditCity } from './EditCity';
-import {Breadcrumbs} from "../../layouts/Breadcrumbs";
 
 interface CityProps {
   store: AppStore;
@@ -35,7 +35,7 @@ export const CityPage = observer<CityProps>((props: CityProps) => {
   }, [store]);
 
   const fileUpload = useCallback((file: File) => {
-    store.uploadPicForMetro(selectedCity.ID, file);
+    store.uploadPicForCity(selectedCity.ID, file);
   }, [store, selectedCity]);
 
   const onNeighborhoodClick = useCallback((id: number) => {

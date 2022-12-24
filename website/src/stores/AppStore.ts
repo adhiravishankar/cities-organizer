@@ -1,7 +1,7 @@
 import { action, flow, makeObservable, observable } from 'mobx';
 
 import { API } from '../apis/API';
-import {City, DetailedCity} from '../interfaces/City';
+import { City, DetailedCity } from '../interfaces/City';
 import { DetailedMetro, Metro } from '../interfaces/Metro';
 import { DetailedNeighborhood, Neighborhood } from '../interfaces/Neighborhood';
 
@@ -50,6 +50,8 @@ export class AppStore {
       editMetro: flow,
       fetchMetroPics: flow,
       uploadPicForMetro: flow,
+      uploadPicForCity: flow,
+      uploadPicForNeighborhood: flow,
       editingModalVisibilityChange: action,
     });
   }
@@ -111,6 +113,20 @@ export class AppStore {
 
   *uploadPicForMetro(id: number, file: File) {
     const success: string = yield this.api.uploadPicForMetro(id, file);
+    if (success && success.length === 0) {
+      this.fetchMetroPics(id);
+    }
+  }
+
+  *uploadPicForCity(id: number, file: File) {
+    const success: string = yield this.api.uploadPicForCity(id, file);
+    if (success && success.length === 0) {
+      this.fetchMetroPics(id);
+    }
+  }
+
+  *uploadPicForNeighborhood(id: number, file: File) {
+    const success: string = yield this.api.uploadPicForNeighborhood(id, file);
     if (success && success.length === 0) {
       this.fetchMetroPics(id);
     }
