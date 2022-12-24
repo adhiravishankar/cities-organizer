@@ -41,6 +41,7 @@ type DetailedCity struct {
 type Neighborhood struct {
 	ID                    int64
 	CityID                int64
+	MetroID               int64
 	FeaturedImage         string
 	Link                  string
 	Name                  string
@@ -48,15 +49,16 @@ type Neighborhood struct {
 	MiddleSchoolScore     int64
 	ElementarySchoolScore int64
 	Address               string
-	MinimumValue          string
-	MaximumValue          string
-	MinSqft               string
-	MaxSqft               string
+	MinimumValue          int64
+	MaximumValue          int64
+	MinSqft               int64
+	MaxSqft               int64
 }
 
 type DetailedNeighborhood struct {
 	ID                    int64
 	CityID                int64
+	MetroID               int64
 	FeaturedImage         string
 	Link                  string
 	Name                  string
@@ -64,9 +66,9 @@ type DetailedNeighborhood struct {
 	MiddleSchoolScore     int64
 	ElementarySchoolScore int64
 	Address               string
-	MinimumValue          string
-	MaximumValue          string
-	MinSqft               string
-	MaxSqft               string
+	MinimumValue          int64
+	MaximumValue          int64
+	MinSqft               int64
+	MaxSqft               int64
 	Pics                  []string
 }

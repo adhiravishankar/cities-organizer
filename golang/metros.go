@@ -19,9 +19,9 @@ func metros(c *gin.Context) {
 		log.Fatal(err)
 	}
 
-	var metroList []Metro
+	var metroList []NullableMetro
 	for rows.Next() {
-		var metro Metro
+		var metro NullableMetro
 		err := rows.Scan(&metro.ID, &metro.Name, &metro.ExtendedName, &metro.Population, &metro.Notes, &metro.FeaturedImage)
 		if err != nil {
 			log.Fatal(err)
@@ -29,7 +29,7 @@ func metros(c *gin.Context) {
 		metroList = append(metroList, metro)
 	}
 
-	c.JSON(200, metroList)
+	c.JSON(200, convertNullableMetroList(metroList))
 }
 
 func getMetro(c *gin.Context) {
@@ -167,9 +167,9 @@ func internalGetCitiesForMetro(c *gin.Context, metro string) []City {
 		log.Fatal(err)
 	}
 
-	var cityList []City
+	var cityList []NullableCity
 	for rows.Next() {
-		var city City
+		var city NullableCity
 		err := rows.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population, &city.FeaturedImage)
 		if err != nil {
 			log.Fatal(err)
@@ -187,9 +187,9 @@ func internalGetNeighborhoodsForMetros(c *gin.Context, metro string) []Neighborh
 		log.Fatal(err)
 	}
 
-	var neighborhoodList []Neighborhood
+	var neighborhoodList []NullableNeighborhood
 	for rows.Next() {
-		var neighborhood Neighborhood
+		var neighborhood NullableNeighborhood
 		err := rows.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.MetroID, &neighborhood.Name,
 			&neighborhood.HighSchoolScore, &neighborhood.MiddleSchoolScore, &neighborhood.ElementarySchoolScore,
 			&neighborhood.Address, &neighborhood.MinimumValue, &neighborhood.MaximumValue, &neighborhood.MinSqft,

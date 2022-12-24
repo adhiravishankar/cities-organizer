@@ -44,33 +44,33 @@ type NullableNeighborhood struct {
 	ID                    int64
 	CityID                sql.NullInt64
 	MetroID               sql.NullInt64
-	FeaturedImage         string
-	Link                  string
-	Name                  string
-	HighSchoolScore       int64
-	MiddleSchoolScore     int64
-	ElementarySchoolScore int64
-	Address               string
-	MinimumValue          string
-	MaximumValue          string
-	MinSqft               string
-	MaxSqft               string
+	FeaturedImage         sql.NullString
+	Link                  sql.NullString
+	Name                  sql.NullString
+	HighSchoolScore       sql.NullInt64
+	MiddleSchoolScore     sql.NullInt64
+	ElementarySchoolScore sql.NullInt64
+	Address               sql.NullString
+	MinimumValue          sql.NullInt64
+	MaximumValue          sql.NullInt64
+	MinSqft               sql.NullInt64
+	MaxSqft               sql.NullInt64
 }
 
 type NullableDetailedNeighborhood struct {
 	ID                    int64
 	CityID                sql.NullInt64
 	MetroID               sql.NullInt64
-	FeaturedImage         string
-	Link                  string
-	Name                  string
-	HighSchoolScore       int64
-	MiddleSchoolScore     int64
-	ElementarySchoolScore int64
-	Address               string
-	MinimumValue          string
-	MaximumValue          string
-	MinSqft               string
-	MaxSqft               string
+	FeaturedImage         sql.NullString
+	Link                  sql.NullString
+	Name                  sql.NullString
+	HighSchoolScore       sql.NullInt64
+	MiddleSchoolScore     sql.NullInt64
+	ElementarySchoolScore sql.NullInt64
+	Address               sql.NullString
+	MinimumValue          sql.NullInt64
+	MaximumValue          sql.NullInt64
+	MinSqft               sql.NullInt64
+	MaxSqft               sql.NullInt64
 	Pics                  []string
 }
