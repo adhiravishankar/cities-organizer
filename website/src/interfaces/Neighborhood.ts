@@ -28,6 +28,6 @@ export interface Neighborhood {
   MaxSqft: number;
 }
 
-export interface DetailedNeighborhood {
+export interface DetailedNeighborhood extends Neighborhood {
   Pics: string[];
 }

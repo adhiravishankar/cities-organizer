@@ -6,6 +6,7 @@ import { MetroPage } from '../pages/metro-page/MetroPage';
 import { MetrosPage } from '../pages/metros-page/MetrosPage';
 import { Signup } from '../pages/Signup';
 import { AppStore } from '../stores/AppStore';
+import {NeighborhoodPage} from "../pages/neighborhood-page/NeighborhoodPage";
 
 export function createRouter(store: AppStore) {
   return createBrowserRouter([
@@ -50,10 +51,10 @@ export function createRouter(store: AppStore) {
       loader: async ({ params }) => {
         await store.fetchMetros();
         // @ts-ignore
-        await store.fetchMetro(params.neighborhood);
+        await store.fetchNeighborhood(params.neighborhood);
         return null;
       },
-      element: <MetroPage store={store}/>,
+      element: <NeighborhoodPage store={store}/>,
     },
   ]);
 }

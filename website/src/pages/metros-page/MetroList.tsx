@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
-import {redirect, useNavigate} from 'react-router';
+import { redirect, useNavigate } from 'react-router';
 
 import { LabeledImageItem } from '../../components/LabeledImageItem';
 import { Metro } from '../../interfaces/Metro';
