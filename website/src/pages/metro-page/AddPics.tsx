@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSProperties, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 
@@ -32,7 +31,7 @@ export function AddPics(props: AddPicsProps) {
         <input {...dropzone.getInputProps()} />
         <div className="dropzone-text">
           <p>{ text }</p>
-          <FontAwesomeIcon icon={['fas', 'upload']} style={{ fontSize: '4rem' }} />
+          <i className="fas fa-upload" style={{ fontSize: '4rem' }} />
         </div>
       </div>
     </div>

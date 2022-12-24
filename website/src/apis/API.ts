@@ -34,10 +34,11 @@ export class API {
     return get(this.baseURL + '/metros/' + id + '/pics').json();
   }
 
-  async editMetro(id: number, name: string, extendedName: string, population: number): Promise<Response> {
+  async editMetro(id: number, name: string, extendedName: string, population: number, featuredImage: string): Promise<Response> {
     const formData = new FormData();
     formData.set('name', name);
     formData.set('extended_name', extendedName);
+    formData.set('featured_image', featuredImage);
     formData.set('population', population.toString());
     return put(this.baseURL + '/metros/' + id, formData);
   }

@@ -1,10 +1,9 @@
 import { observer } from 'mobx-react-lite';
-import { CSSProperties, Fragment, useCallback } from 'react';
+import { Fragment, useCallback } from 'react';
 import { Container, Modal  } from 'react-bootstrap';
 import { useParams } from 'react-router';
 
 import { ImagesCard } from '../../components/ImagesCard';
-import { Metro } from '../../interfaces/Metro';
 import { NavBar } from '../../layouts/NavBar';
 import { AppStore } from '../../stores/AppStore';
 import { AddPics } from './AddPics';
@@ -21,20 +20,16 @@ interface MetroProps {
 export const MetroPage = observer<MetroProps>((props: MetroProps) => {
   const { store } = props;
   const params = useParams<MetroParams>();
-  const metro = store.metrosMap.get(Number.parseInt(params.metro));
+  const metroID = Number.parseInt(params.metro);
+  const metro = store.metrosMap.get(metroID);
 
   const openEditingScreen = useCallback(() => {
-    store.modalOpen = true;
-  }, [store]);
-
-  const editMetro = useCallback((newMetro: Metro) => {
-    store.editMetro(newMetro.ID, newMetro.Name, newMetro.ExtendedName, newMetro.Population);
+    store.editingModalVisibilityChange(true);
   }, [store]);
 
   const fileUpload = useCallback((file: File) => {
     store.uploadPicForMetro(metro.ID, file);
   }, [store, metro]);
-
 
   return (
     <Fragment>
@@ -42,9 +37,7 @@ export const MetroPage = observer<MetroProps>((props: MetroProps) => {
       <Container className="cities-container">
         <ImagesCard pics={ store.pics } />
       </Container>
-      <Modal show={ true || store.modalOpen }>
-        <EditMetro metro={ metro } editMetro={ editMetro } pics={ store.pics } />
-      </Modal>
+      <EditMetro id={ metroID } store={ store } />
       <Modal open={ store.imagesUploadModalOpen }>
         <AddPics fileUpload={ fileUpload } />
       </Modal>

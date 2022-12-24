@@ -1,4 +1,4 @@
-import { flow, makeObservable, observable } from 'mobx';
+import { action, flow, makeObservable, observable } from 'mobx';
 
 import { API } from '../apis/API';
 import { Metro } from '../interfaces/Metro';
@@ -6,7 +6,7 @@ import { Metro } from '../interfaces/Metro';
 export class AppStore {
   api: API;
 
-  modalOpen: boolean;
+  editingModalOpen: boolean;
 
   imagesUploadModalOpen: boolean;
 
@@ -18,12 +18,13 @@ export class AppStore {
     this.api = new API(process.env.BASE_URL);
     makeObservable(this, {
       imagesUploadModalOpen: observable,
-      modalOpen: observable,
+      editingModalOpen: observable,
       metrosMap: observable,
       fetchMetros: flow,
       editMetro: flow,
       fetchMetroPics: flow,
       uploadPicForMetro: flow,
+      editingModalVisibilityChange: action,
     });
   }
 
@@ -38,11 +39,11 @@ export class AppStore {
     this.pics = pics as string[];
   }
 
-  *editMetro(id: number, name: string, extendedName: string, population: number) {
-    const success: Response = yield this.api.editMetro(id, name, extendedName, population);
+  *editMetro(id: number, name: string, extendedName: string, population: number, featuredImage: string) {
+    const success: Response = yield this.api.editMetro(id, name, extendedName, population, featuredImage);
     if (success.ok) {
       const metro = this.metrosMap.get(id);
-      this.metrosMap.set(id, { ...metro, Name: name, ExtendedName: extendedName, Population: population })
+      this.metrosMap.set(id, { ...metro, Name: name, ExtendedName: extendedName, Population: population, FeaturedImage: featuredImage });
     }
   }
 
@@ -51,6 +52,10 @@ export class AppStore {
     if (success && success.length === 0) {
       this.fetchMetroPics(id);
     }
+  }
+
+  editingModalVisibilityChange(visibility: boolean) {
+    this.editingModalOpen = visibility;
   }
 
 }

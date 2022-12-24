@@ -1,40 +1,48 @@
+import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
-import {Button, DropdownButton, Form, Row} from 'react-bootstrap';
+import { Button, Form, Modal } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
 
+import { Dropdown } from '../../components/Dropdown';
 import { Metro } from '../../interfaces/Metro';
-import DropdownItem from "react-bootstrap/DropdownItem";
+import { AppStore } from '../../stores/AppStore';
 
 
 export interface EditMetroProps {
-  metro: Metro;
+  id: number;
 
-  editMetro: (metro: Metro) => void;
-
-  pics: string[];
+  store: AppStore;
 }
 
-export function EditMetro(props: EditMetroProps) {
-  const { editMetro, metro } = props;
+export const EditMetro = observer<EditMetroProps>((props: EditMetroProps) => {
+  const { id, store } = props;
+  const { pics } = store;
+  const metro = store.metrosMap.get(id);
 
-  const { handleSubmit, control } = useForm<Metro>({ defaultValues: props.metro });
+  const { handleSubmit, control } = useForm<Metro>({ defaultValues: metro });
+  const handleClose = () => store.editingModalVisibilityChange(false);
 
   const onSubmit = useCallback((data: Metro) => {
-    editMetro(data);
-  }, [editMetro]);
+    store.editMetro(data.ID, data.Name, data.ExtendedName, data.Population, data.FeaturedImage);
+    handleClose();
+  }, [id, store]);
 
-  const { field: featuredImageField } = useController({ name: 'FeaturedImage', control });
+  const { field: fiField } = useController({ name: 'FeaturedImage', control });
 
   return (
-    <form>
-      <Row>
-        <h4 style={{ marginBottom: '1rem' }}>{`Edit ${ metro.Name }`}</h4>
-        <Controller name="Name" control={control} render={({ field }) => <Form.Control { ...field } id="name" placeholder="Name" /> }/>
-        <Controller name="ExtendedName" control={control} render={({ field }) => <Form.Control { ...field } id="extended_name" placeholder="Extended Name" /> }/>
-        <Controller name="Population" control={control} render={({ field }) => <Form.Control { ...field } id="population" placeholder="Population" type="number" /> }/>
-
-        <Button onClick={ handleSubmit(onSubmit) } type="submit">Submit</Button>
-      </Row>
-    </form>
+    <Modal show={ store.editingModalOpen } onHide={ handleClose }>
+      <Modal.Header closeButton>
+        <Modal.Title>{`Edit ${ metro.Name }`}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <form>
+          <Controller name="Name" control={control} render={({ field }) => <Form.Control { ...field } id="name" placeholder="Name" /> }/>
+          <Controller name="ExtendedName" control={control} render={({ field }) => <Form.Control { ...field } id="extended_name" placeholder="Extended Name" /> }/>
+          <Controller name="Population" control={control} render={({ field }) => <Form.Control { ...field } id="population" placeholder="Population" type="number" /> }/>
+          <Dropdown onChange={ fiField.onChange } options={ pics } title="Featured Image" value={ fiField.value } />
+          <Button onClick={ handleSubmit(onSubmit) } type="submit">Submit</Button>
+        </form>
+      </Modal.Body>
+    </Modal>
   );
-}
+});

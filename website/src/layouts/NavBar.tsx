@@ -12,7 +12,7 @@ export interface NavBarProps {
 }
 
 export function NavBar(props: NavBarProps) {
-  const { id, onEdit } = props;
+  const { id, name, onEdit } = props;
   const onClick = useCallback(() => {
     onEdit();
   }, [onEdit, id]);
@@ -20,15 +20,13 @@ export function NavBar(props: NavBarProps) {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand href="#home">Cities Organizer</Navbar.Brand>
+        <Navbar.Brand>{ name }</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
           </Nav>
           <Nav className="nav-right">
-            <Nav.Item><i className="fas fa-pen" /></Nav.Item>
+            <Nav.Item onClick={ onClick }><i className="fas fa-pen" /></Nav.Item>
           </Nav>
         </Navbar.Collapse>
       </Container>

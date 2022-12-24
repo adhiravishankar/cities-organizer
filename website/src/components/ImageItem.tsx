@@ -7,5 +7,5 @@ export interface ImageItemProps {
 
 export const ImageItem = (image: ImageItemProps) => {
   const { name, source } = image;
-  return <img src={ source } alt={ name } loading="lazy" style={{ height: '20rem' }} />;
+  return <img src={ source } alt={ name } loading="lazy" className="image-item" />;
 };

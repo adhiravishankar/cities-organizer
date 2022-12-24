@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite';
 
+import { LabeledImageItem } from '../../components/LabeledImageItem';
 import { Metro } from '../../interfaces/Metro';
 import { AppStore } from '../../stores/AppStore';
-import { LabeledImageItem } from '../../components/LabeledImageItem';
 
 export interface MetroListProps {
   store: AppStore;
