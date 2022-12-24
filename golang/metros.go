@@ -33,7 +33,7 @@ func metros(c *gin.Context) {
 }
 
 func getMetro(c *gin.Context) {
-	var metro DetailedMetro
+	var metro NullableMetro
 	row := squirrel.Select("*").Where(squirrel.Eq{"id": c.Param("metro")}).From("metros").
 		RunWith(database).QueryRow()
 	err := row.Scan(&metro.ID, &metro.Name, &metro.ExtendedName, &metro.Population, &metro.Notes, &metro.FeaturedImage)
@@ -41,10 +41,11 @@ func getMetro(c *gin.Context) {
 		log.Fatal(err)
 	}
 
-	metro.Pics = internalGetMetroPics(c)
-	metro.Cities = internalGetCitiesForMetro(c, c.Param("metro"))
-	metro.Neighborhoods = internalGetNeighborhoodsForMetros(c, c.Param("metro"))
-	c.JSON(200, metro)
+	detailedMetro := convertNullableDetailedMetroItem(metro)
+	detailedMetro.Pics = internalGetMetroPics(c)
+	detailedMetro.Cities = internalGetCitiesForMetro(c.Param("metro"))
+	detailedMetro.Neighborhoods = internalGetNeighborhoodsForMetros(c.Param("metro"))
+	c.JSON(200, detailedMetro)
 }
 
 func insertMetro(c *gin.Context) {
@@ -161,7 +162,7 @@ func internalGetMetroPics(c *gin.Context) []string {
 	return picList
 }
 
-func internalGetCitiesForMetro(c *gin.Context, metro string) []City {
+func internalGetCitiesForMetro(metro string) []City {
 	rows, err := squirrel.Select("*").From("cities").Where(squirrel.Eq{"metro_id": metro}).RunWith(database).Query()
 	if err != nil {
 		log.Fatal(err)
@@ -177,10 +178,10 @@ func internalGetCitiesForMetro(c *gin.Context, metro string) []City {
 		cityList = append(cityList, city)
 	}
 
-	return cityList
+	return convertNullableCityList(cityList)
 }
 
-func internalGetNeighborhoodsForMetros(c *gin.Context, metro string) []Neighborhood {
+func internalGetNeighborhoodsForMetros(metro string) []Neighborhood {
 	rows, err := squirrel.Select("*").From("neighborhoods").Where(squirrel.Eq{"metro_id": metro}).
 		RunWith(database).Query()
 	if err != nil {
@@ -200,5 +201,5 @@ func internalGetNeighborhoodsForMetros(c *gin.Context, metro string) []Neighborh
 		neighborhoodList = append(neighborhoodList, neighborhood)
 	}
 
-	return neighborhoodList
+	return convertNullableNeighborhoodList(neighborhoodList)
 }

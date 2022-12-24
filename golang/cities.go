@@ -19,9 +19,9 @@ func cities(c *gin.Context) {
 		log.Fatal(err)
 	}
 
-	var cityList []City
+	var cityList []NullableCity
 	for rows.Next() {
-		var city City
+		var city NullableCity
 		err := rows.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population)
 		if err != nil {
 			log.Fatal(err)
@@ -50,15 +50,16 @@ func insertCity(c *gin.Context) {
 }
 
 func getCity(c *gin.Context) {
-	var city DetailedCity
+	var city NullableCity
 	row := squirrel.Select("*").Where(squirrel.Eq{"id": c.Param("city")}).From("cities").RunWith(database).QueryRow()
 	err := row.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	city.Pics = internalGetCityPics(c)
-	c.JSON(200, city)
+	newCity := convertNullableDetailedCityItem(city)
+	newCity.Pics = internalGetCityPics(c)
+	c.JSON(200, newCity)
 }
 
 func editCity(c *gin.Context) {
