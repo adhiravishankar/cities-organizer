@@ -1,9 +1,12 @@
 import { observer } from 'mobx-react-lite';
 import { Fragment, useCallback } from 'react';
-import { Container, Modal  } from 'react-bootstrap';
+import { Container, Modal, Stack } from 'react-bootstrap';
 import { useParams } from 'react-router';
 
 import { ImagesCard } from '../../components/ImagesCard';
+import { LabeledImagesCard } from '../../components/LabeledImagesCard';
+import { LabeledImage } from '../../interfaces/Base';
+import { City } from '../../interfaces/City';
 import { NavBar } from '../../layouts/NavBar';
 import { AppStore } from '../../stores/AppStore';
 import { AddPics } from './AddPics';
@@ -19,9 +22,10 @@ interface MetroProps {
 
 export const MetroPage = observer<MetroProps>((props: MetroProps) => {
   const { store } = props;
+  const { metrosMap, selectedMetro } = store;
   const params = useParams<MetroParams>();
   const metroID = Number.parseInt(params.metro);
-  const metro = store.metrosMap.get(metroID);
+  const metro = metrosMap.get(metroID);
 
   const openEditingScreen = useCallback(() => {
     store.editingModalVisibilityChange(true);
@@ -31,11 +35,19 @@ export const MetroPage = observer<MetroProps>((props: MetroProps) => {
     store.uploadPicForMetro(metro.ID, file);
   }, [store, metro]);
 
+  const images: LabeledImage[] = (selectedMetro.Cities === null || selectedMetro.Cities === undefined) ? null :
+    selectedMetro.Cities
+      .map<LabeledImage>((city: City) => { return { id: city.ID, label: city.Name, source: city.FeaturedImage }; });
+
   return (
     <Fragment>
       <NavBar editIcon={ true } id={ metro.ID } onEdit={ openEditingScreen } name={ metro.Name } />
       <Container className="cities-container">
-        <ImagesCard pics={ store.pics } />
+        <Stack direction="vertical" gap={3}>
+          <ImagesCard pics={ store.pics } />
+          <LabeledImagesCard errorMessage="No cities in this metro currently." name="Cities" onClick={ null } items={ images } />
+          <LabeledImagesCard errorMessage="No neighborhoods in this metro currently." name="Neighborhoods" onClick={ null } items={ null } />
+        </Stack>
       </Container>
       <EditMetro id={ metroID } store={ store } />
       <Modal open={ store.imagesUploadModalOpen }>

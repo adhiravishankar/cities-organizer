@@ -12,10 +12,12 @@ export interface NavBarProps {
 }
 
 export function NavBar(props: NavBarProps) {
-  const { id, name, onEdit } = props;
+  const { editIcon, id, name, onEdit } = props;
   const onClick = useCallback(() => {
     onEdit();
   }, [onEdit, id]);
+
+  const editIconJSX = editIcon ? <Nav.Item onClick={ onClick }><i className="fas fa-pen" /></Nav.Item> : null;
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -26,7 +28,7 @@ export function NavBar(props: NavBarProps) {
           <Nav className="me-auto">
           </Nav>
           <Nav className="nav-right">
-            <Nav.Item onClick={ onClick }><i className="fas fa-pen" /></Nav.Item>
+            { editIconJSX }
           </Nav>
         </Navbar.Collapse>
       </Container>

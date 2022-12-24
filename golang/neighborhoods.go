@@ -130,6 +130,21 @@ func getNeighborhoodPictures(c *gin.Context) {
 	c.JSON(200, internalGetNeighborhoodPics(c))
 }
 
+func deleteNeighborhood(c *gin.Context) {
+	result, err := squirrel.Delete("neighborhoods").Where(squirrel.Eq{"id": c.Param("neighborhood")}).
+		RunWith(database).Exec()
+	if err != nil {
+		log.Fatal(err)
+	}
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		log.Fatal(err)
+	}
+	if rowsAffected > 0 {
+		c.String(200, "success")
+	}
+}
+
 func internalGetNeighborhoodPics(c *gin.Context) []string {
 	rows, err := squirrel.Select("picture_url").From("neighborhood_pictures").
 		Where(squirrel.Eq{"neighborhood_id": c.Param("neighborhood")}).RunWith(database).Query()
@@ -148,19 +163,4 @@ func internalGetNeighborhoodPics(c *gin.Context) []string {
 	}
 
 	return picList
-}
-
-func deleteNeighborhood(c *gin.Context) {
-	result, err := squirrel.Delete("neighborhoods").Where(squirrel.Eq{"id": c.Param("neighborhood")}).
-		RunWith(database).Exec()
-	if err != nil {
-		log.Fatal(err)
-	}
-	rowsAffected, err := result.RowsAffected()
-	if err != nil {
-		log.Fatal(err)
-	}
-	if rowsAffected > 0 {
-		c.String(200, "success")
-	}
 }

@@ -1,4 +1,6 @@
 import { observer } from 'mobx-react-lite';
+import { useCallback } from 'react';
+import {redirect, useNavigate} from 'react-router';
 
 import { LabeledImageItem } from '../../components/LabeledImageItem';
 import { Metro } from '../../interfaces/Metro';
@@ -11,8 +13,13 @@ export interface MetroListProps {
 export const MetroList = observer<MetroListProps>((props: MetroListProps) => {
   const { store } = props;
   const metrosJSX: JSX.Element[] = [];
+  const navigation = useNavigate();
+
+  const onClickHandler = useCallback((id: number) => navigation('/metros/' + id), []);
+
   store.metrosMap.forEach((metro: Metro) => {
-    metrosJSX.push(<LabeledImageItem name={ metro.Name } source={ metro.FeaturedImage } />);
+    const { ID, FeaturedImage, Name } = metro;
+    metrosJSX.push(<LabeledImageItem onClick={ onClickHandler } id={ ID } name={ Name } source={ FeaturedImage } />);
   });
   return <div>{ metrosJSX }</div>;
 });

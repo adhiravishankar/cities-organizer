@@ -34,13 +34,16 @@ func metros(c *gin.Context) {
 
 func getMetro(c *gin.Context) {
 	var metro DetailedMetro
-	row := squirrel.Select("*").Where(squirrel.Eq{"id": c.Param("metro")}).From("metros").RunWith(database).QueryRow()
+	row := squirrel.Select("*").Where(squirrel.Eq{"id": c.Param("metro")}).From("metros").
+		RunWith(database).QueryRow()
 	err := row.Scan(&metro.ID, &metro.Name, &metro.ExtendedName, &metro.Population, &metro.Notes, &metro.FeaturedImage)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	metro.Pics = internalGetMetroPics(c)
+	metro.Cities = internalGetCitiesForMetro(c, c.Param("metro"))
+	metro.Neighborhoods = internalGetNeighborhoodsForMetros(c, c.Param("metro"))
 	c.JSON(200, metro)
 }
 
@@ -123,6 +126,21 @@ func getMetroPictures(c *gin.Context) {
 	c.JSON(200, internalGetMetroPics(c))
 }
 
+func deleteMetro(c *gin.Context) {
+	result, err := squirrel.Delete("metros").Where(squirrel.Eq{"id": c.Param("metro")}).RunWith(database).
+		Exec()
+	if err != nil {
+		log.Fatal(err)
+	}
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		log.Fatal(err)
+	}
+	if rowsAffected > 0 {
+		c.String(200, "success")
+	}
+}
+
 func internalGetMetroPics(c *gin.Context) []string {
 	rows, err := squirrel.Select("picture_url").From("metro_pictures").
 		Where(squirrel.Eq{"metro_id": c.Param("metro")}).RunWith(database).Query()
@@ -143,17 +161,43 @@ func internalGetMetroPics(c *gin.Context) []string {
 	return picList
 }
 
-func deleteMetro(c *gin.Context) {
-	result, err := squirrel.Delete("metros").Where(squirrel.Eq{"id": c.Param("metro")}).RunWith(database).
-		Exec()
+func internalGetCitiesForMetro(c *gin.Context, metro string) []City {
+	rows, err := squirrel.Select("*").From("cities").Where(squirrel.Eq{"metro_id": metro}).RunWith(database).Query()
 	if err != nil {
 		log.Fatal(err)
 	}
-	rowsAffected, err := result.RowsAffected()
+
+	var cityList []City
+	for rows.Next() {
+		var city City
+		err := rows.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population)
+		if err != nil {
+			log.Fatal(err)
+		}
+		cityList = append(cityList, city)
+	}
+
+	return cityList
+}
+
+func internalGetNeighborhoodsForMetros(c *gin.Context, metro string) []Neighborhood {
+	rows, err := squirrel.Select("*").From("neighborhoods").Where(squirrel.Eq{"metro_id": metro}).
+		RunWith(database).Query()
 	if err != nil {
 		log.Fatal(err)
 	}
-	if rowsAffected > 0 {
-		c.String(200, "success")
+
+	var neighborhoodList []Neighborhood
+	for rows.Next() {
+		var neighborhood Neighborhood
+		err := rows.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.Name, &neighborhood.HighSchoolScore,
+			&neighborhood.MiddleSchoolScore, &neighborhood.ElementarySchoolScore, &neighborhood.Address,
+			&neighborhood.MinimumValue, &neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft)
+		if err != nil {
+			log.Fatal(err)
+		}
+		neighborhoodList = append(neighborhoodList, neighborhood)
 	}
+
+	return neighborhoodList
 }

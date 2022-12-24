@@ -1,7 +1,7 @@
 import { action, flow, makeObservable, observable } from 'mobx';
 
 import { API } from '../apis/API';
-import { Metro } from '../interfaces/Metro';
+import {DetailedMetro, Metro} from '../interfaces/Metro';
 
 export class AppStore {
   api: API;
@@ -14,13 +14,17 @@ export class AppStore {
 
   pics: string[] = observable.array();
 
+  selectedMetro: DetailedMetro;
+
   constructor() {
     this.api = new API(process.env.BASE_URL);
     makeObservable(this, {
       imagesUploadModalOpen: observable,
       editingModalOpen: observable,
       metrosMap: observable,
+      selectedMetro: observable,
       fetchMetros: flow,
+      fetchMetro: flow,
       editMetro: flow,
       fetchMetroPics: flow,
       uploadPicForMetro: flow,
@@ -32,6 +36,13 @@ export class AppStore {
     const genericMetros: unknown = yield this.api.metros();
     const metros = genericMetros as Metro[];
     metros.forEach((metro: Metro) => this.metrosMap.set(metro.ID, metro));
+  }
+
+  *fetchMetro(id: number) {
+    const metro = yield this.api.getMetro(id);
+    console.log(metro);
+    this.selectedMetro = metro as DetailedMetro;
+    this.pics = this.selectedMetro.Pics;
   }
 
   *fetchMetroPics(id: number) {

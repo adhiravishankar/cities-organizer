@@ -17,6 +17,8 @@ type DetailedMetro struct {
 	Notes         string
 	FeaturedImage string
 	Pics          []string
+	Cities        []City
+	Neighborhoods []Neighborhood
 }
 
 type City struct {
@@ -39,6 +41,7 @@ type DetailedCity struct {
 type Neighborhood struct {
 	ID                    int64
 	CityID                int64
+	FeaturedImage         string
 	Link                  string
 	Name                  string
 	HighSchoolScore       int64
@@ -54,6 +57,7 @@ type Neighborhood struct {
 type DetailedNeighborhood struct {
 	ID                    int64
 	CityID                int64
+	FeaturedImage         string
 	Link                  string
 	Name                  string
 	HighSchoolScore       int64

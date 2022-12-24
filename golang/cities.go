@@ -121,6 +121,21 @@ func getCityPictures(c *gin.Context) {
 	c.JSON(200, internalGetCityPics(c))
 }
 
+func deleteCity(c *gin.Context) {
+	result, err := squirrel.Delete("cities").Where(squirrel.Eq{"id": c.Param("city")}).RunWith(database).
+		Exec()
+	if err != nil {
+		log.Fatal(err)
+	}
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		log.Fatal(err)
+	}
+	if rowsAffected > 0 {
+		c.String(200, "success")
+	}
+}
+
 func internalGetCityPics(c *gin.Context) []string {
 	rows, err := squirrel.Select("picture_url").From("city_pictures").
 		Where(squirrel.Eq{"city_id": c.Param("city")}).RunWith(database).Query()
@@ -139,19 +154,4 @@ func internalGetCityPics(c *gin.Context) []string {
 	}
 
 	return picList
-}
-
-func deleteCity(c *gin.Context) {
-	result, err := squirrel.Delete("cities").Where(squirrel.Eq{"id": c.Param("city")}).RunWith(database).
-		Exec()
-	if err != nil {
-		log.Fatal(err)
-	}
-	rowsAffected, err := result.RowsAffected()
-	if err != nil {
-		log.Fatal(err)
-	}
-	if rowsAffected > 0 {
-		c.String(200, "success")
-	}
 }
