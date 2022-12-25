@@ -15,8 +15,6 @@
         }
     },
     "include": [
-        "routes/**/*",
-        "src/**/*",
-        "app.ts"
+        "src/**/*"
     ]
 }
