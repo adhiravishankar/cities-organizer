@@ -1,7 +1,7 @@
 import {
   deleteCity, editCity, getAllCities, getCity, getCityPics, insertCity, uploadCityPics,
 } from '../controllers/CityController';
-import router from './router';
+import router from './metro';
 
 router.get('/metros', getAllCities);
 router.post('/metros', insertCity);
