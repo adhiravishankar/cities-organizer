@@ -5,8 +5,12 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "canonical/import-specifier-newline": 0,
+    "canonical/filename-match-exported": 0,
+    "object-curly-newline": "error",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-    "unicorn/numeric-separators-style": 0
+    "unicorn/numeric-separators-style": 0,
+    "unicorn/prefer-export-from": 0
   }
 }
