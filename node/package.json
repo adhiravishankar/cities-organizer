@@ -5,7 +5,8 @@
   "scripts": {
     "build": "tsc -p .",
     "lint": "eslint . --ext .ts,.tsx --fix",
-    "start": "ts-node ./src/index.ts"
+    "start": "ts-node ./src/index.ts",
+    "start:production": "node ./dist/index.js"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
