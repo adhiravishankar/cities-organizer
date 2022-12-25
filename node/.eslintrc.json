@@ -5,11 +5,15 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "@typescript-eslint/space-before-function-paren": 0,
     "canonical/import-specifier-newline": 0,
     "canonical/filename-match-exported": 0,
+    "import/order": 0,
+    "func-style": "off",
     "object-curly-newline": "error",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
+    "space-before-function-paren": 0,
     "unicorn/numeric-separators-style": 0,
     "unicorn/prefer-export-from": 0
   }

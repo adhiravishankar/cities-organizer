@@ -3,12 +3,12 @@ import {
 } from '../controllers/CityController';
 import router from './metro';
 
-router.get('/metros', getAllCities);
-router.post('/metros', insertCity);
-router.get('/metros/:metro', getCity);
-router.put('/metros/:metro', editCity);
-router.delete('/metros/:metro', deleteCity);
-router.get('/metros/:metro/pics', getCityPics);
-router.put('/metros/:metro/upload', uploadCityPics);
+router.get('/cities', getAllCities);
+router.post('/cities', insertCity);
+router.get('/cities/:city', getCity);
+router.put('/cities/:city', editCity);
+router.delete('/cities/:city', deleteCity);
+router.get('/cities/:city/pics', getCityPics);
+router.put('/cities/:city/upload', uploadCityPics);
 
 export default router;

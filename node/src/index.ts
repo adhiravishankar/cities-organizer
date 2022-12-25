@@ -1,8 +1,8 @@
 import express from 'express';
+
 import router from './routes/cities';
 
 const app = express();
-
 app.use(router);
 
 const port = 7002;

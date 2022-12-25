@@ -1,14 +1,32 @@
+import {
+  type Request, type Response,
+} from 'express';
 
-export function getAllMetros () {}
+export function getAllMetros(request: Request, response: Response) {
+  response.send('Not Implemented');
+}
 
-export function insertMetro() {}
+export function insertMetro(request: Request, response: Response) {
+  response.send('Not Implemented');
+}
 
-export function getMetro() {}
+export function getMetro(request: Request, response: Response) {
+  response.send('Not Implemented');
+}
 
-export function getMetroPics() {}
+export function getMetroPics(request: Request, response: Response) {
+  response.send('Not Implemented');
+}
 
-export function uploadMetroPics() {}
+export function uploadMetroPics(request: Request, response: Response) {
+  response.send('Not Implemented');
+}
 
-export function editMetro() {}
+// eslint-disable-next-line
+export function editMetro(request: Request, response: Response) {
+  response.send('Not Implemented');
+}
 
-export function deleteMetro() {}
+export function deleteMetro(request: Request, response: Response) {
+  response.send('Not Implemented');
+}
