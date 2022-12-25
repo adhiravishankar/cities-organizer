@@ -1,11 +1,12 @@
 {
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "canonical", "canonical/typescript"],
   "plugins": ["import", "@typescript-eslint", "simple-import-sort"],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
   "rules": {
     "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error"
+    "simple-import-sort/exports": "error",
+    "unicorn/numeric-separators-style": 0
   }
 }
