@@ -1,10 +1,7 @@
 import { action, computed, flow, makeObservable, observable } from 'mobx';
 
 import { API } from '../apis/API';
-<<<<<<< Updated upstream
-=======
 import { CitiesAPI } from '../apis/CitiesAPI';
->>>>>>> Stashed changes
 import { MetroAPI } from '../apis/MetroAPI';
 import { City, DetailedCity } from '../interfaces/City';
 import { DetailedMetro, Metro } from '../interfaces/Metro';
