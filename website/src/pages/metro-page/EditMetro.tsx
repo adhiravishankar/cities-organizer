@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
 
-import { Dropdown } from '../../components/Dropdown';
+import { DropdownUsingArray } from '../../components/DropdownUsingArray';
 import { Metro } from '../../interfaces/Metro';
 import { AppStore } from '../../stores/AppStore';
 
@@ -39,7 +39,7 @@ export const EditMetro = observer<EditMetroProps>((props: EditMetroProps) => {
           <Controller name="Name" control={control} render={({ field }) => <Form.Control { ...field } id="name" placeholder="Name" /> }/>
           <Controller name="ExtendedName" control={control} render={({ field }) => <Form.Control { ...field } id="extended_name" placeholder="Extended Name" /> }/>
           <Controller name="Population" control={control} render={({ field }) => <Form.Control { ...field } id="population" placeholder="Population" type="number" /> }/>
-          <Dropdown onChange={ fiField.onChange } options={ pics } title="Featured Image" value={ fiField.value } />
+          <DropdownUsingArray onChange={ fiField.onChange } options={ pics } title="Featured Image" value={ fiField.value } />
           <Button onClick={ handleSubmit(onSubmit) } type="submit">Submit</Button>
         </form>
       </Modal.Body>

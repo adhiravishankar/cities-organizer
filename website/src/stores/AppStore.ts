@@ -1,4 +1,4 @@
-import { action, flow, makeObservable, observable } from 'mobx';
+import { action, computed, flow, makeObservable, observable } from 'mobx';
 
 import { API } from '../apis/API';
 import { City, DetailedCity } from '../interfaces/City';
@@ -15,6 +15,12 @@ export class AppStore {
   imagesUploadModalOpen: boolean;
 
   metrosMap: Map<number, Metro> = observable.map();
+
+  get metroNamesMap(): Map<number, string> {
+    const namesMap = new Map<number, string>();
+    this.metrosMap.forEach((value: Metro, key: number) => namesMap.set(key, value.Name));
+    return namesMap;
+  }
 
   citiesMap: Map<number, City> = observable.map();
 
@@ -40,6 +46,7 @@ export class AppStore {
       selectedCity: observable,
       selectedNeighborhood: observable,
       uploadPicsModalOpen: observable,
+      metroNamesMap: computed,
       initialize: flow,
       fetchMetros: flow,
       fetchCities: flow,
