@@ -1,4 +1,4 @@
-import { get, post, put } from '@tkrotoff/fetch';
+import {del, get, post, put} from '@tkrotoff/fetch';
 
 export class MetroAPI {
   baseURL: string;
@@ -41,6 +41,10 @@ export class MetroAPI {
     const formData = new FormData();
     formData.set('picture', picture);
     return post(this.baseURL + '/metros/' + id + '/upload', formData).text();
+  }
+
+  async deleteMetro(id: number): Promise<unknown> {
+    return del(this.baseURL + '/metros/' + id).json();
   }
 
 }

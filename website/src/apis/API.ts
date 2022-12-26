@@ -22,45 +22,14 @@ export class API {
     return post(this.baseURL + '/signup', formData).text();
   }
 
-  async cities(): Promise<unknown> {
-    return get(this.baseURL + '/cities').json();
-  }
-
   async neighborhoods(): Promise<unknown> {
     return get(this.baseURL + '/neighborhoods').json();
-  }
-
-  async uploadPicForCity(id: number, picture: File): Promise<string> {
-    const formData = new FormData();
-    formData.set('picture', picture);
-    return post(this.baseURL + '/cities/' + id + '/upload', formData).text();
   }
 
   async uploadPicForNeighborhood(id: number, picture: File): Promise<string> {
     const formData = new FormData();
     formData.set('picture', picture);
     return post(this.baseURL + '/neighborhoods/' + id + '/upload', formData).text();
-  }
-
-  async getCity(id: number): Promise<unknown> {
-    return get(this.baseURL + '/cities/' + id).json();
-  }
-
-  async insertCity(name: string, metroID: number, population: number, featuredImage: string): Promise<Response> {
-    const formData = new FormData();
-    formData.set('name', name);
-    formData.set('metro_id', metroID.toString());
-    formData.set('featured_image', featuredImage);
-    formData.set('population', population.toString());
-    return post(this.baseURL + '/metros/', formData);
-  }
-
-  async editCity(id: number, name: string, population: number, featuredImage: string): Promise<Response> {
-    const formData = new FormData();
-    formData.set('name', name);
-    formData.set('featured_image', featuredImage);
-    formData.set('population', population.toString());
-    return put(this.baseURL + '/metros/' + id, formData);
   }
 
   async getNeighborhood(id: number): Promise<unknown> {

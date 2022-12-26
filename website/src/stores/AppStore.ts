@@ -5,11 +5,14 @@ import { MetroAPI } from '../apis/MetroAPI';
 import { City, DetailedCity } from '../interfaces/City';
 import { DetailedMetro, Metro } from '../interfaces/Metro';
 import { DetailedNeighborhood, Neighborhood } from '../interfaces/Neighborhood';
+import {CitiesAPI} from "../apis/CitiesAPI";
 
 export class AppStore {
   api: API;
 
   metroAPI: MetroAPI;
+
+  citiesAPI: CitiesAPI;
 
   editingModalOpen: boolean;
 
@@ -40,6 +43,7 @@ export class AppStore {
   constructor() {
     this.api = new API(process.env.BASE_URL);
     this.metroAPI = new MetroAPI(process.env.BASE_URL);
+    this.citiesAPI = new CitiesAPI(process.env.BASE_URL);
     makeObservable(this, {
       imagesUploadModalOpen: observable,
       editingModalOpen: observable,
@@ -80,7 +84,7 @@ export class AppStore {
   }
 
   *fetchCities() {
-    const citiesArray: unknown = yield this.api.cities();
+    const citiesArray: unknown = yield this.citiesAPI.cities();
     const cities = citiesArray as City[];
     cities.forEach((city: City) => this.citiesMap.set(city.ID, city));
   }
@@ -98,7 +102,7 @@ export class AppStore {
   }
 
   *fetchCity(id: number) {
-    const city = yield this.api.getCity(id);
+    const city = yield this.citiesAPI.getCity(id);
     this.selectedCity = city as DetailedCity;
     this.pics = this.selectedCity.Pics;
   }
@@ -115,11 +119,11 @@ export class AppStore {
   }
 
   *insertCity(name: string, metroID: number, population: number, featuredImage: string) {
-    yield this.api.insertCity(name, metroID, population, featuredImage);
+    yield this.citiesAPI.insertCity(name, metroID, population, featuredImage);
   }
 
   *editCity(id: number, name: string, population: number, featuredImage: string) {
-    const success: Response = yield this.api.editCity(id, name, population, featuredImage);
+    const success: Response = yield this.citiesAPI.editCity(id, name, population, featuredImage);
     if (success.ok) {
       const city = this.citiesMap.get(id);
       this.citiesMap.set(id, { ...city, Name: name, Population: population, FeaturedImage: featuredImage });
@@ -146,7 +150,7 @@ export class AppStore {
   }
 
   *uploadPicForCity(id: number, file: File) {
-    const success: string = yield this.api.uploadPicForCity(id, file);
+    const success: string = yield this.citiesAPI.uploadPicForCity(id, file);
     if (success && success.length === 0) {
       this.fetchMetroPics(id);
     }
