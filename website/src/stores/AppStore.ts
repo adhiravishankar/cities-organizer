@@ -1,6 +1,10 @@
 import { action, computed, flow, makeObservable, observable } from 'mobx';
 
 import { API } from '../apis/API';
+<<<<<<< Updated upstream
+=======
+import { CitiesAPI } from '../apis/CitiesAPI';
+>>>>>>> Stashed changes
 import { MetroAPI } from '../apis/MetroAPI';
 import { City, DetailedCity } from '../interfaces/City';
 import { DetailedMetro, Metro } from '../interfaces/Metro';
@@ -29,6 +33,16 @@ export class AppStore {
   }
 
   citiesMap: Map<number, City> = observable.map();
+
+  selectedMetroArea: number;
+
+  get filteredCitiesMap(): Map<number, string> {
+    const namesMap = new Map<number, string>();
+    this.citiesMap.forEach((city: City, key: number) => {
+      if (city.MetroID === this.selectedMetroArea) namesMap.set(key, city.Name);
+    });
+    return namesMap;
+  }
 
   neighborhoodsMap: Map<number, Neighborhood> = observable.map();
 

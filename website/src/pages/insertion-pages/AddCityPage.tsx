@@ -34,7 +34,7 @@ export function AddCityPage(props: AddCityPageProps) {
         <Col>
           <Controller name="Population" control={control} render={({ field }) => <Form.Control { ...field } id="population" placeholder="Population" type="number" /> }/>
         </Col>
-        <Col>
+        <Col className="col-2">
           <DropdownNumberMap onChange={ miField.onChange } options={ store.metroNamesMap } title="Metro Area" value={ miField.value } />
         </Col>
       </Row>

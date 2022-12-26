@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 import {del, get, post, put} from '@tkrotoff/fetch';
+=======
+import { del, get, post, put } from '@tkrotoff/fetch';
+>>>>>>> Stashed changes
 
 export class MetroAPI {
   baseURL: string;
