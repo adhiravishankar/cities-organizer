@@ -22,7 +22,6 @@ export function uploadMetroPics(request: Request, response: Response) {
   response.send('Not Implemented');
 }
 
-// eslint-disable-next-line
 export function editMetro(request: Request, response: Response) {
   response.send('Not Implemented');
 }
