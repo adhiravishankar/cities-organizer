@@ -24,7 +24,7 @@ func neighborhoods(c *gin.Context) {
 		err := rows.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.MetroID, &neighborhood.Name,
 			&neighborhood.FeaturedImage, &neighborhood.HighSchoolScore, &neighborhood.MiddleSchoolScore,
 			&neighborhood.ElementarySchoolScore, &neighborhood.Address, &neighborhood.MinimumValue,
-			&neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft)
+			&neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft, &neighborhood.Notes)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -42,7 +42,7 @@ func getNeighborhood(c *gin.Context) {
 	err := row.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.MetroID, &neighborhood.Name,
 		&neighborhood.FeaturedImage, &neighborhood.HighSchoolScore, &neighborhood.MiddleSchoolScore,
 		&neighborhood.ElementarySchoolScore, &neighborhood.Address, &neighborhood.MinimumValue,
-		&neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft)
+		&neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft, &neighborhood.Notes)
 
 	if err != nil {
 		log.Fatal(err)
@@ -55,8 +55,8 @@ func getNeighborhood(c *gin.Context) {
 
 func insertNeighborhood(c *gin.Context) {
 	result, err := squirrel.Insert("neighborhoods").
-		Columns("name", "extended_name", "population", "featured_image").
-		Values(c.PostForm("name"), c.PostForm("extended_name"), c.PostForm("population"), c.PostForm("featured_image")).
+		Columns("name", "extended_name", "population", "featured_image", "notes").
+		Values(c.PostForm("name"), c.PostForm("extended_name"), c.PostForm("population"), c.PostForm("featured_image"), c.PostForm("notes")).
 		RunWith(database).Exec()
 	if err != nil {
 		log.Fatal(err)
@@ -75,6 +75,7 @@ func editNeighborhood(c *gin.Context) {
 		Set("extended_name", c.PostForm("extended_name")).
 		Set("population", c.PostForm("population")).
 		Set("featured_image", c.PostForm("featured_image")).
+		Set("notes", c.PostForm("notes")).
 		Where(squirrel.Eq{"id": c.Param("neighborhood")}).RunWith(database).Exec()
 	if err != nil {
 		log.Fatal(err)

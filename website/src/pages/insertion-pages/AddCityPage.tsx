@@ -19,7 +19,7 @@ export function AddCityPage(props: AddCityPageProps) {
   const { handleSubmit, control } = useForm<City>({ defaultValues: store.selectedCity });
 
   const onSubmit = useCallback((data: City) => {
-    store.insertCity(data.Name, data.MetroID, data.Population, data.FeaturedImage);
+    store.insertCity(data.Name, data.MetroID, data.Population, data.FeaturedImage, data.Notes);
     navigation('/');
   }, [store]);
 
@@ -36,6 +36,11 @@ export function AddCityPage(props: AddCityPageProps) {
         </Col>
         <Col className="col-2">
           <DropdownNumberMap onChange={ miField.onChange } options={ store.metroNamesMap } title="Metro Area" value={ miField.value } />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Controller name="Notes" control={control} render={({ field }) => <Form.Control { ...field } id="Notes" placeholder="Notes" as="textarea" rows={ 10 } /> }/>
         </Col>
       </Row>
       <Row>

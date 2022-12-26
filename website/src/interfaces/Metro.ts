@@ -14,10 +14,9 @@ export interface Metro {
 
   MetroSizeRank: number;
 
-  Notes: string;
-
   FeaturedImage: string;
 
+  Notes: string;
 }
 
 export interface DetailedMetro extends Metro {

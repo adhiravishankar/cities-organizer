@@ -29,6 +29,7 @@ type City struct {
 	Name          string
 	Population    int64
 	FeaturedImage string
+	Notes         string
 }
 
 type DetailedCity struct {
@@ -37,6 +38,7 @@ type DetailedCity struct {
 	Name          string
 	Population    int64
 	FeaturedImage string
+	Notes         string
 	Pics          []string
 	Neighborhoods []Neighborhood
 }
@@ -56,6 +58,7 @@ type Neighborhood struct {
 	MaximumValue          int64
 	MinSqft               int64
 	MaxSqft               int64
+	Notes                 string
 }
 
 type DetailedNeighborhood struct {
@@ -73,5 +76,6 @@ type DetailedNeighborhood struct {
 	MaximumValue          int64
 	MinSqft               int64
 	MaxSqft               int64
+	Notes                 string
 	Pics                  []string
 }

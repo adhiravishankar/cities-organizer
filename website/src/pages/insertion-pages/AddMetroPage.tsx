@@ -17,9 +17,10 @@ export function AddMetroPage(props: AddMetroPageProps) {
 
   const navigation = useNavigate();
 
-  const onSubmit = useCallback((data: Metro) => {
-    store.insertMetro(data.Name, data.ExtendedName, data.Population, data.FeaturedImage);
-    navigation('/');
+  const onSubmit = useCallback(async (data: Metro) => {
+    store.insertMetro(data.Name, data.ExtendedName, data.MetroSizeRank, data.Population, data.FeaturedImage, data.Notes).next(() => {
+      navigation('/');
+    });
   }, [store]);
 
   return (
@@ -36,6 +37,11 @@ export function AddMetroPage(props: AddMetroPageProps) {
         </Col>
         <Col>
           <Controller name="MetroSizeRank" control={control} render={({ field }) => <Form.Control { ...field } id="MetroSizeRank" placeholder="Metro Size Rank" type="number" /> }/>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Controller name="Notes" control={control} render={({ field }) => <Form.Control { ...field } id="Notes" placeholder="Notes" as="textarea" rows={ 10 } /> }/>
         </Col>
       </Row>
       <Row>

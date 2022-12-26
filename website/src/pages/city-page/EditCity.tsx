@@ -23,7 +23,7 @@ export const EditCity = observer<EditCityProps>((props: EditCityProps) => {
   const handleClose = () => store.editingModalVisibilityChange(false);
 
   const onSubmit = useCallback((data: City) => {
-    store.editCity(data.ID, data.Name, data.Population, data.FeaturedImage);
+    store.editCity(data.ID, data.Name, data.Population, data.FeaturedImage, data.Notes);
     handleClose();
   }, [id, store]);
 

@@ -19,19 +19,23 @@ export class MetroAPI {
     return get(this.baseURL + '/metros/' + id + '/pics').json();
   }
 
-  async insertMetro(name: string, extendedName: string, population: number, featuredImage: string): Promise<Response> {
+  async insertMetro(name: string, extendedName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string): Promise<Response> {
     const formData = new FormData();
     formData.set('name', name);
     formData.set('extended_name', extendedName);
+    formData.set('metro_size_rank', metroSizeRank.toString());
     formData.set('featured_image', featuredImage);
     formData.set('population', population.toString());
-    return post(this.baseURL + '/metros/', formData);
+    formData.set('notes', notes);
+    return post(this.baseURL + '/metros', formData);
   }
 
-  async editMetro(id: number, name: string, extendedName: string, population: number, featuredImage: string): Promise<Response> {
+  async editMetro(id: number, name: string, extendedName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string): Promise<Response> {
     const formData = new FormData();
     formData.set('name', name);
     formData.set('extended_name', extendedName);
+    formData.set('notes', notes);
+    formData.set('metro_size_rank', metroSizeRank.toString());
     formData.set('featured_image', featuredImage);
     formData.set('population', population.toString());
     return put(this.baseURL + '/metros/' + id, formData);

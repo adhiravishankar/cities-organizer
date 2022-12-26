@@ -76,6 +76,11 @@ export const AddNeighborhoodPage = observer<AddNeighborhoodPageProps>((props: Ad
       </Row>
       <Row>
         <Col>
+          <Controller name="Notes" control={control} render={({ field }) => <Form.Control { ...field } id="Notes" placeholder="Notes" as="textarea" rows={ 10 } /> }/>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
           <Button onClick={ handleSubmit(onSubmit) } type="submit">Submit</Button>
         </Col>
       </Row>

@@ -23,7 +23,7 @@ export const EditMetro = observer<EditMetroProps>((props: EditMetroProps) => {
   const handleClose = () => store.editingModalVisibilityChange(false);
 
   const onSubmit = useCallback((data: Metro) => {
-    store.editMetro(data.ID, data.Name, data.ExtendedName, data.Population, data.FeaturedImage);
+    store.editMetro(data.ID, data.Name, data.ExtendedName, data.MetroSizeRank, data.Population, data.FeaturedImage, data.Notes);
     handleClose();
   }, [id, store]);
 

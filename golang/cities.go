@@ -21,7 +21,7 @@ func cities(c *gin.Context) {
 	var cityList []NullableCity
 	for rows.Next() {
 		var city NullableCity
-		err := rows.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population, &city.FeaturedImage)
+		err := rows.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population, &city.FeaturedImage, &city.Notes)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -33,8 +33,8 @@ func cities(c *gin.Context) {
 
 func insertCity(c *gin.Context) {
 	result, err := squirrel.Insert("cities").
-		Columns("name", "metro_id", "population", "featured_image").
-		Values(c.PostForm("name"), c.PostForm("metro_id"), c.PostForm("population"), c.PostForm("featured_image")).
+		Columns("name", "metro_id", "population", "featured_image", "notes").
+		Values(c.PostForm("name"), c.PostForm("metro_id"), c.PostForm("population"), c.PostForm("featured_image"), c.PostForm("notes")).
 		RunWith(database).Exec()
 	if err != nil {
 		log.Fatal(err)
@@ -52,7 +52,7 @@ func getCity(c *gin.Context) {
 	var city NullableCity
 	row := squirrel.Select("*").Where(squirrel.Eq{"id": c.Param("city")}).From("cities").
 		RunWith(database).QueryRow()
-	err := row.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population, &city.FeaturedImage)
+	err := row.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population, &city.FeaturedImage, &city.Notes)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -66,7 +66,7 @@ func getCity(c *gin.Context) {
 func editCity(c *gin.Context) {
 	result, err := squirrel.Update("cities").Set("name", c.PostForm("name")).
 		Set("extended_name", c.PostForm("extended_name")).Set("population", c.PostForm("population")).
-		Where(squirrel.Eq{"id": c.Param("city")}).RunWith(database).Exec()
+		Set("notes", c.PostForm("notes")).Where(squirrel.Eq{"id": c.Param("city")}).RunWith(database).Exec()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -171,7 +171,7 @@ func internalGetNeighborhoodsForCities(city string) []Neighborhood {
 		err := rows.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.MetroID, &neighborhood.Name,
 			&neighborhood.FeaturedImage, &neighborhood.HighSchoolScore, &neighborhood.MiddleSchoolScore,
 			&neighborhood.ElementarySchoolScore, &neighborhood.Address, &neighborhood.MinimumValue,
-			&neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft)
+			&neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft, &neighborhood.Notes)
 		if err != nil {
 			log.Fatal(err)
 		}

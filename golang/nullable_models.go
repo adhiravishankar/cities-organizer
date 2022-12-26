@@ -8,8 +8,8 @@ type NullableMetro struct {
 	ExtendedName  sql.NullString
 	Population    sql.NullInt64
 	MetroSizeRank sql.NullInt64
-	Notes         sql.NullString
 	FeaturedImage sql.NullString
+	Notes         sql.NullString
 }
 
 type NullableCity struct {
@@ -18,6 +18,7 @@ type NullableCity struct {
 	Name          sql.NullString
 	Population    sql.NullInt64
 	FeaturedImage sql.NullString
+	Notes         sql.NullString
 }
 
 type NullableNeighborhood struct {
@@ -35,4 +36,5 @@ type NullableNeighborhood struct {
 	MaximumValue          sql.NullInt64
 	MinSqft               sql.NullInt64
 	MaxSqft               sql.NullInt64
+	Notes                 sql.NullString
 }

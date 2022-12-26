@@ -19,6 +19,7 @@
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.41.0",
+    "react-markdown": "^8.0.4",
     "react-pdf": "^6.2.0",
     "react-router": "^6.5.0",
     "react-router-dom": "^6.5.0",

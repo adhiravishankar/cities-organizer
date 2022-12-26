@@ -22,7 +22,8 @@ func metros(c *gin.Context) {
 	var metroList []NullableMetro
 	for rows.Next() {
 		var metro NullableMetro
-		err := rows.Scan(&metro.ID, &metro.Name, &metro.ExtendedName, &metro.Population, &metro.Notes, &metro.FeaturedImage)
+		err := rows.Scan(&metro.ID, &metro.Name, &metro.ExtendedName, &metro.Population, &metro.MetroSizeRank,
+			&metro.FeaturedImage, &metro.Notes)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -36,8 +37,8 @@ func getMetro(c *gin.Context) {
 	var metro NullableMetro
 	row := squirrel.Select("*").Where(squirrel.Eq{"id": c.Param("metro")}).From("metros").
 		RunWith(database).QueryRow()
-	err := row.Scan(&metro.ID, &metro.Name, &metro.ExtendedName, &metro.Population, &metro.MetroSizeRank, &metro.Notes,
-		&metro.FeaturedImage)
+	err := row.Scan(&metro.ID, &metro.Name, &metro.ExtendedName, &metro.Population, &metro.MetroSizeRank,
+		&metro.FeaturedImage, &metro.Notes)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -51,9 +52,9 @@ func getMetro(c *gin.Context) {
 
 func insertMetro(c *gin.Context) {
 	result, err := squirrel.Insert("metros").
-		Columns("name", "extended_name", "population", "metro_size_rank", "featured_image").
+		Columns("name", "extended_name", "population", "metro_size_rank", "notes", "featured_image").
 		Values(c.PostForm("name"), c.PostForm("extended_name"), c.PostForm("population"),
-			c.PostForm("metro_size_rank"), c.PostForm("featured_image")).
+			c.PostForm("metro_size_rank"), c.PostForm("Notes"), c.PostForm("featured_image")).
 		RunWith(database).Exec()
 	if err != nil {
 		log.Fatal(err)
@@ -70,6 +71,7 @@ func insertMetro(c *gin.Context) {
 func editMetro(c *gin.Context) {
 	result, err := squirrel.Update("metros").Set("name", c.PostForm("name")).
 		Set("extended_name", c.PostForm("extended_name")).
+		Set("notes", c.PostForm("notes")).
 		Set("population", c.PostForm("population")).
 		Set("metro_size_rank", c.PostForm("metro_size_rank")).
 		Set("featured_image", c.PostForm("featured_image")).
@@ -174,7 +176,7 @@ func internalGetCitiesForMetro(metro string) []City {
 	var cityList []NullableCity
 	for rows.Next() {
 		var city NullableCity
-		err := rows.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population, &city.FeaturedImage)
+		err := rows.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population, &city.FeaturedImage, &city.Notes)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -197,7 +199,7 @@ func internalGetNeighborhoodsForMetros(metro string) []Neighborhood {
 		err := rows.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.MetroID, &neighborhood.Name,
 			&neighborhood.FeaturedImage, &neighborhood.HighSchoolScore, &neighborhood.MiddleSchoolScore,
 			&neighborhood.ElementarySchoolScore, &neighborhood.Address, &neighborhood.MinimumValue,
-			&neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft)
+			&neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft, &neighborhood.Notes)
 		if err != nil {
 			log.Fatal(err)
 		}

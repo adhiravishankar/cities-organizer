@@ -10,6 +10,8 @@ export interface City {
   FeaturedImage: string;
 
   MetroID: number;
+
+  Notes: string;
 }
 
 export interface DetailedCity extends City {

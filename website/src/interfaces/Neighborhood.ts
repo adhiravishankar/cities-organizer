@@ -26,6 +26,8 @@ export interface Neighborhood {
   MinSqft: number;
 
   MaxSqft: number;
+
+  Notes: string;
 }
 
 export interface DetailedNeighborhood extends Neighborhood {

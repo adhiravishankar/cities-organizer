@@ -74,7 +74,10 @@ export class AppStore {
       fetchMetro: flow,
       fetchCity: flow,
       fetchNeighborhood: flow,
+      insertMetro: flow,
+      insertCity: flow,
       editMetro: flow,
+      editCity: flow,
       fetchMetroPics: flow,
       updateSelectedMetro: action,
       uploadPicForMetro: flow,
@@ -131,12 +134,12 @@ export class AppStore {
     this.pics = pics as string[];
   }
 
-  *insertCity(name: string, metroID: number, population: number, featuredImage: string) {
-    yield this.citiesAPI.insertCity(name, metroID, population, featuredImage);
+  *insertCity(name: string, metroID: number, population: number, featuredImage: string, notes: string) {
+    return yield this.citiesAPI.insertCity(name, metroID, population, featuredImage, notes);
   }
 
-  *editCity(id: number, name: string, population: number, featuredImage: string) {
-    const success: Response = yield this.citiesAPI.editCity(id, name, population, featuredImage);
+  *editCity(id: number, name: string, population: number, featuredImage: string, notes: string) {
+    const success: Response = yield this.citiesAPI.editCity(id, name, population, featuredImage, notes);
     if (success.ok) {
       const city = this.citiesMap.get(id);
       this.citiesMap.set(id, { ...city, Name: name, Population: population, FeaturedImage: featuredImage });
@@ -150,12 +153,12 @@ export class AppStore {
     }
   }
 
-  *insertMetro(name: string, extendedName: string, population: number, featuredImage: string) {
-    yield this.metroAPI.insertMetro(name, extendedName, population, featuredImage);
+  *insertMetro(name: string, extendedName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string) {
+    yield this.metroAPI.insertMetro(name, extendedName, metroSizeRank, population, featuredImage, notes);
   }
 
-  *editMetro(id: number, name: string, extendedName: string, population: number, featuredImage: string) {
-    const success: Response = yield this.metroAPI.editMetro(id, name, extendedName, population, featuredImage);
+  *editMetro(id: number, name: string, extendedName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string) {
+    const success: Response = yield this.metroAPI.editMetro(id, name, extendedName, metroSizeRank, population, featuredImage, notes);
     if (success.ok) {
       const metro = this.metrosMap.get(id);
       this.metrosMap.set(id, { ...metro, Name: name, ExtendedName: extendedName, Population: population, FeaturedImage: featuredImage });

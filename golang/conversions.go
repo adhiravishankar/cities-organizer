@@ -15,8 +15,8 @@ func convertNullableMetroItem(metro NullableMetro) Metro {
 	newMetro.FeaturedImage = metro.FeaturedImage.String
 	newMetro.Population = metro.Population.Int64
 	newMetro.MetroSizeRank = metro.MetroSizeRank.Int64
-	newMetro.Notes = metro.Notes.String
 	newMetro.ExtendedName = metro.ExtendedName.String
+	newMetro.Notes = metro.Notes.String
 	return newMetro
 }
 
@@ -27,8 +27,8 @@ func convertNullableDetailedMetroItem(metro NullableMetro) DetailedMetro {
 	newMetro.FeaturedImage = metro.FeaturedImage.String
 	newMetro.Population = metro.Population.Int64
 	newMetro.MetroSizeRank = metro.MetroSizeRank.Int64
-	newMetro.Notes = metro.Notes.String
 	newMetro.ExtendedName = metro.ExtendedName.String
+	newMetro.Notes = metro.Notes.String
 	return newMetro
 }
 
@@ -47,6 +47,7 @@ func convertNullableCityItem(city NullableCity) City {
 	newCity.Name = city.Name.String
 	newCity.FeaturedImage = city.FeaturedImage.String
 	newCity.Population = city.Population.Int64
+	newCity.Notes = city.Notes.String
 	return newCity
 }
 
@@ -57,6 +58,7 @@ func convertNullableDetailedCityItem(city NullableCity) DetailedCity {
 	newCity.Name = city.Name.String
 	newCity.FeaturedImage = city.FeaturedImage.String
 	newCity.Population = city.Population.Int64
+	newCity.Notes = city.Notes.String
 	return newCity
 }
 
@@ -84,6 +86,7 @@ func convertNullableNeighborhoodItem(neighborhood NullableNeighborhood) Neighbor
 	newNeighborhood.MaximumValue = neighborhood.MaximumValue.Int64
 	newNeighborhood.MinSqft = neighborhood.MinSqft.Int64
 	newNeighborhood.MaxSqft = neighborhood.MaxSqft.Int64
+	newNeighborhood.Notes = neighborhood.Notes.String
 	return newNeighborhood
 }
 
@@ -103,5 +106,6 @@ func convertNullableDetailedNeighborhoodItem(neighborhood NullableNeighborhood) 
 	newNeighborhood.MaximumValue = neighborhood.MaximumValue.Int64
 	newNeighborhood.MinSqft = neighborhood.MinSqft.Int64
 	newNeighborhood.MaxSqft = neighborhood.MaxSqft.Int64
+	newNeighborhood.Notes = neighborhood.Notes.String
 	return newNeighborhood
 }
