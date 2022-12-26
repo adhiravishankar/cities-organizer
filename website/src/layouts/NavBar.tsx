@@ -1,5 +1,6 @@
-import { useCallback } from 'react';
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Fragment, useCallback } from 'react';
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { useNavigate } from 'react-router';
 
 export interface NavBarProps {
   name: string;
@@ -13,11 +14,24 @@ export interface NavBarProps {
 
 export function NavBar(props: NavBarProps) {
   const { editIcon, id, name, onEdit } = props;
-  const onClick = useCallback(() => {
+
+  const navigation = useNavigate();
+
+  const onClickEditIcon = useCallback(() => {
     onEdit();
   }, [onEdit, id]);
 
-  const editIconJSX = editIcon ? <Nav.Item onClick={ onClick }><i className="fas fa-pen" /></Nav.Item> : null;
+  const onAddMetro = useCallback(() => navigation('/add-metro'), []);
+  const onAddCity = useCallback(() => navigation('/add-city'), []);
+  const onAddNeighborhood = useCallback(() => navigation('/add-neighborhood'), []);
+
+  const plusIconJSX = (
+    <Fragment>
+      <i className="fas fa-plus" />
+      Add
+    </Fragment>
+  );
+  const editIconJSX = editIcon ? <Nav.Item onClick={ onClickEditIcon }><i className="fas fa-pen" /></Nav.Item> : null;
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -27,6 +41,11 @@ export function NavBar(props: NavBarProps) {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto" />
           <Nav className="nav-right">
+            <NavDropdown title={ plusIconJSX }>
+              <NavDropdown.Item onClick={ onAddMetro }>Metro</NavDropdown.Item>
+              <NavDropdown.Item onClick={ onAddCity }>City</NavDropdown.Item>
+              <NavDropdown.Item onClick={ onAddNeighborhood }>Neighborhood</NavDropdown.Item>
+            </NavDropdown>
             { editIconJSX }
           </Nav>
         </Navbar.Collapse>

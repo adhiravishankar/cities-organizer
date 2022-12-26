@@ -1,6 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import { CityPage } from '../pages/city-page/CityPage';
+import { AddCityPage } from '../pages/insertion-pages/AddCityPage';
+import { AddMetroPage } from '../pages/insertion-pages/AddMetroPage';
+import { AddNeighborhoodPage } from '../pages/insertion-pages/AddNeighborhoodPage';
 import { Login } from '../pages/Login';
 import { MetroPage } from '../pages/metro-page/MetroPage';
 import { MetrosPage } from '../pages/metros-page/MetrosPage';
@@ -55,6 +58,30 @@ export function createRouter(store: AppStore) {
         return null;
       },
       element: <NeighborhoodPage store={store}/>,
+    },
+    {
+      path: '/add-city',
+      loader: async () => {
+        await store.initialize();
+        return null;
+      },
+      element: <AddCityPage store={store}/>,
+    },
+    {
+      path: '/add-metro',
+      loader: async () => {
+        await store.initialize();
+        return null;
+      },
+      element: <AddMetroPage store={store}/>,
+    },
+    {
+      path: '/add-neighborhood',
+      loader: async () => {
+        await store.initialize();
+        return null;
+      },
+      element: <AddNeighborhoodPage store={store}/>,
     },
   ]);
 }
