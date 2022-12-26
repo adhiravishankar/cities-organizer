@@ -6,10 +6,12 @@
   },
   "rules": {
     "@typescript-eslint/space-before-function-paren": 0,
+    "array-bracket-newline": 0,
     "canonical/import-specifier-newline": 0,
     "canonical/filename-match-exported": 0,
     "import/order": 0,
     "func-style": "off",
+    "no-console": "off",
     "object-curly-newline": "error",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
