@@ -1,8 +1,9 @@
+import { useCallback } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 
 import { DropdownNumberMap } from '../../components/DropdownNumberMap';
-import { DropdownUsingArray } from '../../components/DropdownUsingArray';
 import { City } from '../../interfaces/City';
 import { FormsPage } from '../../layouts/FormsPage';
 import { AppStore } from '../../stores/AppStore';
@@ -13,8 +14,14 @@ export interface AddCityPageProps {
 
 export function AddCityPage(props: AddCityPageProps) {
   const { store } = props;
+  const navigation = useNavigate();
 
   const { handleSubmit, control } = useForm<City>({ defaultValues: store.selectedCity });
+
+  const onSubmit = useCallback((data: City) => {
+    store.insertCity(data.Name, data.MetroID, data.Population, data.FeaturedImage);
+    navigation('/');
+  }, [store]);
 
   const { field: miField } = useController({ name: 'MetroID', control });
 
@@ -33,7 +40,7 @@ export function AddCityPage(props: AddCityPageProps) {
       </Row>
       <Row>
         <Col>
-          <Button>Submit</Button>
+          <Button onClick={ handleSubmit(onSubmit) } type="submit">Submit</Button>
         </Col>
       </Row>
     </FormsPage>

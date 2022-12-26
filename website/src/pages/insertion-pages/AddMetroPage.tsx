@@ -1,5 +1,7 @@
+import { useCallback } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { Controller, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 
 import { Metro } from '../../interfaces/Metro';
 import { FormsPage } from '../../layouts/FormsPage';
@@ -11,8 +13,14 @@ export interface AddMetroPageProps {
 
 export function AddMetroPage(props: AddMetroPageProps) {
   const { store } = props;
-
   const { handleSubmit, control } = useForm<Metro>({ defaultValues: store.selectedCity });
+
+  const navigation = useNavigate();
+
+  const onSubmit = useCallback((data: Metro) => {
+    store.insertMetro(data.Name, data.ExtendedName, data.Population, data.FeaturedImage);
+    navigation('/');
+  }, [store]);
 
   return (
     <FormsPage title="Add Metro">
@@ -29,7 +37,7 @@ export function AddMetroPage(props: AddMetroPageProps) {
       </Row>
       <Row>
         <Col>
-          <Button>Submit</Button>
+          <Button onClick={ handleSubmit(onSubmit) } type="submit">Submit</Button>
         </Col>
       </Row>
     </FormsPage>

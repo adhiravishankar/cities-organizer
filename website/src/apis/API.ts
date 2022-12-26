@@ -22,39 +22,12 @@ export class API {
     return post(this.baseURL + '/signup', formData).text();
   }
 
-  async metros(): Promise<unknown> {
-    return get(this.baseURL + '/metros').json();
-  }
-
   async cities(): Promise<unknown> {
     return get(this.baseURL + '/cities').json();
   }
 
   async neighborhoods(): Promise<unknown> {
     return get(this.baseURL + '/neighborhoods').json();
-  }
-
-  async getMetro(id: number): Promise<unknown> {
-    return get(this.baseURL + '/metros/' + id).json();
-  }
-
-  async getMetroPics(id: number): Promise<unknown> {
-    return get(this.baseURL + '/metros/' + id + '/pics').json();
-  }
-
-  async editMetro(id: number, name: string, extendedName: string, population: number, featuredImage: string): Promise<Response> {
-    const formData = new FormData();
-    formData.set('name', name);
-    formData.set('extended_name', extendedName);
-    formData.set('featured_image', featuredImage);
-    formData.set('population', population.toString());
-    return put(this.baseURL + '/metros/' + id, formData);
-  }
-  
-  async uploadPicForMetro(id: number, picture: File): Promise<string> {
-    const formData = new FormData();
-    formData.set('picture', picture);
-    return post(this.baseURL + '/metros/' + id + '/upload', formData).text();
   }
 
   async uploadPicForCity(id: number, picture: File): Promise<string> {
@@ -71,6 +44,23 @@ export class API {
 
   async getCity(id: number): Promise<unknown> {
     return get(this.baseURL + '/cities/' + id).json();
+  }
+
+  async insertCity(name: string, metroID: number, population: number, featuredImage: string): Promise<Response> {
+    const formData = new FormData();
+    formData.set('name', name);
+    formData.set('metro_id', metroID.toString());
+    formData.set('featured_image', featuredImage);
+    formData.set('population', population.toString());
+    return post(this.baseURL + '/metros/', formData);
+  }
+
+  async editCity(id: number, name: string, population: number, featuredImage: string): Promise<Response> {
+    const formData = new FormData();
+    formData.set('name', name);
+    formData.set('featured_image', featuredImage);
+    formData.set('population', population.toString());
+    return put(this.baseURL + '/metros/' + id, formData);
   }
 
   async getNeighborhood(id: number): Promise<unknown> {

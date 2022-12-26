@@ -1,12 +1,15 @@
 import { action, computed, flow, makeObservable, observable } from 'mobx';
 
 import { API } from '../apis/API';
+import { MetroAPI } from '../apis/MetroAPI';
 import { City, DetailedCity } from '../interfaces/City';
 import { DetailedMetro, Metro } from '../interfaces/Metro';
 import { DetailedNeighborhood, Neighborhood } from '../interfaces/Neighborhood';
 
 export class AppStore {
   api: API;
+
+  metroAPI: MetroAPI;
 
   editingModalOpen: boolean;
 
@@ -36,6 +39,7 @@ export class AppStore {
 
   constructor() {
     this.api = new API(process.env.BASE_URL);
+    this.metroAPI = new MetroAPI(process.env.BASE_URL);
     makeObservable(this, {
       imagesUploadModalOpen: observable,
       editingModalOpen: observable,
@@ -70,7 +74,7 @@ export class AppStore {
   }
 
   *fetchMetros() {
-    const genericMetros: unknown = yield this.api.metros();
+    const genericMetros: unknown = yield this.metroAPI.metros();
     const metros = genericMetros as Metro[];
     metros.forEach((metro: Metro) => this.metrosMap.set(metro.ID, metro));
   }
@@ -88,7 +92,7 @@ export class AppStore {
   }
 
   *fetchMetro(id: number) {
-    const metro = yield this.api.getMetro(id);
+    const metro = yield this.metroAPI.getMetro(id);
     this.selectedMetro = metro as DetailedMetro;
     this.pics = this.selectedMetro.Pics;
   }
@@ -106,22 +110,38 @@ export class AppStore {
   }
 
   *fetchMetroPics(id: number) {
-    const pics: unknown = yield this.api.getMetroPics(id);
+    const pics: unknown = yield this.metroAPI.getMetroPics(id);
     this.pics = pics as string[];
   }
 
-  *editMetro(id: number, name: string, extendedName: string, population: number, featuredImage: string) {
-    const success: Response = yield this.api.editMetro(id, name, extendedName, population, featuredImage);
+  *insertCity(name: string, metroID: number, population: number, featuredImage: string) {
+    yield this.api.insertCity(name, metroID, population, featuredImage);
+  }
+
+  *editCity(id: number, name: string, population: number, featuredImage: string) {
+    const success: Response = yield this.api.editCity(id, name, population, featuredImage);
     if (success.ok) {
-      const metro = this.metrosMap.get(id);
-      this.metrosMap.set(id, { ...metro, Name: name, ExtendedName: extendedName, Population: population, FeaturedImage: featuredImage });
+      const city = this.citiesMap.get(id);
+      this.citiesMap.set(id, { ...city, Name: name, Population: population, FeaturedImage: featuredImage });
     }
   }
 
   *uploadPicForMetro(id: number, file: File) {
-    const success: string = yield this.api.uploadPicForMetro(id, file);
+    const success: string = yield this.metroAPI.uploadPicForMetro(id, file);
     if (success && success.length === 0) {
       this.fetchMetroPics(id);
+    }
+  }
+
+  *insertMetro(name: string, extendedName: string, population: number, featuredImage: string) {
+    yield this.metroAPI.insertMetro(name, extendedName, population, featuredImage);
+  }
+
+  *editMetro(id: number, name: string, extendedName: string, population: number, featuredImage: string) {
+    const success: Response = yield this.metroAPI.editMetro(id, name, extendedName, population, featuredImage);
+    if (success.ok) {
+      const metro = this.metrosMap.get(id);
+      this.metrosMap.set(id, { ...metro, Name: name, ExtendedName: extendedName, Population: population, FeaturedImage: featuredImage });
     }
   }
 

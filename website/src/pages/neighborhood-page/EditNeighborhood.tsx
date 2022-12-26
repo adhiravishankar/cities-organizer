@@ -5,6 +5,7 @@ import { Controller, useController, useForm } from 'react-hook-form';
 
 import { DropdownUsingArray } from '../../components/DropdownUsingArray';
 import { Metro } from '../../interfaces/Metro';
+import { Neighborhood } from '../../interfaces/Neighborhood';
 import { AppStore } from '../../stores/AppStore';
 
 
@@ -18,11 +19,11 @@ export const EditNeighborhood = observer<EditNeighborhoodProps>((props: EditNeig
   const { id, store } = props;
   const { pics } = store;
 
-  const { handleSubmit, control } = useForm<Metro>({ defaultValues: store.selectedNeighborhood });
+  const { handleSubmit, control } = useForm<Neighborhood>({ defaultValues: store.selectedNeighborhood });
   const handleClose = () => store.editingModalVisibilityChange(false);
 
-  const onSubmit = useCallback((data: Metro) => {
-    store.editMetro(data.ID, data.Name, data.ExtendedName, data.Population, data.FeaturedImage);
+  const onSubmit = useCallback((data: Neighborhood) => {
+
     handleClose();
   }, [id, store]);
 
@@ -36,8 +37,6 @@ export const EditNeighborhood = observer<EditNeighborhoodProps>((props: EditNeig
       <Modal.Body>
         <form>
           <Controller name="Name" control={control} render={({ field }) => <Form.Control { ...field } id="name" placeholder="Name" /> }/>
-          <Controller name="ExtendedName" control={control} render={({ field }) => <Form.Control { ...field } id="extended_name" placeholder="Extended Name" /> }/>
-          <Controller name="Population" control={control} render={({ field }) => <Form.Control { ...field } id="population" placeholder="Population" type="number" /> }/>
           <DropdownUsingArray onChange={ fiField.onChange } options={ pics } title="Featured Image" value={ fiField.value } />
           <Button onClick={ handleSubmit(onSubmit) } type="submit">Submit</Button>
         </form>
