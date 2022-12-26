@@ -34,6 +34,9 @@ export function AddMetroPage(props: AddMetroPageProps) {
         <Col>
           <Controller name="Population" control={control} render={({ field }) => <Form.Control { ...field } id="population" placeholder="Population" type="number" /> }/>
         </Col>
+        <Col>
+          <Controller name="MetroSizeRank" control={control} render={({ field }) => <Form.Control { ...field } id="MetroSizeRank" placeholder="Metro Size Rank" type="number" /> }/>
+        </Col>
       </Row>
       <Row>
         <Col>

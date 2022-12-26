@@ -23,6 +23,12 @@ export const AddNeighborhoodPage = observer<AddNeighborhoodPageProps>((props: Ad
   const { field: ciField } = useController({ name: 'CityID', control });
   const { field: miField } = useController({ name: 'MetroID', control });
 
+  const onChangeMetroArea = useCallback((events: any[]) => {
+    store.updateSelectedMetro(events as unknown as number);
+    miField.onChange(-1);
+    miField.onChange(events);
+  }, []);
+
 
   return (
     <FormsPage title="Add Neighborhood">
@@ -34,7 +40,7 @@ export const AddNeighborhoodPage = observer<AddNeighborhoodPageProps>((props: Ad
           <Controller name="Link" control={control} render={({ field }) => <Form.Control { ...field } id="Link" placeholder="Link" /> }/>
         </Col>
         <Col className="col-2">
-          <DropdownNumberMap onChange={ miField.onChange } options={ store.metroNamesMap } title="Metro Area" value={ miField.value } />
+          <DropdownNumberMap onChange={ onChangeMetroArea } options={ store.metroNamesMap } title="Metro Area" value={ miField.value } />
         </Col>
         <Col className="col-2">
           <DropdownNumberMap onChange={ ciField.onChange } options={ store.filteredCitiesMap } title="City Area" value={ ciField.value } />

@@ -36,7 +36,8 @@ func getMetro(c *gin.Context) {
 	var metro NullableMetro
 	row := squirrel.Select("*").Where(squirrel.Eq{"id": c.Param("metro")}).From("metros").
 		RunWith(database).QueryRow()
-	err := row.Scan(&metro.ID, &metro.Name, &metro.ExtendedName, &metro.Population, &metro.Notes, &metro.FeaturedImage)
+	err := row.Scan(&metro.ID, &metro.Name, &metro.ExtendedName, &metro.Population, &metro.MetroSizeRank, &metro.Notes,
+		&metro.FeaturedImage)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -50,8 +51,9 @@ func getMetro(c *gin.Context) {
 
 func insertMetro(c *gin.Context) {
 	result, err := squirrel.Insert("metros").
-		Columns("name", "extended_name", "population", "featured_image").
-		Values(c.PostForm("name"), c.PostForm("extended_name"), c.PostForm("population"), c.PostForm("featured_image")).
+		Columns("name", "extended_name", "population", "metro_size_rank", "featured_image").
+		Values(c.PostForm("name"), c.PostForm("extended_name"), c.PostForm("population"),
+			c.PostForm("metro_size_rank"), c.PostForm("featured_image")).
 		RunWith(database).Exec()
 	if err != nil {
 		log.Fatal(err)
@@ -69,6 +71,7 @@ func editMetro(c *gin.Context) {
 	result, err := squirrel.Update("metros").Set("name", c.PostForm("name")).
 		Set("extended_name", c.PostForm("extended_name")).
 		Set("population", c.PostForm("population")).
+		Set("metro_size_rank", c.PostForm("metro_size_rank")).
 		Set("featured_image", c.PostForm("featured_image")).
 		Where(squirrel.Eq{"id": c.Param("metro")}).RunWith(database).Exec()
 	if err != nil {

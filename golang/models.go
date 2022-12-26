@@ -5,6 +5,7 @@ type Metro struct {
 	Name          string
 	ExtendedName  string
 	Population    int64
+	MetroSizeRank int64
 	Notes         string
 	FeaturedImage string
 }
@@ -14,6 +15,7 @@ type DetailedMetro struct {
 	Name          string
 	ExtendedName  string
 	Population    int64
+	MetroSizeRank int64
 	Notes         string
 	FeaturedImage string
 	Pics          []string

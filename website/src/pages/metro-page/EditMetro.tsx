@@ -39,6 +39,7 @@ export const EditMetro = observer<EditMetroProps>((props: EditMetroProps) => {
           <Controller name="Name" control={control} render={({ field }) => <Form.Control { ...field } id="name" placeholder="Name" /> }/>
           <Controller name="ExtendedName" control={control} render={({ field }) => <Form.Control { ...field } id="extended_name" placeholder="Extended Name" /> }/>
           <Controller name="Population" control={control} render={({ field }) => <Form.Control { ...field } id="population" placeholder="Population" type="number" /> }/>
+          <Controller name="MetroSizeRank" control={control} render={({ field }) => <Form.Control { ...field } id="MetroSizeRank" placeholder="Metro Size Rank" type="number" /> }/>
           <DropdownUsingArray onChange={ fiField.onChange } options={ pics } title="Featured Image" value={ fiField.value } />
           <Button onClick={ handleSubmit(onSubmit) } type="submit">Submit</Button>
         </form>

@@ -12,6 +12,8 @@ export interface Metro {
 
   Population: number;
 
+  MetroSizeRank: number;
+
   Notes: string;
 
   FeaturedImage: string;

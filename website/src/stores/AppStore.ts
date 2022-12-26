@@ -6,7 +6,6 @@ import { MetroAPI } from '../apis/MetroAPI';
 import { City, DetailedCity } from '../interfaces/City';
 import { DetailedMetro, Metro } from '../interfaces/Metro';
 import { DetailedNeighborhood, Neighborhood } from '../interfaces/Neighborhood';
-import {CitiesAPI} from "../apis/CitiesAPI";
 
 export class AppStore {
   api: API;
@@ -62,6 +61,8 @@ export class AppStore {
       citiesMap: observable,
       neighborhoodsMap: observable,
       selectedMetro: observable,
+      selectedMetroArea: observable,
+      filteredCitiesMap: computed,
       selectedCity: observable,
       selectedNeighborhood: observable,
       uploadPicsModalOpen: observable,
@@ -75,6 +76,7 @@ export class AppStore {
       fetchNeighborhood: flow,
       editMetro: flow,
       fetchMetroPics: flow,
+      updateSelectedMetro: action,
       uploadPicForMetro: flow,
       uploadPicForCity: flow,
       uploadPicForNeighborhood: flow,
@@ -172,6 +174,10 @@ export class AppStore {
     if (success && success.length === 0) {
       this.fetchMetroPics(id);
     }
+  }
+
+  updateSelectedMetro(metro: number) {
+    this.selectedMetroArea = metro;
   }
 
   editingModalVisibilityChange(visibility: boolean) {

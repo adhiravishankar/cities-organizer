@@ -7,6 +7,7 @@ type NullableMetro struct {
 	Name          sql.NullString
 	ExtendedName  sql.NullString
 	Population    sql.NullInt64
+	MetroSizeRank sql.NullInt64
 	Notes         sql.NullString
 	FeaturedImage sql.NullString
 }

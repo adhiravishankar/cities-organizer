@@ -14,6 +14,7 @@ func convertNullableMetroItem(metro NullableMetro) Metro {
 	newMetro.Name = metro.Name.String
 	newMetro.FeaturedImage = metro.FeaturedImage.String
 	newMetro.Population = metro.Population.Int64
+	newMetro.MetroSizeRank = metro.MetroSizeRank.Int64
 	newMetro.Notes = metro.Notes.String
 	newMetro.ExtendedName = metro.ExtendedName.String
 	return newMetro
@@ -25,6 +26,7 @@ func convertNullableDetailedMetroItem(metro NullableMetro) DetailedMetro {
 	newMetro.Name = metro.Name.String
 	newMetro.FeaturedImage = metro.FeaturedImage.String
 	newMetro.Population = metro.Population.Int64
+	newMetro.MetroSizeRank = metro.MetroSizeRank.Int64
 	newMetro.Notes = metro.Notes.String
 	newMetro.ExtendedName = metro.ExtendedName.String
 	return newMetro
