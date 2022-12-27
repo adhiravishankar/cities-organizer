@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { Fragment, useCallback } from 'react';
-import { Container, Stack } from 'react-bootstrap';
+import { Card, Container, Stack } from 'react-bootstrap';
+import ReactMarkdown from 'react-markdown';
 
 import { AddPics } from '../../components/AddPics';
 import { ImagesCard } from '../../components/ImagesCard';
@@ -56,6 +57,12 @@ export const NeighborhoodPage = observer<NeighborhoodProps>((props: Neighborhood
             openAddPics={ openUploadPicsScreen }
             pics={ store.pics }
           />
+          <Card>
+            <Card.Header><Card.Title>Notes</Card.Title></Card.Header>
+            <Card.Body>
+              <ReactMarkdown>{ store.selectedNeighborhood.Notes }</ReactMarkdown>
+            </Card.Body>
+          </Card>
         </Stack>
       </Container>
       <EditNeighborhood id={ selectedNeighborhood.ID } store={ store } />

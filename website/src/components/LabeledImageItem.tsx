@@ -16,7 +16,7 @@ export interface LabeledImageItemProps {
 export const LabeledImageItem = (image: LabeledImageItemProps) => {
   const { id, name, onClick, source } = image;
   const onClickHandler = useCallback(() => onClick(id), [id, onClick]);
-  if (source === null || source === undefined || source === '')
+  if (source === null || source === undefined || source === '' || source === 'undefined')
     return <NoImageItem name={ name } onClick={ onClickHandler } />;
 
 

@@ -6,6 +6,10 @@ html, body, #root {
   height: 100%
 }
 
+.body-container {
+  padding-top: 2rem;
+}
+
 .dropzone-wrapper {
   display: flex;
   height: 10rem;
@@ -16,10 +20,6 @@ html, body, #root {
     text-align: center;
     margin: auto 0;
   }
-}
-
-.cities-container {
-  margin-top: 1rem;
 }
 
 .auth-box-wrapper {

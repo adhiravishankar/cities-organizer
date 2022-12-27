@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { Fragment, useCallback } from 'react';
-import { Container, Stack } from 'react-bootstrap';
+import { Card, Container, Stack } from 'react-bootstrap';
+import ReactMarkdown from 'react-markdown';
 import { useNavigate, useParams } from 'react-router';
 
 import { AddPics } from '../../components/AddPics';
@@ -94,6 +95,12 @@ export const MetroPage = observer<MetroProps>((props: MetroProps) => {
             onClick={ onNeighborhoodClick }
             items={ neighborhoodImages }
           />
+          <Card>
+            <Card.Header><Card.Title>Notes</Card.Title></Card.Header>
+            <Card.Body>
+              <ReactMarkdown>{ store.selectedMetro.Notes }</ReactMarkdown>
+            </Card.Body>
+          </Card>
         </Stack>
       </Container>
       <EditMetro id={ metroID } store={ store } />

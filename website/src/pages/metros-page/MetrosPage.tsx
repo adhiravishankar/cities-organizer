@@ -13,10 +13,6 @@ export interface MetrosPageProps {
 export const MetrosPage = observer<MetrosPageProps>((props: MetrosPageProps) => {
   const { store } = props;
 
-  useEffect(() => {
-    store.fetchMetros();
-  }, [store]);
-
   return (
     <Fragment>
       <NavBar editIcon={ false } name="Metros" />

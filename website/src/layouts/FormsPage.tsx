@@ -14,7 +14,7 @@ export function FormsPage(props: FormsPageProps) {
   return (
     <Fragment>
       <NavBar editIcon={ false } name={ title } />
-      <Container>
+      <Container className="body-container">
         <Row>
           <Card>
             <Card.Header>
