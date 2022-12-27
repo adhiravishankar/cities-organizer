@@ -2,9 +2,9 @@ import { Fragment, PropsWithChildren, ReactNode } from 'react';
 import { Card, Container, Stack } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 
-import {AddPics, AddPicsProps} from '../components/AddPics';
+import { AddPics, AddPicsProps } from '../components/AddPics';
 import { Breadcrumbs, BreadcrumbsProps } from './Breadcrumbs';
-import {NavBar, NavBarProps} from './NavBar';
+import { NavBar, NavBarProps } from './NavBar';
 
 export interface CardsPageProps {
   breadcrumbs: BreadcrumbsProps;

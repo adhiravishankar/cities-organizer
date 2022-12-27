@@ -1,12 +1,11 @@
 import { observer } from 'mobx-react-lite';
-import { Fragment, useCallback } from 'react';
-import { Card, Container, Stack } from 'react-bootstrap';
-import ReactMarkdown from 'react-markdown';
+import { useCallback } from 'react';
 
-import { AddPics } from '../../components/AddPics';
+import { AddPicsProps } from '../../components/AddPics';
 import { ImagesCard } from '../../components/ImagesCard';
-import { Breadcrumbs } from '../../layouts/Breadcrumbs';
-import { NavBar } from '../../layouts/NavBar';
+import { BreadcrumbsProps } from '../../layouts/Breadcrumbs';
+import { CardsPage } from '../../layouts/CardsPage';
+import { NavBarProps } from '../../layouts/NavBar';
 import { AppStore } from '../../stores/AppStore';
 import { EditNeighborhood } from './EditNeighborhood';
 
@@ -36,37 +35,27 @@ export const NeighborhoodPage = observer<NeighborhoodProps>((props: Neighborhood
 
   const metroName = store.metrosMap.get(selectedNeighborhood.MetroID)?.Name;
   const cityName = store.citiesMap.get(selectedNeighborhood.CityID)?.Name;
-  const neighboorhoodName = selectedNeighborhood?.Name;
+
+  const breadCrumbsProps: BreadcrumbsProps = { active: 'metro', neighborhoodID: selectedNeighborhood.ID,
+    metroID: selectedNeighborhood.MetroID, cityID: selectedNeighborhood.ID, neighborhood: selectedNeighborhood.Name,
+    metro: metroName, city: cityName };
+  const editCity = <EditNeighborhood id={ selectedNeighborhood.ID } store={ store } />;
+  const addPicsProps: AddPicsProps = { onCloseModal: closeUploadPicsScreen, shown: store.uploadPicsModalOpen, fileUpload };
+  const navBarProps: NavBarProps = { editIcon: true, id: selectedNeighborhood.ID, onEdit: openEditingScreen, name: selectedNeighborhood.Name };
 
   return (
-    <Fragment>
-      <NavBar editIcon={ true } id={ selectedNeighborhood.ID } onEdit={ openEditingScreen } name={ selectedNeighborhood.Name } />
-      <Container className="cities-container">
-        <Stack direction="vertical" gap={3}>
-          <Breadcrumbs
-            cityID={ selectedNeighborhood.CityID }
-            metroID={ selectedNeighborhood.MetroID }
-            neighborhoodID={ selectedNeighborhood.ID }
-            metro={ metroName }
-            city={ cityName }
-            neighborhood={ neighboorhoodName }
-            active="neighborhood"
-          />
-          <ImagesCard
-            errorMessage="No images are currently attached."
-            openAddPics={ openUploadPicsScreen }
-            pics={ store.pics }
-          />
-          <Card>
-            <Card.Header><Card.Title>Notes</Card.Title></Card.Header>
-            <Card.Body>
-              <ReactMarkdown>{ store.selectedNeighborhood.Notes }</ReactMarkdown>
-            </Card.Body>
-          </Card>
-        </Stack>
-      </Container>
-      <EditNeighborhood id={ selectedNeighborhood.ID } store={ store } />
-      <AddPics onCloseModal={ closeUploadPicsScreen } shown={ store.uploadPicsModalOpen } fileUpload={ fileUpload } />
-    </Fragment>
+    <CardsPage
+      breadcrumbs={ breadCrumbsProps }
+      notes={ selectedNeighborhood.Notes }
+      editModal={ editCity }
+      addPicsProps={ addPicsProps }
+      navBarProps={ navBarProps }
+    >
+      <ImagesCard
+        errorMessage="No images are currently attached."
+        openAddPics={ openUploadPicsScreen }
+        pics={ store.pics }
+      />
+    </CardsPage>
   );
 });
