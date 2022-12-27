@@ -35,8 +35,14 @@
       font-size: 7rem;
     }
   }
+}
 
-  .image-label {
+.images-grid .no-image-item {
+  height: 16rem;
+  width: 22rem;
+}
 
-  }
+.images-grid .no-image-item .image {
+  height: 14rem;
+  width: 22rem;
 }
