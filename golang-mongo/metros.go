@@ -34,7 +34,7 @@ func metros(c *gin.Context) {
 }
 
 func getMetro(c *gin.Context) {
-	var metro NullableMetro
+	var metro Metro
 	row := squirrel.Select("*").Where(squirrel.Eq{"id": c.Param("metro")}).From("metros").
 		RunWith(database).QueryRow()
 	err := row.Scan(&metro.ID, &metro.Name, &metro.ExtendedName, &metro.Population, &metro.MetroSizeRank,

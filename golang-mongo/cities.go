@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"github.com/Masterminds/squirrel"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	awstypes "github.com/aws/aws-sdk-go-v2/service/s3/types"
@@ -18,9 +17,9 @@ func cities(c *gin.Context) {
 		log.Fatal(err)
 	}
 
-	var cityList []NullableCity
+	var cityList []City
 	for rows.Next() {
-		var city NullableCity
+		var city City
 		err := rows.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population, &city.FeaturedImage, &city.Notes)
 		if err != nil {
 			log.Fatal(err)
@@ -49,7 +48,7 @@ func insertCity(c *gin.Context) {
 }
 
 func getCity(c *gin.Context) {
-	var city NullableCity
+	var city City
 	row := squirrel.Select("*").Where(squirrel.Eq{"id": c.Param("city")}).From("cities").
 		RunWith(database).QueryRow()
 	err := row.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population, &city.FeaturedImage, &city.Notes)
@@ -165,9 +164,9 @@ func internalGetNeighborhoodsForCities(city string) []Neighborhood {
 		log.Fatal(err)
 	}
 
-	var neighborhoodList []NullableNeighborhood
+	var neighborhoodList []Neighborhood
 	for rows.Next() {
-		var neighborhood NullableNeighborhood
+		var neighborhood Neighborhood
 		err := rows.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.MetroID, &neighborhood.Name,
 			&neighborhood.FeaturedImage, &neighborhood.HighSchoolScore, &neighborhood.MiddleSchoolScore,
 			&neighborhood.ElementarySchoolScore, &neighborhood.Address, &neighborhood.MinimumValue,

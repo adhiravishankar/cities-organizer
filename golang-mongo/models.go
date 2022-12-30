@@ -1,7 +1,7 @@
 package main
 
 type Metro struct {
-	ID            int64
+	ID            string
 	Name          string
 	ExtendedName  string
 	Population    int64
@@ -11,7 +11,7 @@ type Metro struct {
 }
 
 type DetailedMetro struct {
-	ID            int64
+	ID            string
 	Name          string
 	ExtendedName  string
 	Population    int64
@@ -24,7 +24,7 @@ type DetailedMetro struct {
 }
 
 type City struct {
-	ID            int64
+	ID            string
 	MetroID       int64
 	Name          string
 	Population    int64
@@ -33,7 +33,7 @@ type City struct {
 }
 
 type DetailedCity struct {
-	ID            int64
+	ID            string
 	MetroID       int64
 	Name          string
 	Population    int64
@@ -44,7 +44,7 @@ type DetailedCity struct {
 }
 
 type Neighborhood struct {
-	ID                    int64
+	ID                    string
 	CityID                int64
 	MetroID               int64
 	FeaturedImage         string
@@ -62,7 +62,7 @@ type Neighborhood struct {
 }
 
 type DetailedNeighborhood struct {
-	ID                    int64
+	ID                    string
 	CityID                int64
 	MetroID               int64
 	FeaturedImage         string
@@ -78,4 +78,10 @@ type DetailedNeighborhood struct {
 	MaxSqft               int64
 	Notes                 string
 	Pics                  []string
+}
+
+type Pic struct {
+	AttributeID string
+	ID          string
+	URL         string
 }

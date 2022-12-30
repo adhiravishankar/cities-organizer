@@ -6,7 +6,6 @@ import (
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/gin-gonic/gin"
-	"github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
 	"log"
 	"os"
@@ -17,15 +16,6 @@ var s3Client *s3.Client
 
 func main() {
 	err := godotenv.Load()
-
-	sqlDsnStruct := mysql.Config{
-		User:                 os.Getenv("MYSQL_USER"),
-		Passwd:               os.Getenv("MYSQL_PASSWORD"),
-		Net:                  "tcp",
-		Addr:                 os.Getenv("MYSQL_ADDRESS"),
-		DBName:               os.Getenv("MYSQL_DB"),
-		AllowNativePasswords: true,
-	}
 
 	db, err := sql.Open("mysql", sqlDsnStruct.FormatDSN())
 	database = db

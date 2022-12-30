@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"github.com/Masterminds/squirrel"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	awstypes "github.com/aws/aws-sdk-go-v2/service/s3/types"
@@ -18,9 +17,9 @@ func neighborhoods(c *gin.Context) {
 		log.Fatal(err)
 	}
 
-	var neighborhoodList []NullableNeighborhood
+	var neighborhoodList []Neighborhood
 	for rows.Next() {
-		var neighborhood NullableNeighborhood
+		var neighborhood Neighborhood
 		err := rows.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.MetroID, &neighborhood.Name,
 			&neighborhood.FeaturedImage, &neighborhood.HighSchoolScore, &neighborhood.MiddleSchoolScore,
 			&neighborhood.ElementarySchoolScore, &neighborhood.Address, &neighborhood.MinimumValue,
@@ -35,7 +34,7 @@ func neighborhoods(c *gin.Context) {
 }
 
 func getNeighborhood(c *gin.Context) {
-	var neighborhood NullableNeighborhood
+	var neighborhood Neighborhood
 	row := squirrel.Select("*").
 		Where(squirrel.Eq{"id": c.Param("neighborhood")}).From("neighborhoods").RunWith(database).QueryRow()
 
