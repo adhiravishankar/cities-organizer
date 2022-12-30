@@ -1,14 +1,8 @@
 package main
 
 import (
-	"context"
-	"github.com/aws/aws-sdk-go-v2/aws"
-	"github.com/aws/aws-sdk-go-v2/service/s3"
-	awstypes "github.com/aws/aws-sdk-go-v2/service/s3/types"
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 	"log"
-	"path/filepath"
 )
 
 func neighborhoods(c *gin.Context) {
@@ -88,50 +82,6 @@ func editNeighborhood(c *gin.Context) {
 	}
 }
 
-func addNeighborhoodPicture(c *gin.Context) {
-	file, err := c.FormFile("picture")
-	if err != nil {
-		log.Fatal(err)
-	}
-	fileExt := filepath.Ext(file.Filename)
-	pictureFile, err := file.Open()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	pictureFileName := "cities/" + uuid.New().String() + fileExt
-	s3Object := s3.PutObjectInput{
-		Body:          pictureFile,
-		Bucket:        aws.String("cities-organizer-photos"),
-		Key:           aws.String(pictureFileName),
-		ContentLength: file.Size,
-		ACL:           awstypes.ObjectCannedACL("public-read"),
-	}
-	_, err = s3Client.PutObject(context.TODO(), &s3Object)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	pictureURL := "https://d2oewc7nt2ih9r.cloudfront.net/" + pictureFileName
-	result, err := squirrel.Insert("neighborhood_pictures").Columns("neighborhood_id", "picture_url").
-		Values(c.Param("neighborhood"), pictureURL).RunWith(database).Exec()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	rowsAffected, err := result.RowsAffected()
-	if err != nil {
-		log.Fatal(err)
-	}
-	if rowsAffected > 0 {
-		c.String(200, "success")
-	}
-}
-
-func getNeighborhoodPictures(c *gin.Context) {
-	c.JSON(200, internalGetNeighborhoodPics(c))
-}
-
 func deleteNeighborhood(c *gin.Context) {
 	result, err := squirrel.Delete("neighborhoods").Where(squirrel.Eq{"id": c.Param("neighborhood")}).
 		RunWith(database).Exec()
@@ -145,24 +95,4 @@ func deleteNeighborhood(c *gin.Context) {
 	if rowsAffected > 0 {
 		c.String(200, "success")
 	}
-}
-
-func internalGetNeighborhoodPics(c *gin.Context) []string {
-	rows, err := squirrel.Select("picture_url").From("neighborhood_pictures").
-		Where(squirrel.Eq{"neighborhood_id": c.Param("neighborhood")}).RunWith(database).Query()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var picList []string
-	for rows.Next() {
-		var pic string
-		err := rows.Scan(&pic)
-		if err != nil {
-			log.Fatal(err)
-		}
-		picList = append(picList, pic)
-	}
-
-	return picList
 }

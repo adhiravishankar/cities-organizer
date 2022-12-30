@@ -1,14 +1,8 @@
 package main
 
 import (
-	"context"
-	"github.com/aws/aws-sdk-go-v2/aws"
-	"github.com/aws/aws-sdk-go-v2/service/s3"
-	awstypes "github.com/aws/aws-sdk-go-v2/service/s3/types"
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 	"log"
-	"path/filepath"
 )
 
 func cities(c *gin.Context) {
@@ -78,50 +72,6 @@ func editCity(c *gin.Context) {
 	}
 }
 
-func addCityPicture(c *gin.Context) {
-	file, err := c.FormFile("picture")
-	if err != nil {
-		log.Fatal(err)
-	}
-	fileExt := filepath.Ext(file.Filename)
-	pictureFile, err := file.Open()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	pictureFileName := "cities/" + uuid.New().String() + fileExt
-	s3Object := s3.PutObjectInput{
-		Body:          pictureFile,
-		Bucket:        aws.String("cities-organizer-photos"),
-		Key:           aws.String(pictureFileName),
-		ContentLength: file.Size,
-		ACL:           awstypes.ObjectCannedACL("public-read"),
-	}
-	_, err = s3Client.PutObject(context.TODO(), &s3Object)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	pictureURL := "https://d2oewc7nt2ih9r.cloudfront.net/" + pictureFileName
-	result, err := squirrel.Insert("city_pictures").Columns("city_id", "picture_url").
-		Values(c.Param("city"), pictureURL).RunWith(database).Exec()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	rowsAffected, err := result.RowsAffected()
-	if err != nil {
-		log.Fatal(err)
-	}
-	if rowsAffected > 0 {
-		c.String(200, "success")
-	}
-}
-
-func getCityPictures(c *gin.Context) {
-	c.JSON(200, internalGetCityPics(c))
-}
-
 func deleteCity(c *gin.Context) {
 	result, err := squirrel.Delete("cities").Where(squirrel.Eq{"id": c.Param("city")}).RunWith(database).
 		Exec()
@@ -135,26 +85,6 @@ func deleteCity(c *gin.Context) {
 	if rowsAffected > 0 {
 		c.String(200, "success")
 	}
-}
-
-func internalGetCityPics(c *gin.Context) []string {
-	rows, err := squirrel.Select("picture_url").From("city_pictures").
-		Where(squirrel.Eq{"city_id": c.Param("city")}).RunWith(database).Query()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var picList []string
-	for rows.Next() {
-		var pic string
-		err := rows.Scan(&pic)
-		if err != nil {
-			log.Fatal(err)
-		}
-		picList = append(picList, pic)
-	}
-
-	return picList
 }
 
 func internalGetNeighborhoodsForCities(city string) []Neighborhood {
