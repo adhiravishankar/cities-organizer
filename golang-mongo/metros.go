@@ -120,7 +120,7 @@ func deleteMetro(c *gin.Context) {
 	}
 
 	/// Delete metro
-	_, err = metrosCollections.DeleteOne(c, bson.D{{"_id", c.Param("cologne")}})
+	_, err = metrosCollections.DeleteOne(c, bson.D{{"_id", c.Param("metro")}})
 	if err != nil {
 		log.Fatal(err)
 	}

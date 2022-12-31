@@ -2,8 +2,10 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson"
 	"log"
+	"strconv"
 )
 
 func neighborhoods(c *gin.Context) {
@@ -21,10 +23,10 @@ func neighborhoods(c *gin.Context) {
 	c.JSON(200, &neighborhoods)
 }
 
-func getNeighborhood(c *gin.Context) {
+func readNeighborhood(c *gin.Context) {
 	neighborhoodsCollection := mongoDB.Collection("neighborhoods")
 
-	var result = neighborhoodsCollection.FindOne(c, bson.M{"_id": c.Param("metro")})
+	var result = neighborhoodsCollection.FindOne(c, bson.M{"_id": c.Param("neighborhood")})
 	neighborhood := Neighborhood{}
 	err := result.Decode(&neighborhood)
 	if err != nil {
@@ -39,60 +41,148 @@ func getNeighborhood(c *gin.Context) {
 	c.JSON(200, &detailedNeighborhood)
 }
 
-func insertNeighborhood(c *gin.Context) {
-	result, err := squirrel.Insert("neighborhoods").
-		Columns("name", "extended_name", "population", "featured_image", "notes").
-		Values(c.PostForm("name"), c.PostForm("extended_name"), c.PostForm("population"), c.PostForm("featured_image"), c.PostForm("notes")).
-		RunWith(database).Exec()
+func createNeighborhood(c *gin.Context) {
+	neighborhoodCollection := mongoDB.Collection("neighborhoods")
+
+	highSchoolScore, err := strconv.ParseInt(c.PostForm("high_school_score"), 10, 10)
 	if err != nil {
 		log.Fatal(err)
 	}
-	rowsAffected, err := result.RowsAffected()
+
+	middleSchoolScore, err := strconv.ParseInt(c.PostForm("middle_school_score"), 10, 10)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if rowsAffected > 0 {
-		c.String(200, "success")
+
+	elementarySchoolScore, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	if err != nil {
+		log.Fatal(err)
 	}
+
+	minimumValue, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	maximumValue, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	minSqft, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	maxSqft, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	neighborhood := Neighborhood{
+		ID:                    uuid.New().String(),
+		CityID:                c.PostForm("city_id"),
+		MetroID:               c.PostForm("metro_id"),
+		FeaturedImage:         c.PostForm("featured_image"),
+		Link:                  c.PostForm("link"),
+		Name:                  c.PostForm("name"),
+		HighSchoolScore:       highSchoolScore,
+		MiddleSchoolScore:     middleSchoolScore,
+		ElementarySchoolScore: elementarySchoolScore,
+		Address:               c.PostForm("address"),
+		MinimumValue:          minimumValue,
+		MaximumValue:          maximumValue,
+		MinSqft:               minSqft,
+		MaxSqft:               maxSqft,
+		Notes:                 c.PostForm("notes"),
+	}
+
+	insertOneResult, err := neighborhoodCollection.InsertOne(c, neighborhood)
+	if err != nil {
+		log.Fatal(err)
+	}
+	c.JSON(200, insertOneResult)
 }
 
-func editNeighborhood(c *gin.Context) {
-	result, err := squirrel.Update("neighborhoods").Set("name", c.PostForm("name")).
-		Set("extended_name", c.PostForm("extended_name")).
-		Set("population", c.PostForm("population")).
-		Set("featured_image", c.PostForm("featured_image")).
-		Set("notes", c.PostForm("notes")).
-		Where(squirrel.Eq{"id": c.Param("neighborhood")}).RunWith(database).Exec()
+func updateNeighborhood(c *gin.Context) {
+	neighborhoodCollection := mongoDB.Collection("neighborhoods")
+
+	highSchoolScore, err := strconv.ParseInt(c.PostForm("high_school_score"), 10, 10)
 	if err != nil {
 		log.Fatal(err)
 	}
-	rowsAffected, err := result.RowsAffected()
+
+	middleSchoolScore, err := strconv.ParseInt(c.PostForm("middle_school_score"), 10, 10)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if rowsAffected > 0 {
-		c.String(200, "success")
+
+	elementarySchoolScore, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	if err != nil {
+		log.Fatal(err)
 	}
+
+	minimumValue, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	maximumValue, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	minSqft, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	maxSqft, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	neighborhood := Neighborhood{
+		ID:                    c.Param("neighborhood"),
+		CityID:                c.PostForm("city_id"),
+		MetroID:               c.PostForm("metro_id"),
+		FeaturedImage:         c.PostForm("featured_image"),
+		Link:                  c.PostForm("link"),
+		Name:                  c.PostForm("name"),
+		HighSchoolScore:       highSchoolScore,
+		MiddleSchoolScore:     middleSchoolScore,
+		ElementarySchoolScore: elementarySchoolScore,
+		Address:               c.PostForm("address"),
+		MinimumValue:          minimumValue,
+		MaximumValue:          maximumValue,
+		MinSqft:               minSqft,
+		MaxSqft:               maxSqft,
+		Notes:                 c.PostForm("notes"),
+	}
+
+	id, err := neighborhoodCollection.UpdateByID(c, bson.D{{"_id", c.Param("neighborhood")}}, neighborhood)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	c.JSON(200, id)
 }
 
 func deleteNeighborhood(c *gin.Context) {
-	result, err := squirrel.Delete("neighborhoods").Where(squirrel.Eq{"id": c.Param("neighborhood")}).
-		RunWith(database).Exec()
+	neighborhoodsCollections := mongoDB.Collection("neighborhoods")
+
+	/// Delete metro
+	_, err := neighborhoodsCollections.DeleteOne(c, bson.D{{"_id", c.Param("neighborhood")}})
 	if err != nil {
 		log.Fatal(err)
 	}
-	rowsAffected, err := result.RowsAffected()
-	if err != nil {
-		log.Fatal(err)
-	}
-	if rowsAffected > 0 {
-		c.String(200, "success")
-	}
+
+	c.String(200, "success")
 }
 
 func internalNeighborhoodsForMetro(c *gin.Context) []Neighborhood {
 	neighborhoodsCollection := mongoDB.Collection("neighborhoods")
-	cursor, err := neighborhoodsCollection.Find(c, bson.D{{"metro_id", c.Param("metro")}})
+	cursor, err := neighborhoodsCollection.Find(c, bson.D{{"metro_id", c.Param("neighborhood")}})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -107,7 +197,7 @@ func internalNeighborhoodsForMetro(c *gin.Context) []Neighborhood {
 
 func internalNeighborhoodsForCity(c *gin.Context) []Neighborhood {
 	neighborhoodsCollection := mongoDB.Collection("neighborhoods")
-	cursor, err := neighborhoodsCollection.Find(c, bson.D{{"city_id", c.Param("city")}})
+	cursor, err := neighborhoodsCollection.Find(c, bson.D{{"city_id", c.Param("neighborhood")}})
 	if err != nil {
 		log.Fatal(err)
 	}

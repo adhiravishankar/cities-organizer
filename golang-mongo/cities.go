@@ -24,7 +24,7 @@ func cities(c *gin.Context) {
 	c.JSON(200, &cities)
 }
 
-func insertCity(c *gin.Context) {
+func createCity(c *gin.Context) {
 	citiesCollections := mongoDB.Collection("cities")
 
 	population, err := strconv.ParseInt(c.PostForm("population"), 10, 10)
@@ -48,10 +48,10 @@ func insertCity(c *gin.Context) {
 	c.JSON(200, insertOneResult)
 }
 
-func getCity(c *gin.Context) {
+func readCity(c *gin.Context) {
 	citiesCollections := mongoDB.Collection("cities")
 
-	var result = citiesCollections.FindOne(c, bson.M{"_id": c.Param("metro")})
+	var result = citiesCollections.FindOne(c, bson.M{"_id": c.Param("city")})
 	city := City{}
 	err := result.Decode(&city)
 	if err != nil {
@@ -83,7 +83,7 @@ func updateCity(c *gin.Context) {
 		Notes:         c.PostForm("notes"),
 	}
 
-	id, err := citiesCollections.UpdateByID(c, bson.D{{"_id", c.Param("metro")}}, city)
+	id, err := citiesCollections.UpdateByID(c, bson.D{{"_id", c.Param("city")}}, city)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -56,7 +56,7 @@ type DetailedNeighborhood struct {
 }
 
 type Pic struct {
-	AttributeID string
+	AttributeID string `bson:"attribute_id"`
 	ID          string
-	URL         string
+	URL         string `bson:"url"`
 }

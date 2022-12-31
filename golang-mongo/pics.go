@@ -6,6 +6,7 @@ import (
 	awstypes "github.com/aws/aws-sdk-go-v2/service/s3/types"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"go.mongodb.org/mongo-driver/bson"
 	"log"
 	"path/filepath"
 )
@@ -55,7 +56,23 @@ func uploadPics(c *gin.Context) {
 	c.JSON(200, insertOneResult)
 }
 
-func listPics(c *gin.Context, attribute string) {
-	pictures := mongoDB.Collection("pictures")
+func internalListPics(c *gin.Context, attribute string) []string {
+	picturesCollection := mongoDB.Collection("pictures")
+	cursor, err := picturesCollection.Find(c, bson.D{{"attribute_id", attribute}})
+	if err != nil {
+		log.Fatal(err)
+	}
 
+	var pics []Pic
+	err = cursor.All(c, &pics)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var picURLs []string
+	for _, pic := range pics {
+		picURLs = append(picURLs, pic.URL)
+	}
+
+	return picURLs
 }

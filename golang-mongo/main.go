@@ -40,16 +40,16 @@ func main() {
 
 	// Cities CRUD API
 	router.GET("/cities", cities)
-	router.POST("/cities", insertCity)
-	router.GET("/cities/:city", getCity)
+	router.POST("/cities", createCity)
+	router.GET("/cities/:city", readCity)
 	router.PUT("/cities/:city", updateCity)
 	router.DELETE("/cities/:city", deleteCity)
 
 	// Neighborhoods CRUD API
 	router.GET("/neighborhoods", neighborhoods)
-	router.POST("/neighborhoods", insertNeighborhood)
-	router.GET("/neighborhoods/:neighborhood", getNeighborhood)
-	router.PUT("/neighborhoods/:neighborhood", editNeighborhood)
+	router.POST("/neighborhoods", createNeighborhood)
+	router.GET("/neighborhoods/:neighborhood", readNeighborhood)
+	router.PUT("/neighborhoods/:neighborhood", updateNeighborhood)
 	router.DELETE("/neighborhoods/:neighborhood", deleteNeighborhood)
 
 	// Pics API
