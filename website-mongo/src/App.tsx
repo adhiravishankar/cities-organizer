@@ -1,7 +1,7 @@
 import { RouterProvider } from 'react-router';
 
-import { createRouter } from './routes/routes';
-import { AppStore } from './stores/AppStore';
+import { createRouter } from './common/routes/routes';
+import { AppStore } from './common/stores/AppStore';
 
 
 export function App() {

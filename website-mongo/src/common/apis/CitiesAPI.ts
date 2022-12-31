@@ -1,4 +1,4 @@
-import ky from "ky";
+import ky, { KyResponse } from 'ky';
 
 export class CitiesAPI {
   baseURL: string;
@@ -7,15 +7,15 @@ export class CitiesAPI {
     this.baseURL = baseURL;
   }
 
-  async cities(): Promise<unknown> {
+  async cities(): Promise<KyResponse> {
     return ky.get(this.baseURL + '/cities').json();
   }
 
-  async getCity(id: number): Promise<unknown> {
+  async getCity(id: number): Promise<KyResponse> {
     return ky.get(this.baseURL + '/cities/' + id).json();
   }
 
-  async insertCity(name: string, metroID: number, population: number, featuredImage: string, notes: string): Promise<Response> {
+  async insertCity(name: string, metroID: number, population: number, featuredImage: string, notes: string): Promise<KyResponse> {
     const formData = new FormData();
     formData.set('name', name);
     formData.set('metro_id', metroID.toString());
@@ -25,7 +25,7 @@ export class CitiesAPI {
     return ky.post(this.baseURL + '/metros/', { body: formData });
   }
 
-  async editCity(id: number, name: string, population: number, featuredImage: string, notes: string): Promise<Response> {
+  async editCity(id: number, name: string, population: number, featuredImage: string, notes: string): Promise<KyResponse> {
     const formData = new FormData();
     formData.set('name', name);
     formData.set('featured_image', featuredImage);

@@ -1,4 +1,4 @@
-import ky, {KyResponse} from "ky";
+import ky, { KyResponse } from 'ky';
 
 export class API {
   baseURL: string;

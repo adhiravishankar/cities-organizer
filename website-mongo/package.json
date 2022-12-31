@@ -1,11 +1,20 @@
 {
   "name": "@adhiravishankar/colognes-website-mongo",
   "version": "1.0.0",
+  "scripts": {
+    "build": "redrun --series build:components build:parcel",
+    "build:components": "redrun --parallel build:sass build:tsc",
+    "build:sass": "node sass-compile.js",
+    "build:tsc": "tsc -p .",
+    "build:parcel": "parcel build/index.html",
+    "lint": "eslint . --ext .ts,.tsx --fix"
+  },
   "dependencies": {
     "ky": "^0.33.1",
     "mobx": "^6.7.0",
     "mobx-react-lite": "^3.4.0",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.7.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.41.2",
     "react-router": "^6.6.1",
