@@ -10,9 +10,15 @@
     "lint": "eslint . --ext .ts,.tsx --fix"
   },
   "dependencies": {
+    "@babel/core": "^7.20.7",
+    "@mui/material": "^5.11.2",
+    "@mui/icons-material": "^5.11.0",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@tanstack/react-table": "^8.7.4",
     "ky": "^0.33.1",
     "material-colors": "^1.2.6",
+    "material-react-table": "^1.5.4",
     "mobx": "^6.7.0",
     "mobx-react-lite": "^3.4.0",
     "queue-typescript": "^1.0.1",

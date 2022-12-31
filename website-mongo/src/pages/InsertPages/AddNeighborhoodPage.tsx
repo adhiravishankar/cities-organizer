@@ -1,10 +1,10 @@
+import {MenuItem, Select, TextField} from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
-import { DropdownNumberMap } from '../../common/hooks/DropdownNumberMap';
 import { FormsPage } from '../../common/hooks/FormsPage';
 import { Neighborhood } from '../../common/interfaces/Neighborhood';
 import { AppStore } from '../../common/stores/AppStore';
@@ -32,59 +32,70 @@ export const AddNeighborhoodPage = observer<AddNeighborhoodPageProps>((props: Ad
     miField.onChange(events);
   }, []);
 
+  const metroItems: JSX.Element[] = [];
+  store.metroNamesMap.forEach((text: string, id: string) =>
+    metroItems.push(<MenuItem key={ id } value={ id }>{ text }</MenuItem>));
+
+  const cityItems: JSX.Element[] = [];
+  store.filteredCitiesMap.forEach((text: string, id: string) =>
+    cityItems.push(<MenuItem key={ id } value={ id }>{ text }</MenuItem>));
 
   return (
     <FormsPage title="Add Neighborhood">
       <Row>
         <Col>
-          <Controller name="Name" control={control} render={({ field }) => <Form.Control { ...field } id="name" placeholder="Name" /> }/>
+          <Controller name="Name" control={control} render={({ field }) => <TextField { ...field } id="name" placeholder="Name" /> }/>
         </Col>
         <Col>
-          <Controller name="Link" control={control} render={({ field }) => <Form.Control { ...field } id="Link" placeholder="Link" /> }/>
+          <Controller name="Link" control={control} render={({ field }) => <TextField { ...field } id="Link" placeholder="Link" /> }/>
         </Col>
         <Col className="col-2">
-          <DropdownNumberMap onChange={ onChangeMetroArea } options={ store.metroNamesMap } title="Metro Area" value={ miField.value } />
+          <Select onChange={ miField.onChange } label="Metro Area" value={ miField.value }>
+            { metroItems }
+          </Select>
         </Col>
         <Col className="col-2">
-          <DropdownNumberMap onChange={ ciField.onChange } options={ store.filteredCitiesMap } title="City Area" value={ ciField.value } />
+          <Select onChange={ ciField.onChange } label="City Area" value={ ciField.value }>
+            { cityItems }
+          </Select>
         </Col>
       </Row>
       <Row>
         <Col>
-          <Controller name="Address" control={control} render={({ field }) => <Form.Control { ...field } id="Address" placeholder="Address" /> }/>
+          <Controller name="Address" control={control} render={({ field }) => <TextField { ...field } id="Address" placeholder="Address" /> }/>
         </Col>
       </Row>
       <Row>
         <Col>
-          <Controller name="ElementarySchoolScore" control={control} render={({ field }) => <Form.Control { ...field } id="ElementarySchoolScore" placeholder="Elementary School Score" type="number" /> }/>
+          <Controller name="ElementarySchoolScore" control={control} render={({ field }) => <TextField { ...field } id="ElementarySchoolScore" placeholder="Elementary School Score" type="number" /> }/>
         </Col>
         <Col>
-          <Controller name="MiddleSchoolScore" control={control} render={({ field }) => <Form.Control { ...field } id="MiddleSchoolScore" placeholder="Middle School Score" type="number" /> }/>
+          <Controller name="MiddleSchoolScore" control={control} render={({ field }) => <TextField { ...field } id="MiddleSchoolScore" placeholder="Middle School Score" type="number" /> }/>
         </Col>
         <Col>
-          <Controller name="HighSchoolScore" control={control} render={({ field }) => <Form.Control { ...field } id="HighSchoolScore" placeholder="High School Score" type="number" /> }/>
+          <Controller name="HighSchoolScore" control={control} render={({ field }) => <TextField { ...field } id="HighSchoolScore" placeholder="High School Score" type="number" /> }/>
         </Col>
         <Col>
-          <Controller name="MinimumValue" control={control} render={({ field }) => <Form.Control { ...field } id="MinimumValue" placeholder="Minimum Value" type="number" /> }/>
+          <Controller name="MinimumValue" control={control} render={({ field }) => <TextField { ...field } id="MinimumValue" placeholder="Minimum Value" type="number" /> }/>
         </Col>
         <Col>
-          <Controller name="MaximumValue" control={control} render={({ field }) => <Form.Control { ...field } id="MaximumValue" placeholder="Maximum Value" type="number" /> }/>
+          <Controller name="MaximumValue" control={control} render={({ field }) => <TextField { ...field } id="MaximumValue" placeholder="Maximum Value" type="number" /> }/>
         </Col>
         <Col>
-          <Controller name="MinSqft" control={control} render={({ field }) => <Form.Control { ...field } id="MinSqft" placeholder="Minimum Sq. Ft." type="number" /> }/>
+          <Controller name="MinSqft" control={control} render={({ field }) => <TextField { ...field } id="MinSqft" placeholder="Minimum Sq. Ft." type="number" /> }/>
         </Col>
         <Col>
-          <Controller name="MaxSqft" control={control} render={({ field }) => <Form.Control { ...field } id="MaxSqft" placeholder="Maximum Sq. Ft." type="number" /> }/>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Controller name="Notes" control={control} render={({ field }) => <Form.Control { ...field } id="Notes" placeholder="Notes" as="textarea" rows={ 10 } /> }/>
+          <Controller name="MaxSqft" control={control} render={({ field }) => <TextField { ...field } id="MaxSqft" placeholder="Maximum Sq. Ft." type="number" /> }/>
         </Col>
       </Row>
       <Row>
         <Col>
-          <Button onClick={ handleSubmit(onSubmit) } type="submit">Submit</Button>
+          <Controller name="Notes" control={control} render={({ field }) => <TextField { ...field } id="Notes" placeholder="Notes" multiline rows={ 10 } /> }/>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Button variant="contained" onClick={ handleSubmit(onSubmit) } type="submit">Submit</Button>
         </Col>
       </Row>
     </FormsPage>

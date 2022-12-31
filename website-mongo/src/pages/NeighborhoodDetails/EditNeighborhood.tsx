@@ -1,11 +1,11 @@
 import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
 
-import { DropdownUsingArray } from '../../common/hooks/DropdownUsingArray';
 import { Neighborhood } from '../../common/interfaces/Neighborhood';
 import { AppStore } from '../../common/stores/AppStore';
+import {MenuItem, Select, TextField} from "@mui/material";
 
 
 export interface EditNeighborhoodProps {
@@ -27,6 +27,10 @@ export const EditNeighborhood = observer<EditNeighborhoodProps>((props: EditNeig
 
   const { field: fiField } = useController({ name: 'FeaturedImage', control });
 
+  const picsJSX: JSX.Element[] = [];
+  store.selectedNeighborhood.Pics.forEach((text: string) =>
+    picsJSX.push(<MenuItem key={ text } value={ text }>{ text }</MenuItem>));
+
   return (
     <Modal show={ store.editingModalOpen } onHide={ handleClose }>
       <Modal.Header closeButton>
@@ -34,9 +38,9 @@ export const EditNeighborhood = observer<EditNeighborhoodProps>((props: EditNeig
       </Modal.Header>
       <Modal.Body>
         <form>
-          <Controller name="Name" control={control} render={({ field }) => <Form.Control { ...field } id="name" placeholder="Name" /> }/>
-          <DropdownUsingArray onChange={ fiField.onChange } options={ store.selectedNeighborhood.Pics } title="Featured Image" value={ fiField.value } />
-          <Button onClick={ handleSubmit(onSubmit) } type="submit">Submit</Button>
+          <Controller name="Name" control={control} render={({ field }) => <TextField { ...field } id="name" placeholder="Name" /> }/>
+          <Select onChange={ fiField.onChange } value={ fiField.value } label="Featured Image">{ picsJSX }</Select>
+          <Button variant="contained" onClick={ handleSubmit(onSubmit) } type="submit">Submit</Button>
         </form>
       </Modal.Body>
     </Modal>

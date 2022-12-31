@@ -1,7 +1,8 @@
 import { Fragment, PropsWithChildren } from 'react';
-import { Card, Col, Container, Row, Stack } from 'react-bootstrap';
+import { Col, Container, Row, Stack } from 'react-bootstrap';
 
 import { NavBar } from './NavBar';
+import {Card, CardContent, CardHeader, Typography} from "@mui/material";
 
 interface Props {
   title: string;
@@ -18,12 +19,10 @@ export function FormsPage(props: FormsPageProps) {
         <Row>
           <Col>
             <Card>
-              <Card.Header>
-                <Card.Title>{ title }</Card.Title>
-              </Card.Header>
-              <Card.Body>
+              <CardContent>
+                <h1>{ title }</h1>
                 <Stack gap={ 3 }>{ children }</Stack>
-              </Card.Body>
+              </CardContent>
             </Card>
           </Col>
         </Row>

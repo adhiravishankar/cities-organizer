@@ -1,5 +1,6 @@
+import { Button, TextField } from '@mui/material';
 import { useCallback } from 'react';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
@@ -26,26 +27,26 @@ export function AddMetroPage(props: AddMetroPageProps) {
     <FormsPage title="Add Metro">
       <Row>
         <Col>
-          <Controller name="Name" control={control} render={({ field }) => <Form.Control { ...field } id="name" placeholder="Name" /> }/>
+          <Controller name="Name" control={control} render={({ field }) => <TextField { ...field } fullWidth id="name" label="Name" placeholder="Name" /> }/>
         </Col>
         <Col>
-          <Controller name="ExtendedName" control={control} render={({ field }) => <Form.Control { ...field } id="extended_name" placeholder="Extended Name" /> }/>
+          <Controller name="ExtendedName" control={control} render={({ field }) => <TextField { ...field } fullWidth id="extended_name" label="Extended Name" placeholder="Extended Name" /> }/>
         </Col>
         <Col>
-          <Controller name="Population" control={control} render={({ field }) => <Form.Control { ...field } id="population" placeholder="Population" type="number" /> }/>
+          <Controller name="Population" control={control} render={({ field }) => <TextField { ...field } fullWidth id="population" label="Population" placeholder="Population" type="number" /> }/>
         </Col>
         <Col>
-          <Controller name="MetroSizeRank" control={control} render={({ field }) => <Form.Control { ...field } id="MetroSizeRank" placeholder="Metro Size Rank" type="number" /> }/>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Controller name="Notes" control={control} render={({ field }) => <Form.Control { ...field } id="Notes" placeholder="Notes" as="textarea" rows={ 10 } /> }/>
+          <Controller name="MetroSizeRank" control={control} render={({ field }) => <TextField { ...field } fullWidth id="MetroSizeRank" label="Metro Size Rank" placeholder="Metro Size Rank" type="number" /> }/>
         </Col>
       </Row>
       <Row>
         <Col>
-          <Button onClick={ handleSubmit(onSubmit) } type="submit">Submit</Button>
+          <Controller name="Notes" control={control} render={({ field }) => <TextField { ...field } id="Notes" label="Notes" placeholder="Notes" multiline fullWidth rows={ 10 } /> }/>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Button variant="contained" onClick={ handleSubmit(onSubmit) } type="submit">Submit</Button>
         </Col>
       </Row>
     </FormsPage>

@@ -3,9 +3,9 @@ import { useCallback } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
 
-import { DropdownUsingArray } from '../../common/hooks/DropdownUsingArray';
 import { City } from '../../common/interfaces/City';
 import { AppStore } from '../../common/stores/AppStore';
+import {MenuItem, Select, TextField} from "@mui/material";
 
 
 export interface EditCityProps {
@@ -27,6 +27,10 @@ export const EditCity = observer<EditCityProps>((props: EditCityProps) => {
 
   const { field: fiField } = useController({ name: 'FeaturedImage', control });
 
+  const picsJSX: JSX.Element[] = [];
+  store.selectedCity.Pics.forEach((text: string) =>
+    picsJSX.push(<MenuItem key={ text } value={ text }>{ text }</MenuItem>));
+
   return (
     <Modal show={ store.editingModalOpen } onHide={ handleClose }>
       <Modal.Header closeButton>
@@ -34,10 +38,10 @@ export const EditCity = observer<EditCityProps>((props: EditCityProps) => {
       </Modal.Header>
       <Modal.Body>
         <form>
-          <Controller name="Name" control={control} render={({ field }) => <Form.Control { ...field } id="name" placeholder="Name" /> }/>
-          <Controller name="Population" control={control} render={({ field }) => <Form.Control { ...field } id="population" placeholder="Population" type="number" /> }/>
-          <DropdownUsingArray onChange={ fiField.onChange } options={ store.selectedCity.Pics } title="Featured Image" value={ fiField.value } />
-          <Button onClick={ handleSubmit(onSubmit) } type="submit">Submit</Button>
+          <Controller name="Name" control={control} render={({ field }) => <TextField { ...field } id="name" placeholder="Name" /> }/>
+          <Controller name="Population" control={control} render={({ field }) => <TextField { ...field } id="population" placeholder="Population" type="number" /> }/>
+          <Select onChange={ fiField.onChange } value={ fiField.value } label="Featured Image">{ picsJSX }</Select>
+          <Button variant="contained" onClick={ handleSubmit(onSubmit) } type="submit">Submit</Button>
         </form>
       </Modal.Body>
     </Modal>
