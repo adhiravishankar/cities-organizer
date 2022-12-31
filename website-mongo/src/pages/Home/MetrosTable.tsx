@@ -1,10 +1,10 @@
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { Table } from 'react-bootstrap';
+import { NumericFormat } from 'react-number-format';
 
+import { getOrdinal } from '../../common/functions/getOrdinal';
 import { Metro } from '../../common/interfaces/Metro';
 import { AppStore } from '../../common/stores/AppStore';
-import {NumericFormat} from "react-number-format";
-import { getOrdinal } from '../../common/functions/getOrdinal';
 
 export interface MetrosTableProps {
   store: AppStore;

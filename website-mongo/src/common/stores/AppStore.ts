@@ -34,6 +34,8 @@ export class AppStore {
 
   selectedCity: DetailedCity;
 
+  citiesArray: City[] = observable.array();
+
   citiesMap: Map<string, City> = observable.map();
 
   get filteredCitiesMap(): Map<string, string> {
@@ -48,6 +50,8 @@ export class AppStore {
 
   selectedNeighborhood: DetailedNeighborhood;
 
+  neighborhoodsArray: Neighborhood[] = observable.array();
+
   neighborhoodsMap: Map<string, Neighborhood> = observable.map();
 
   editingModalOpen: boolean;
@@ -59,6 +63,7 @@ export class AppStore {
     this.metroAPI = new MetroAPI(process.env.BASE_URL);
     this.citiesAPI = new CitiesAPI(process.env.BASE_URL);
     makeObservable(this, {
+      citiesArray: observable,
       citiesMap: observable,
       editingModalOpen: observable,
       editingModalVisibilityChange: action,
@@ -76,6 +81,7 @@ export class AppStore {
       metroNamesMap: computed,
       metrosArray: observable,
       metrosMap: observable,
+      neighborhoodsArray: observable,
       neighborhoodsMap: observable,
       selectedCity: observable,
       selectedMetro: observable,
@@ -128,9 +134,9 @@ export class AppStore {
 
   *fetchCities() {
     const response: KyResponse = yield this.citiesAPI.cities();
-    const cities = yield response.json<City[]>();
+    this.citiesArray = yield response.json<City[]>();
     this.citiesMap.clear();
-    cities.forEach((city: City) => this.citiesMap.set(city.ID, city));
+    this.citiesArray.forEach((city: City) => this.citiesMap.set(city.ID, city));
   }
 
   *fetchCity(id: string) {
@@ -157,8 +163,9 @@ export class AppStore {
 
   *fetchNeighborhoods() {
     const response: KyResponse = yield this.api.neighborhoods();
-    const neighborhoods: Neighborhood[] = yield response.json<Neighborhood[]>();
-    neighborhoods.forEach((neighboorhood: Neighborhood) => this.neighborhoodsMap.set(neighboorhood.ID, neighboorhood));
+    this.neighborhoodsArray = yield response.json<Neighborhood[]>();
+    this.neighborhoodsMap.clear();
+    this.neighborhoodsArray.forEach((neighboorhood: Neighborhood) => this.neighborhoodsMap.set(neighboorhood.ID, neighboorhood));
   }
 
   *fetchNeighborhood(id: string) {

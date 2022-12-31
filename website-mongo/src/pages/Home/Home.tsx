@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { Fragment, useCallback } from 'react';
-import {Container, Tab, Tabs} from 'react-bootstrap';
+import { Container, Tab, Tabs } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
 import { ImageList } from '../../common/hooks/ImageList';
@@ -8,13 +8,15 @@ import { LabeledImageItem } from '../../common/hooks/LabeledImageItem';
 import { NavBar } from '../../common/hooks/NavBar';
 import { Metro } from '../../common/interfaces/Metro';
 import { AppStore } from '../../common/stores/AppStore';
-import {MetrosTable} from "./MetrosTable";
+import { CitiesTable } from './CitiesTable';
+import { MetrosTable } from './MetrosTable';
+import { NeighborhoodsTable } from './NeighborhoodsTable';
 
-export interface MetrosPageProps {
+export interface HomePageProps {
   store: AppStore;
 }
 
-export const MetrosPage = observer<MetrosPageProps>((props: MetrosPageProps) => {
+export const Home = observer<HomePageProps>((props: HomePageProps) => {
   const { store } = props;
 
   const metrosJSX: JSX.Element[] = [];
@@ -31,8 +33,8 @@ export const MetrosPage = observer<MetrosPageProps>((props: MetrosPageProps) => 
       <NavBar editIcon={ false } name="Metros" />
       <Container className="body-container images-grid">
         <Tabs
-          defaultActiveKey="profile"
-          id="justify-tab-example"
+          defaultActiveKey="metros"
+          id="home-page-tabs"
           className="mb-3"
           justify
         >
@@ -42,11 +44,11 @@ export const MetrosPage = observer<MetrosPageProps>((props: MetrosPageProps) => 
           <Tab eventKey="metros-table" title="Metros Table">
             <MetrosTable store={ store } />
           </Tab>
-          <Tab eventKey="longer-tab" title="Loooonger Tab">
-
+          <Tab eventKey="cities-table" title="Cities Table">
+            <CitiesTable store={ store } />
           </Tab>
-          <Tab eventKey="contact" title="Contact" disabled>
-
+          <Tab eventKey="neighborhoods-table" title="Neighborhoods Table">
+            <NeighborhoodsTable store={ store } />
           </Tab>
         </Tabs>
       </Container>

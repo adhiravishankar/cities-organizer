@@ -1,5 +1,6 @@
 import ky, { KyResponse } from 'ky';
-import {Neighborhood} from "../interfaces/Neighborhood";
+
+import { Neighborhood } from '../interfaces/Neighborhood';
 
 export class API {
   baseURL: string;
