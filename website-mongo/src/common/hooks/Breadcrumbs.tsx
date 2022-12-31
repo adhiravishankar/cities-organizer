@@ -39,11 +39,9 @@ export function Breadcrumbs(props: BreadcrumbsProps) {
   }
 
   return (
-    <Row>
-      <Breadcrumb>
-        { breadcrumbs }
-      </Breadcrumb>
-    </Row>
+    <Breadcrumb>
+      { breadcrumbs }
+    </Breadcrumb>
   );
 
 }

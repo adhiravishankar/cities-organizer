@@ -4,7 +4,7 @@ import { Metro } from './Metro';
 import { Neighborhood } from './Neighborhood';
 
 
-export interface DetailedMetro extends Metro {
+export interface DetailedMetro {
 
   Metropolitan: Metro;
 

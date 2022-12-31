@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 
 import { DropdownNumberMap } from '../../common/hooks/DropdownNumberMap';
 import { FormsPage } from '../../common/hooks/FormsPage';
@@ -15,9 +16,11 @@ export interface AddNeighborhoodPageProps {
 export const AddNeighborhoodPage = observer<AddNeighborhoodPageProps>((props: AddNeighborhoodPageProps) => {
   const { store } = props;
   const { handleSubmit, control } = useForm<Neighborhood>();
+  const navigation = useNavigate();
 
-  const onSubmit = useCallback((data: Neighborhood) => {
-
+  const onSubmit = useCallback(async (data: Neighborhood) => {
+    await store.insertNeighborhood(data);
+    navigation('/');
   }, [store]);
 
   const { field: ciField } = useController({ name: 'CityID', control });

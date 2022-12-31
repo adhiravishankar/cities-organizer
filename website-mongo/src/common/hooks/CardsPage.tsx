@@ -1,5 +1,5 @@
 import { Fragment, PropsWithChildren, ReactNode } from 'react';
-import { Card, Container, Row, Stack } from 'react-bootstrap';
+import { Card, Col, Container, Row, Stack } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 
 import { AddPics, AddPicsProps } from './AddPics';
@@ -24,18 +24,20 @@ export function CardsPage(props: PropsWithChildren<CardsPageProps>) {
     <Fragment>
       <NavBar { ...navBarProps } />
       <Container className="body-container">
-        <Stack direction="vertical" gap={3}>
-          <Breadcrumbs { ...breadcrumbs } />
-          { children }
-          <Row>
-            <Card>
-              <Card.Header><Card.Title>Notes</Card.Title></Card.Header>
-              <Card.Body>
-                <ReactMarkdown>{ notes }</ReactMarkdown>
-              </Card.Body>
-            </Card>
-          </Row>
-        </Stack>
+        <Row>
+          <Col>
+            <Stack direction="vertical" gap={3}>
+              <Breadcrumbs { ...breadcrumbs } />
+              { children }
+              <Card>
+                <Card.Header><Card.Title>Notes</Card.Title></Card.Header>
+                <Card.Body>
+                  <ReactMarkdown>{ notes }</ReactMarkdown>
+                </Card.Body>
+              </Card>
+            </Stack>
+          </Col>
+        </Row>
       </Container>
       { editModal }
       <AddPics { ...addPicsProps } />

@@ -35,14 +35,12 @@ export function LabeledImagesCard(props: LabeledImagesCardProps) {
   );
 
   return (
-    <Row>
-      <Card className="images-card">
-        <Card.Header>
-          <Card.Title>{ name }</Card.Title>
-          <div className="card-add" onClick={ onItemAddClickHandler }><i className="fas fa-plus" /></div>
-        </Card.Header>
-        <Card.Body>{ itemsJSX }</Card.Body>
-      </Card>
-    </Row>
+    <Card className="images-card">
+      <Card.Header className="card-actions-header">
+        <Card.Title>{ name }</Card.Title>
+        <div className="card-add" onClick={ onItemAddClickHandler }><i className="fas fa-plus" /></div>
+      </Card.Header>
+      <Card.Body>{ itemsJSX }</Card.Body>
+    </Card>
   );
 }

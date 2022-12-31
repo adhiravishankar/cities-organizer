@@ -18,7 +18,7 @@ type DetailedMetro struct {
 }
 
 type City struct {
-	ID            string
+	ID            string `bson:"_id"`
 	MetroID       string `bson:"metro_id"`
 	Name          string `bson:"name"`
 	Population    int64  `bson:"population"`
@@ -33,7 +33,7 @@ type DetailedCity struct {
 }
 
 type Neighborhood struct {
-	ID                    string
+	ID                    string `bson:"_id"`
 	CityID                string `bson:"city_id"`
 	MetroID               string `bson:"metro_id"`
 	FeaturedImage         string `bson:"featured_image"`
@@ -56,7 +56,7 @@ type DetailedNeighborhood struct {
 }
 
 type Pic struct {
-	ID          string
+	ID          string `bson:"_id"`
 	AttributeID string `bson:"attribute_id"`
 	URL         string `bson:"url"`
 }

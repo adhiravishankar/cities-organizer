@@ -32,7 +32,7 @@ func cities(c *gin.Context) {
 func createCity(c *gin.Context) {
 	citiesCollections := mongoDB.Collection("cities")
 
-	population, err := strconv.ParseInt(c.PostForm("population"), 10, 10)
+	population, err := strconv.ParseInt(c.PostForm("population"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -75,7 +75,7 @@ func readCity(c *gin.Context) {
 func updateCity(c *gin.Context) {
 	citiesCollections := mongoDB.Collection("cities")
 
-	population, err := strconv.ParseInt(c.PostForm("population"), 10, 10)
+	population, err := strconv.ParseInt(c.PostForm("population"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}

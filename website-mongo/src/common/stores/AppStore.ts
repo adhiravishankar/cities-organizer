@@ -62,12 +62,14 @@ export class AppStore {
       editingModalOpen: observable,
       editingModalVisibilityChange: action,
       fetchCities: flow,
+      fetchMetro: flow,
       fetchMetros: flow,
       fetchNeighborhoods: flow,
       filteredCitiesMap: computed,
       initialize: flow,
       insertCity: flow,
       insertMetro: flow,
+      insertNeighborhood: flow,
       metroNamesMap: computed,
       metrosMap: observable,
       neighborhoodsMap: observable,
@@ -90,7 +92,13 @@ export class AppStore {
   *fetchMetros() {
     const response: KyResponse = yield this.metroAPI.metros();
     const metros: Metro[] = yield response.json<Metro[]>();
+    this.metrosMap.clear();
     metros.forEach((metro: Metro) => this.metrosMap.set(metro.ID, metro));
+  }
+
+  *fetchMetro(id: number) {
+    const response: KyResponse = yield this.metroAPI.getMetro(id);
+    this.selectedMetro = yield response.json<DetailedMetro>();
   }
 
   *insertMetro(name: string, extendedName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string) {
@@ -115,8 +123,9 @@ export class AppStore {
   }
 
   *fetchCities() {
-    const citiesArray: unknown = yield this.citiesAPI.cities();
-    const cities = citiesArray as City[];
+    const response: KyResponse = yield this.citiesAPI.cities();
+    const cities = yield response.json<City[]>();
+    this.citiesMap.clear();
     cities.forEach((city: City) => this.citiesMap.set(city.ID, city));
   }
 
@@ -141,6 +150,14 @@ export class AppStore {
     const response: KyResponse = yield this.api.neighborhoods();
     const neighborhoods: Neighborhood[] = yield response.json<Neighborhood[]>();
     neighborhoods.forEach((neighboorhood: Neighborhood) => this.neighborhoodsMap.set(neighboorhood.ID, neighboorhood));
+  }
+
+  *insertNeighborhood(neighborhood: Neighborhood) {
+    const response: KyResponse = yield this.api.insertNeighborhood(neighborhood);
+    if (response.ok) {
+      const neighborhoodID = yield response.text();
+      console.log(neighborhoodID);
+    }
   }
 
   *uploadPic(id: string, file: File) {

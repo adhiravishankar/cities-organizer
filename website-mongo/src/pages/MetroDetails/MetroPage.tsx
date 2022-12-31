@@ -62,17 +62,17 @@ export const MetroPage = observer<MetroProps>((props: MetroProps) => {
     selectedMetro.Cities
       .map<LabeledImage>((city: City) => { return { ID: city.ID, Label: city.Name, Source: city.FeaturedImage }; });
 
-  const metroName = selectedMetro.Name;
+  const metroName = selectedMetro.Metropolitan.Name;
 
-  const breadCrumbsProps: BreadcrumbsProps = { active: 'metro', metroID: selectedMetro.ID, metro: metroName };
+  const breadCrumbsProps: BreadcrumbsProps = { active: 'metro', metroID: selectedMetro.Metropolitan.ID, metro: metroName };
   const editCity = <EditMetro id={ metro.ID } store={ store } />;
   const addPicsProps: AddPicsProps = { onCloseModal: closeUploadPicsScreen, shown: store.uploadPicsModalOpen, fileUpload };
-  const navBarProps: NavBarProps = { editIcon: true, id: selectedMetro.ID, onEdit: openEditingScreen, name: selectedMetro.Name };
+  const navBarProps: NavBarProps = { editIcon: true, id: selectedMetro.Metropolitan.ID, onEdit: openEditingScreen, name: selectedMetro.Metropolitan.Name };
 
   return (
     <CardsPage
       breadcrumbs={ breadCrumbsProps }
-      notes={ selectedMetro.Notes }
+      notes={ selectedMetro.Metropolitan.Notes }
       editModal={ editCity }
       addPicsProps={ addPicsProps }
       navBarProps={ navBarProps }

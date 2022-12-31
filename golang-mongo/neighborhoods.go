@@ -49,37 +49,37 @@ func readNeighborhood(c *gin.Context) {
 func createNeighborhood(c *gin.Context) {
 	neighborhoodCollection := mongoDB.Collection("neighborhoods")
 
-	highSchoolScore, err := strconv.ParseInt(c.PostForm("high_school_score"), 10, 10)
+	highSchoolScore, err := strconv.ParseInt(c.PostForm("high_school_score"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	middleSchoolScore, err := strconv.ParseInt(c.PostForm("middle_school_score"), 10, 10)
+	middleSchoolScore, err := strconv.ParseInt(c.PostForm("middle_school_score"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	elementarySchoolScore, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	elementarySchoolScore, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	minimumValue, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	minimumValue, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	maximumValue, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	maximumValue, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	minSqft, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	minSqft, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	maxSqft, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	maxSqft, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -112,37 +112,37 @@ func createNeighborhood(c *gin.Context) {
 func updateNeighborhood(c *gin.Context) {
 	neighborhoodCollection := mongoDB.Collection("neighborhoods")
 
-	highSchoolScore, err := strconv.ParseInt(c.PostForm("high_school_score"), 10, 10)
+	highSchoolScore, err := strconv.ParseInt(c.PostForm("high_school_score"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	middleSchoolScore, err := strconv.ParseInt(c.PostForm("middle_school_score"), 10, 10)
+	middleSchoolScore, err := strconv.ParseInt(c.PostForm("middle_school_score"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	elementarySchoolScore, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	elementarySchoolScore, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	minimumValue, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	minimumValue, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	maximumValue, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	maximumValue, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	minSqft, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	minSqft, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	maxSqft, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 10)
+	maxSqft, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -187,7 +187,7 @@ func deleteNeighborhood(c *gin.Context) {
 
 func internalNeighborhoodsForMetro(c *gin.Context) []Neighborhood {
 	neighborhoodsCollection := mongoDB.Collection("neighborhoods")
-	cursor, err := neighborhoodsCollection.Find(c, bson.D{{"metro_id", c.Param("neighborhood")}})
+	cursor, err := neighborhoodsCollection.Find(c, bson.D{{"metro_id", c.Param("metro")}})
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -51,12 +51,12 @@ func readMetro(c *gin.Context) {
 func createMetro(c *gin.Context) {
 	metrosCollections := mongoDB.Collection("metros")
 
-	population, err := strconv.ParseInt(c.PostForm("population"), 10, 10)
+	population, err := strconv.ParseInt(c.PostForm("population"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	metroSizeRank, err := strconv.ParseInt(c.PostForm("metro_size_rank"), 10, 10)
+	metroSizeRank, err := strconv.ParseInt(c.PostForm("metro_size_rank"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -80,12 +80,12 @@ func createMetro(c *gin.Context) {
 func updateMetro(c *gin.Context) {
 	metrosCollections := mongoDB.Collection("metros")
 
-	population, err := strconv.ParseInt(c.PostForm("population"), 10, 10)
+	population, err := strconv.ParseInt(c.PostForm("population"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	metroSizeRank, err := strconv.ParseInt(c.PostForm("metro_size_rank"), 10, 10)
+	metroSizeRank, err := strconv.ParseInt(c.PostForm("metro_size_rank"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
