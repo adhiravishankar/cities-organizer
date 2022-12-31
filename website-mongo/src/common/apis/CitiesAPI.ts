@@ -25,7 +25,7 @@ export class CitiesAPI {
     return ky.post(this.baseURL + '/metros/', { body: formData });
   }
 
-  async editCity(id: number, name: string, population: number, featuredImage: string, notes: string): Promise<KyResponse> {
+  async updateCity(id: string, name: string, population: number, featuredImage: string, notes: string): Promise<KyResponse> {
     const formData = new FormData();
     formData.set('name', name);
     formData.set('featured_image', featuredImage);

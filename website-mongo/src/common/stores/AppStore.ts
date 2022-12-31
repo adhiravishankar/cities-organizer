@@ -5,10 +5,11 @@ import { API } from '../apis/API';
 import { CitiesAPI } from '../apis/CitiesAPI';
 import { MetroAPI } from '../apis/MetroAPI';
 import { City } from '../interfaces/City';
+import { DetailedCity } from '../interfaces/DetailedCity';
 import { DetailedMetro } from '../interfaces/DetailedMetro';
+import { DetailedNeighborhood } from '../interfaces/DetailedNeighborhood';
 import { Metro } from '../interfaces/Metro';
 import { Neighborhood } from '../interfaces/Neighborhood';
-import {Ky} from "ky/distribution/core/Ky";
 
 
 export class AppStore {
@@ -29,12 +30,9 @@ export class AppStore {
     return namesMap;
   }
 
+  selectedCity: DetailedCity;
+
   citiesMap: Map<string, City> = observable.map();
-
-  selectedMetroArea: string;
-
-  neighborhoodsMap: Map<string, Neighborhood> = observable.map();
-
 
   get filteredCitiesMap(): Map<string, string> {
     const namesMap = new Map<string, string>();
@@ -43,6 +41,13 @@ export class AppStore {
     });
     return namesMap;
   }
+
+  selectedMetroArea: string;
+
+  selectedNeighborhood: DetailedNeighborhood;
+
+  neighborhoodsMap: Map<string, Neighborhood> = observable.map();
+
 
   editingModalOpen: boolean;
 
@@ -66,8 +71,10 @@ export class AppStore {
       metroNamesMap: computed,
       metrosMap: observable,
       neighborhoodsMap: observable,
+      selectedCity: observable,
       selectedMetro: observable,
       selectedMetroArea: observable,
+      updateCity: flow,
       updateSelectedMetro: action,
       uploadPicsModalOpen: observable,
       uploadPicsModalVisibilityChange: action,
@@ -119,6 +126,14 @@ export class AppStore {
       const cityID = yield response.text();
       const city: City = { Name: name, MetroID: metroID, Population: population, FeaturedImage: featuredImage, ID: cityID, Notes: notes };
       this.citiesMap.set(cityID, city);
+    }
+  }
+
+  *updateCity(id: string, name: string, population: number, featuredImage: string, notes: string) {
+    const success: KyResponse = yield this.citiesAPI.updateCity(id, name, population, featuredImage, notes);
+    if (success.ok) {
+      const city = this.citiesMap.get(id);
+      this.citiesMap.set(id, { ...city, Name: name, Population: population, FeaturedImage: featuredImage });
     }
   }
 

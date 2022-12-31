@@ -66,7 +66,7 @@ func getCity(c *gin.Context) {
 	c.JSON(200, &detailedCity)
 }
 
-func editCity(c *gin.Context) {
+func updateCity(c *gin.Context) {
 	citiesCollections := mongoDB.Collection("cities")
 
 	population, err := strconv.ParseInt(c.PostForm("population"), 10, 10)

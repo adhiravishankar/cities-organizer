@@ -19,11 +19,11 @@ type DetailedMetro struct {
 
 type City struct {
 	ID            string
-	MetroID       string
-	Name          string
-	Population    int64
-	FeaturedImage string
-	Notes         string
+	MetroID       string `bson:"metro_id"`
+	Name          string `bson:"name"`
+	Population    int64  `bson:"population"`
+	FeaturedImage string `bson:"featured_image"`
+	Notes         string `bson:"notes"`
 }
 
 type DetailedCity struct {
@@ -34,8 +34,8 @@ type DetailedCity struct {
 
 type Neighborhood struct {
 	ID                    string
-	CityID                int64
-	MetroID               int64
+	CityID                string `bson:"city_id"`
+	MetroID               string `bson:"metro_id"`
 	FeaturedImage         string
 	Link                  string
 	Name                  string

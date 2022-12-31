@@ -22,22 +22,21 @@ func neighborhoods(c *gin.Context) {
 }
 
 func getNeighborhood(c *gin.Context) {
-	var neighborhood Neighborhood
-	row := squirrel.Select("*").
-		Where(squirrel.Eq{"id": c.Param("neighborhood")}).From("neighborhoods").RunWith(database).QueryRow()
+	neighborhoodsCollection := mongoDB.Collection("neighborhoods")
 
-	err := row.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.MetroID, &neighborhood.Name,
-		&neighborhood.FeaturedImage, &neighborhood.HighSchoolScore, &neighborhood.MiddleSchoolScore,
-		&neighborhood.ElementarySchoolScore, &neighborhood.Address, &neighborhood.MinimumValue,
-		&neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft, &neighborhood.Notes)
-
+	var result = neighborhoodsCollection.FindOne(c, bson.M{"_id": c.Param("metro")})
+	neighborhood := Neighborhood{}
+	err := result.Decode(&neighborhood)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	newNeighborhood := convertNullableDetailedNeighborhoodItem(neighborhood)
-	newNeighborhood.Pics = internalGetNeighborhoodPics(c)
-	c.JSON(200, newNeighborhood)
+	detailedNeighborhood := DetailedNeighborhood{
+		Neighborhood: neighborhood,
+		Pics:         nil,
+	}
+
+	c.JSON(200, &detailedNeighborhood)
 }
 
 func insertNeighborhood(c *gin.Context) {

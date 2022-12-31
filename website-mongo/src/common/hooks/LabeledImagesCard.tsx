@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { Card, Row, Stack } from 'react-bootstrap';
 
-import { LabeledImage } from '../interfaces/Base';
+import { LabeledImage } from '../interfaces/LabeledImage';
 import { LabeledImageItem } from './LabeledImageItem';
 
 export interface LabeledImagesCardProps {
@@ -9,7 +9,7 @@ export interface LabeledImagesCardProps {
 
   errorMessage: string;
 
-  onClick: (id: number) => void;
+  onClick: (id: string) => void;
 
   onItemAddClick: () => void;
 
@@ -19,7 +19,7 @@ export interface LabeledImagesCardProps {
 export function LabeledImagesCard(props: LabeledImagesCardProps) {
   const { errorMessage, items, name, onClick, onItemAddClick } = props;
 
-  const onClickHandler = useCallback((id: number) => {
+  const onClickHandler = useCallback((id: string) => {
     onClick(id);
   }, [onClick]);
 
@@ -30,7 +30,7 @@ export function LabeledImagesCard(props: LabeledImagesCardProps) {
 
   const itemsJSX = (items === null || items === undefined) ? <span>{ errorMessage }</span> : (
     <Stack className="images-stack" gap={1} direction="horizontal">
-      { items.map((image: LabeledImage) => <LabeledImageItem id={ image.id } onClick={ onClickHandler } source={ image.source } name={ image.label } />) }
+      { items.map((image: LabeledImage) => <LabeledImageItem id={ image.ID } onClick={ onClickHandler } source={ image.Source } name={ image.Label } />) }
     </Stack>
   );
 

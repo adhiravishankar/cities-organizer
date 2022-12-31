@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import { AddPicsProps } from '../../common/hooks/AddPics';
 import { BreadcrumbsProps } from '../../common/hooks/Breadcrumbs';
@@ -8,26 +8,19 @@ import { CardsPage } from '../../common/hooks/CardsPage';
 import { ImagesCard } from '../../common/hooks/ImagesCard';
 import { LabeledImagesCard } from '../../common/hooks/LabeledImagesCard';
 import { NavBarProps } from '../../common/hooks/NavBar';
-import { City } from '../../common/interfaces/City';
 import { LabeledImage } from '../../common/interfaces/LabeledImage';
 import { Neighborhood } from '../../common/interfaces/Neighborhood';
 import { AppStore } from '../../common/stores/AppStore';
-import { EditMetro } from './EditMetro';
+import { EditCity } from './EditCity';
 
-type MetroParams = {
-  metro: string;
-};
-
-interface MetroProps {
+interface CityProps {
   store: AppStore;
 }
 
-export const MetroPage = observer<MetroProps>((props: MetroProps) => {
+export const CityPage = observer<CityProps>((props: CityProps) => {
   const { store } = props;
-  const { metrosMap, selectedMetro } = store;
-  const params = useParams<MetroParams>();
+  const { selectedCity } = store;
   const navigation = useNavigate();
-  const metro = metrosMap.get(params.metro);
 
   const openEditingScreen = useCallback(() => {
     store.editingModalVisibilityChange(true);
@@ -42,37 +35,30 @@ export const MetroPage = observer<MetroProps>((props: MetroProps) => {
   }, [store]);
 
   const fileUpload = useCallback((file: File) => {
-    store.uploadPic(metro.ID, file);
-  }, [store, metro]);
-
-  const onCityClick = useCallback((id: string) => {
-    navigation('/cities/' + id);
-  }, []);
+    store.uploadPic(selectedCity.City.ID, file);
+  }, [store, selectedCity]);
 
   const onNeighborhoodClick = useCallback((id: string) => {
     navigation('/neighborhoods/' + id);
   }, []);
 
 
-  const neighborhoodImages: LabeledImage[] = (selectedMetro.Neighborhoods === null || selectedMetro.Neighborhoods === undefined) ? null :
-    selectedMetro.Neighborhoods
+  const neighborhoodImages: LabeledImage[] = (selectedCity.Neighborhoods === null || selectedCity.Neighborhoods === undefined) ? null :
+    selectedCity.Neighborhoods
       .map<LabeledImage>((neighborhood: Neighborhood) => { return { ID: neighborhood.ID, Label: neighborhood.Name, Source: neighborhood.FeaturedImage }; });
 
-  const cityImages: LabeledImage[] = (selectedMetro.Cities === null || selectedMetro.Cities === undefined) ? null :
-    selectedMetro.Cities
-      .map<LabeledImage>((city: City) => { return { ID: city.ID, Label: city.Name, Source: city.FeaturedImage }; });
+  const metroName = store.metrosMap.get(selectedCity.City.MetroID)?.Name;
+  const cityName = selectedCity.City.Name;
 
-  const metroName = selectedMetro.Name;
-
-  const breadCrumbsProps: BreadcrumbsProps = { active: 'metro', metroID: selectedMetro.ID, metro: metroName };
-  const editCity = <EditMetro id={ metro.ID } store={ store } />;
+  const breadCrumbsProps: BreadcrumbsProps = { active: 'metro', metroID: selectedCity.City.MetroID, cityID: selectedCity.City.ID, metro: metroName, city: cityName };
+  const editCity = <EditCity id={ selectedCity.City.ID } store={ store } />;
   const addPicsProps: AddPicsProps = { onCloseModal: closeUploadPicsScreen, shown: store.uploadPicsModalOpen, fileUpload };
-  const navBarProps: NavBarProps = { editIcon: true, id: selectedMetro.ID, onEdit: openEditingScreen, name: selectedMetro.Name };
+  const navBarProps: NavBarProps = { editIcon: true, id: selectedCity.City.ID, onEdit: openEditingScreen, name: selectedCity.City.Name };
 
   return (
     <CardsPage
       breadcrumbs={ breadCrumbsProps }
-      notes={ selectedMetro.Notes }
+      notes={ selectedCity.City.Notes }
       editModal={ editCity }
       addPicsProps={ addPicsProps }
       navBarProps={ navBarProps }
@@ -80,14 +66,7 @@ export const MetroPage = observer<MetroProps>((props: MetroProps) => {
       <ImagesCard
         errorMessage="No images are currently attached."
         openAddPics={ openUploadPicsScreen }
-        pics={ store.selectedMetro.Pics }
-      />
-      <LabeledImagesCard
-        onItemAddClick={ null }
-        errorMessage="No cities in this metro currently."
-        name="Cities"
-        onClick={ onCityClick }
-        items={ cityImages }
+        pics={ store.selectedCity.Pics }
       />
       <LabeledImagesCard
         onItemAddClick={ null }

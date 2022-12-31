@@ -13,7 +13,7 @@ import (
 var pictureURL = "https://d2oewc7nt2ih9r.cloudfront.net/"
 
 func uploadPics(c *gin.Context) {
-	colognes := mongoDB.Collection("pictures")
+	picturesCollection := mongoDB.Collection("pictures")
 
 	// Pull file from request
 	file, err := c.FormFile("picture")
@@ -48,9 +48,14 @@ func uploadPics(c *gin.Context) {
 		ID:          pictureFileName,
 		URL:         pictureURL,
 	}
-	insertOneResult, err := colognes.InsertOne(c, mongoPic)
+	insertOneResult, err := picturesCollection.InsertOne(c, mongoPic)
 	if err != nil {
 		log.Fatal(err)
 	}
 	c.JSON(200, insertOneResult)
+}
+
+func listPics(c *gin.Context, attribute string) {
+	pictures := mongoDB.Collection("pictures")
+
 }

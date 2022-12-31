@@ -23,7 +23,7 @@ func listMetros(c *gin.Context) {
 	c.JSON(200, &metros)
 }
 
-func getMetro(c *gin.Context) {
+func readMetro(c *gin.Context) {
 	metrosCollections := mongoDB.Collection("metros")
 
 	var result = metrosCollections.FindOne(c, bson.M{"_id": c.Param("metro")})
