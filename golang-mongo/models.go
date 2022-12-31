@@ -36,18 +36,18 @@ type Neighborhood struct {
 	ID                    string
 	CityID                string `bson:"city_id"`
 	MetroID               string `bson:"metro_id"`
-	FeaturedImage         string
-	Link                  string
-	Name                  string
-	HighSchoolScore       int64
-	MiddleSchoolScore     int64
-	ElementarySchoolScore int64
-	Address               string
-	MinimumValue          int64
-	MaximumValue          int64
-	MinSqft               int64
-	MaxSqft               int64
-	Notes                 string
+	FeaturedImage         string `bson:"featured_image"`
+	Link                  string `bson:"link"`
+	Name                  string `bson:"name"`
+	HighSchoolScore       int64  `bson:"high_school_score"`
+	MiddleSchoolScore     int64  `bson:"middle_school_score"`
+	ElementarySchoolScore int64  `bson:"elementary_school_score"`
+	Address               string `bson:"address"`
+	MinimumValue          int64  `bson:"minimum_value"`
+	MaximumValue          int64  `bson:"maximum_value"`
+	MinSqft               int64  `bson:"min_sqft"`
+	MaxSqft               int64  `bson:"max_sqft"`
+	Notes                 string `bson:"notes"`
 }
 
 type DetailedNeighborhood struct {
@@ -56,7 +56,7 @@ type DetailedNeighborhood struct {
 }
 
 type Pic struct {
-	AttributeID string `bson:"attribute_id"`
 	ID          string
+	AttributeID string `bson:"attribute_id"`
 	URL         string `bson:"url"`
 }

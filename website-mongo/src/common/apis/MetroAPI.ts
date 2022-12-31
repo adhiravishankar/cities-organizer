@@ -8,11 +8,11 @@ export class MetroAPI {
   }
 
   async metros(): Promise<KyResponse> {
-    return ky.get(this.baseURL + '/metros').json();
+    return ky.get(this.baseURL + '/metros');
   }
 
   async getMetro(id: number): Promise<KyResponse> {
-    return ky.get(this.baseURL + '/metros/' + id).json();
+    return ky.get(this.baseURL + '/metros/' + id);
   }
 
   async insertMetro(name: string, extendedName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string): Promise<KyResponse> {

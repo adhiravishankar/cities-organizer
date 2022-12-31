@@ -20,6 +20,11 @@ func neighborhoods(c *gin.Context) {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	if neighborhoods == nil {
+		neighborhoods = make([]Neighborhood, 0)
+	}
+
 	c.JSON(200, &neighborhoods)
 }
 
@@ -35,7 +40,7 @@ func readNeighborhood(c *gin.Context) {
 
 	detailedNeighborhood := DetailedNeighborhood{
 		Neighborhood: neighborhood,
-		Pics:         nil,
+		Pics:         internalListPics(c, c.Param("neighborhood")),
 	}
 
 	c.JSON(200, &detailedNeighborhood)
@@ -192,6 +197,11 @@ func internalNeighborhoodsForMetro(c *gin.Context) []Neighborhood {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	if neighborhoods == nil {
+		neighborhoods = make([]Neighborhood, 0)
+	}
+
 	return neighborhoods
 }
 
@@ -207,5 +217,10 @@ func internalNeighborhoodsForCity(c *gin.Context) []Neighborhood {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	if neighborhoods == nil {
+		neighborhoods = make([]Neighborhood, 0)
+	}
+
 	return neighborhoods
 }

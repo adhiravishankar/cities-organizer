@@ -20,6 +20,11 @@ func listMetros(c *gin.Context) {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	if metros == nil {
+		metros = make([]Metro, 0)
+	}
+
 	c.JSON(200, &metros)
 }
 
@@ -35,6 +40,7 @@ func readMetro(c *gin.Context) {
 
 	detailedMetro := DetailedMetro{
 		Metropolitan:  metro,
+		Pics:          internalListPics(c, c.Param("metro")),
 		Cities:        internalCitiesForMetro(c),
 		Neighborhoods: internalNeighborhoodsForMetro(c),
 	}

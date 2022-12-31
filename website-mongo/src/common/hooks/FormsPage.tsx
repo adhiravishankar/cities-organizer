@@ -1,5 +1,5 @@
 import { Fragment, PropsWithChildren } from 'react';
-import { Card, Container, Row, Stack } from 'react-bootstrap';
+import { Card, Col, Container, Row, Stack } from 'react-bootstrap';
 
 import { NavBar } from './NavBar';
 
@@ -16,14 +16,16 @@ export function FormsPage(props: FormsPageProps) {
       <NavBar editIcon={ false } name={ title } />
       <Container className="body-container">
         <Row>
-          <Card>
-            <Card.Header>
-              <Card.Title>{ title }</Card.Title>
-            </Card.Header>
-            <Card.Body>
-              <Stack gap={ 3 }>{ children }</Stack>
-            </Card.Body>
-          </Card>
+          <Col>
+            <Card>
+              <Card.Header>
+                <Card.Title>{ title }</Card.Title>
+              </Card.Header>
+              <Card.Body>
+                <Stack gap={ 3 }>{ children }</Stack>
+              </Card.Body>
+            </Card>
+          </Col>
         </Row>
       </Container>
     </Fragment>
