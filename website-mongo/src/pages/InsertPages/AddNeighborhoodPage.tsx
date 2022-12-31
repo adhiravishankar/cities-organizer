@@ -3,10 +3,10 @@ import { useCallback } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
 
-import { DropdownNumberMap } from '../../components/DropdownNumberMap';
-import { Neighborhood } from '../../interfaces/Neighborhood';
-import { FormsPage } from '../../layouts/FormsPage';
-import { AppStore } from '../../stores/AppStore';
+import { DropdownNumberMap } from '../../common/hooks/DropdownNumberMap';
+import { FormsPage } from '../../common/hooks/FormsPage';
+import { Neighborhood } from '../../common/interfaces/Neighborhood';
+import { AppStore } from '../../common/stores/AppStore';
 
 export interface AddNeighborhoodPageProps {
   store: AppStore;
@@ -14,7 +14,7 @@ export interface AddNeighborhoodPageProps {
 
 export const AddNeighborhoodPage = observer<AddNeighborhoodPageProps>((props: AddNeighborhoodPageProps) => {
   const { store } = props;
-  const { handleSubmit, control } = useForm<Neighborhood>({ defaultValues: store.selectedNeighborhood });
+  const { handleSubmit, control } = useForm<Neighborhood>();
 
   const onSubmit = useCallback((data: Neighborhood) => {
 
@@ -23,8 +23,8 @@ export const AddNeighborhoodPage = observer<AddNeighborhoodPageProps>((props: Ad
   const { field: ciField } = useController({ name: 'CityID', control });
   const { field: miField } = useController({ name: 'MetroID', control });
 
-  const onChangeMetroArea = useCallback((events: any[]) => {
-    store.updateSelectedMetro(events as unknown as number);
+  const onChangeMetroArea = useCallback((events: string) => {
+    store.updateSelectedMetro(events);
     miField.onChange(-1);
     miField.onChange(events);
   }, []);

@@ -15,7 +15,7 @@ export class CitiesAPI {
     return ky.get(this.baseURL + '/cities/' + id).json();
   }
 
-  async insertCity(name: string, metroID: number, population: number, featuredImage: string, notes: string): Promise<KyResponse> {
+  async insertCity(name: string, metroID: string, population: number, featuredImage: string, notes: string): Promise<KyResponse> {
     const formData = new FormData();
     formData.set('name', name);
     formData.set('metro_id', metroID.toString());

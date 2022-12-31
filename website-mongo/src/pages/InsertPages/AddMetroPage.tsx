@@ -3,9 +3,9 @@ import { Button, Col, Form, Row } from 'react-bootstrap';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
-import { Metro } from '../../interfaces/Metro';
-import { FormsPage } from '../../layouts/FormsPage';
-import { AppStore } from '../../stores/AppStore';
+import { FormsPage } from '../../common/hooks/FormsPage';
+import { Metro } from '../../common/interfaces/Metro';
+import { AppStore } from '../../common/stores/AppStore';
 
 export interface AddMetroPageProps {
   store: AppStore;
@@ -13,14 +13,13 @@ export interface AddMetroPageProps {
 
 export function AddMetroPage(props: AddMetroPageProps) {
   const { store } = props;
-  const { handleSubmit, control } = useForm<Metro>({ defaultValues: store.selectedCity });
+  const { handleSubmit, control } = useForm<Metro>();
 
   const navigation = useNavigate();
 
   const onSubmit = useCallback(async (data: Metro) => {
-    store.insertMetro(data.Name, data.ExtendedName, data.MetroSizeRank, data.Population, data.FeaturedImage, data.Notes).next(() => {
-      navigation('/');
-    });
+    await store.insertMetro(data.Name, data.ExtendedName, data.MetroSizeRank, data.Population, data.FeaturedImage, data.Notes);
+    navigation('/');
   }, [store]);
 
   return (

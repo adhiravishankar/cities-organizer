@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router';
 import { DropdownNumberMap } from '../../common/hooks/DropdownNumberMap';
 import { FormsPage } from '../../common/hooks/FormsPage';
 import { City } from '../../common/interfaces/City';
-import {AppStore} from "../../common/stores/AppStore";
+import { AppStore } from '../../common/stores/AppStore';
 
 
 export interface AddCityPageProps {
@@ -19,8 +19,8 @@ export function AddCityPage(props: AddCityPageProps) {
 
   const { handleSubmit, control } = useForm<City>();
 
-  const onSubmit = useCallback((data: City) => {
-    store.insertCity(data.Name, data.MetroID, data.Population, data.FeaturedImage, data.Notes);
+  const onSubmit = useCallback(async (data: City) => {
+    await store.insertCity(data.Name, data.MetroID, data.Population, data.FeaturedImage, data.Notes);
     navigation('/');
   }, [store]);
 

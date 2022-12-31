@@ -1,7 +1,7 @@
 
 export interface Metro {
 
-  ID: String;
+  ID: string;
 
   Name: string;
 
