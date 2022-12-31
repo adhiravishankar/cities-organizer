@@ -74,5 +74,9 @@ func internalListPics(c *gin.Context, attribute string) []string {
 		picURLs = append(picURLs, pic.URL)
 	}
 
+	if picURLs == nil {
+		picURLs = make([]string, 0)
+	}
+
 	return picURLs
 }

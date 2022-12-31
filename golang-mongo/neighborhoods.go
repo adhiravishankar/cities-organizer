@@ -64,22 +64,22 @@ func createNeighborhood(c *gin.Context) {
 		log.Fatal(err)
 	}
 
-	minimumValue, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 64)
+	minimumValue, err := strconv.ParseInt(c.PostForm("minimum_value"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	maximumValue, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 64)
+	maximumValue, err := strconv.ParseInt(c.PostForm("maximum_value"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	minSqft, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 64)
+	minSqft, err := strconv.ParseInt(c.PostForm("min_sqft"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	maxSqft, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 64)
+	maxSqft, err := strconv.ParseInt(c.PostForm("max_sqft"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -127,22 +127,22 @@ func updateNeighborhood(c *gin.Context) {
 		log.Fatal(err)
 	}
 
-	minimumValue, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 64)
+	minimumValue, err := strconv.ParseInt(c.PostForm("minimum_value"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	maximumValue, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 64)
+	maximumValue, err := strconv.ParseInt(c.PostForm("maximum_value"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	minSqft, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 64)
+	minSqft, err := strconv.ParseInt(c.PostForm("min_sqft"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	maxSqft, err := strconv.ParseInt(c.PostForm("elementary_school_score"), 10, 64)
+	maxSqft, err := strconv.ParseInt(c.PostForm("max_sqft"), 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -207,7 +207,7 @@ func internalNeighborhoodsForMetro(c *gin.Context) []Neighborhood {
 
 func internalNeighborhoodsForCity(c *gin.Context) []Neighborhood {
 	neighborhoodsCollection := mongoDB.Collection("neighborhoods")
-	cursor, err := neighborhoodsCollection.Find(c, bson.D{{"city_id", c.Param("neighborhood")}})
+	cursor, err := neighborhoodsCollection.Find(c, bson.D{{"city_id", c.Param("city")}})
 	if err != nil {
 		log.Fatal(err)
 	}

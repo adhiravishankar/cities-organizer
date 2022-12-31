@@ -11,7 +11,7 @@ export class CitiesAPI {
     return ky.get(this.baseURL + '/cities');
   }
 
-  async getCity(id: number): Promise<KyResponse> {
+  async readCity(id: string): Promise<KyResponse> {
     return ky.get(this.baseURL + '/cities/' + id);
   }
 
@@ -31,7 +31,7 @@ export class CitiesAPI {
     formData.set('featured_image', featuredImage);
     formData.set('notes', notes);
     formData.set('population', population.toString());
-    return ky.put(this.baseURL + '/metros/' + id, { body: formData });
+    return ky.put(this.baseURL + '/cities/' + id, { body: formData });
   }
 
 }

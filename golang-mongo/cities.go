@@ -60,7 +60,7 @@ func readCity(c *gin.Context) {
 	city := City{}
 	err := result.Decode(&city)
 	if err != nil {
-		log.Fatal(err)
+		_ = c.AbortWithError(404, err)
 	}
 
 	detailedCity := DetailedCity{

@@ -35,7 +35,8 @@ func readMetro(c *gin.Context) {
 	metro := Metro{}
 	err := result.Decode(&metro)
 	if err != nil {
-		log.Fatal(err)
+		c.String(404, err.Error())
+		return
 	}
 
 	detailedMetro := DetailedMetro{

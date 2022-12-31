@@ -22,6 +22,8 @@ export class AppStore {
 
   selectedMetro: DetailedMetro;
 
+  metrosArray: Metro[] = observable.array();
+
   metrosMap: Map<string, Metro> = observable.map();
 
   get metroNamesMap(): Map<string, string> {
@@ -48,7 +50,6 @@ export class AppStore {
 
   neighborhoodsMap: Map<string, Neighborhood> = observable.map();
 
-
   editingModalOpen: boolean;
 
   uploadPicsModalOpen: boolean;
@@ -61,9 +62,11 @@ export class AppStore {
       citiesMap: observable,
       editingModalOpen: observable,
       editingModalVisibilityChange: action,
+      fetchCity: flow,
       fetchCities: flow,
       fetchMetro: flow,
       fetchMetros: flow,
+      fetchNeighborhood: flow,
       fetchNeighborhoods: flow,
       filteredCitiesMap: computed,
       initialize: flow,
@@ -71,6 +74,7 @@ export class AppStore {
       insertMetro: flow,
       insertNeighborhood: flow,
       metroNamesMap: computed,
+      metrosArray: observable,
       metrosMap: observable,
       neighborhoodsMap: observable,
       selectedCity: observable,
@@ -91,12 +95,12 @@ export class AppStore {
 
   *fetchMetros() {
     const response: KyResponse = yield this.metroAPI.metros();
-    const metros: Metro[] = yield response.json<Metro[]>();
+    this.metrosArray = yield response.json<Metro[]>();
     this.metrosMap.clear();
-    metros.forEach((metro: Metro) => this.metrosMap.set(metro.ID, metro));
+    this.metrosArray.forEach((metro: Metro) => this.metrosMap.set(metro.ID, metro));
   }
 
-  *fetchMetro(id: number) {
+  *fetchMetro(id: string) {
     const response: KyResponse = yield this.metroAPI.getMetro(id);
     this.selectedMetro = yield response.json<DetailedMetro>();
   }
@@ -129,6 +133,11 @@ export class AppStore {
     cities.forEach((city: City) => this.citiesMap.set(city.ID, city));
   }
 
+  *fetchCity(id: string) {
+    const response: KyResponse = yield this.citiesAPI.readCity(id);
+    this.selectedCity = yield response.json<DetailedCity>();
+  }
+
   *insertCity(name: string, metroID: string, population: number, featuredImage: string, notes: string) {
     const response: KyResponse = yield this.citiesAPI.insertCity(name, metroID, population, featuredImage, notes);
     if (response.ok) {
@@ -150,6 +159,11 @@ export class AppStore {
     const response: KyResponse = yield this.api.neighborhoods();
     const neighborhoods: Neighborhood[] = yield response.json<Neighborhood[]>();
     neighborhoods.forEach((neighboorhood: Neighborhood) => this.neighborhoodsMap.set(neighboorhood.ID, neighboorhood));
+  }
+
+  *fetchNeighborhood(id: string) {
+    const response: KyResponse = yield this.api.getNeighborhood(id);
+    this.selectedNeighborhood = yield response.json<DetailedNeighborhood>();
   }
 
   *insertNeighborhood(neighborhood: Neighborhood) {

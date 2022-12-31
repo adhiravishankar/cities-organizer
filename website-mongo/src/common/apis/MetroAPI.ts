@@ -11,7 +11,7 @@ export class MetroAPI {
     return ky.get(this.baseURL + '/metros');
   }
 
-  async getMetro(id: number): Promise<KyResponse> {
+  async getMetro(id: string): Promise<KyResponse> {
     return ky.get(this.baseURL + '/metros/' + id);
   }
 

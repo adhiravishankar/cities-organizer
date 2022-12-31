@@ -17,7 +17,7 @@ export interface EditNeighborhoodProps {
 export const EditNeighborhood = observer<EditNeighborhoodProps>((props: EditNeighborhoodProps) => {
   const { id, store } = props;
 
-  const { handleSubmit, control } = useForm<Neighborhood>({ defaultValues: store.selectedNeighborhood });
+  const { handleSubmit, control } = useForm<Neighborhood>({ defaultValues: store.selectedNeighborhood.Neighborhood });
   const handleClose = () => store.editingModalVisibilityChange(false);
 
   const onSubmit = useCallback((data: Neighborhood) => {
@@ -30,7 +30,7 @@ export const EditNeighborhood = observer<EditNeighborhoodProps>((props: EditNeig
   return (
     <Modal show={ store.editingModalOpen } onHide={ handleClose }>
       <Modal.Header closeButton>
-        <Modal.Title>{`Edit ${ store.selectedNeighborhood.Name }`}</Modal.Title>
+        <Modal.Title>{`Edit ${ store.selectedNeighborhood.Neighborhood.Name }`}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form>

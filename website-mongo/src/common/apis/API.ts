@@ -34,7 +34,7 @@ export class API {
     return ky.get(this.baseURL + '/neighborhoods');
   }
 
-  async getNeighborhood(id: number): Promise<KyResponse> {
+  async getNeighborhood(id: string): Promise<KyResponse> {
     return ky.get(this.baseURL + '/neighborhoods/' + id);
   }
 

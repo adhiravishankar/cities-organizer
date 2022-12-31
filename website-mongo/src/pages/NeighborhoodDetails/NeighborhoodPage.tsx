@@ -30,23 +30,23 @@ export const NeighborhoodPage = observer<NeighborhoodProps>((props: Neighborhood
   }, [store]);
 
   const fileUpload = useCallback((file: File) => {
-    store.uploadPic(selectedNeighborhood.ID, file);
+    store.uploadPic(selectedNeighborhood.Neighborhood.ID, file);
   }, [store, selectedNeighborhood]);
 
-  const metroName = store.metrosMap.get(selectedNeighborhood.MetroID)?.Name;
-  const cityName = store.citiesMap.get(selectedNeighborhood.CityID)?.Name;
+  const metroName = store.metrosMap.get(selectedNeighborhood.Neighborhood.MetroID)?.Name;
+  const cityName = store.citiesMap.get(selectedNeighborhood.Neighborhood.CityID)?.Name;
 
-  const breadCrumbsProps: BreadcrumbsProps = { active: 'metro', neighborhoodID: selectedNeighborhood.ID,
-    metroID: selectedNeighborhood.MetroID, cityID: selectedNeighborhood.ID, neighborhood: selectedNeighborhood.Name,
+  const breadCrumbsProps: BreadcrumbsProps = { active: 'metro', neighborhoodID: selectedNeighborhood.Neighborhood.ID,
+    metroID: selectedNeighborhood.Neighborhood.MetroID, cityID: selectedNeighborhood.Neighborhood.ID, neighborhood: selectedNeighborhood.Neighborhood.Name,
     metro: metroName, city: cityName };
-  const editCity = <EditNeighborhood id={ selectedNeighborhood.ID } store={ store } />;
+  const editCity = <EditNeighborhood id={ selectedNeighborhood.Neighborhood.ID } store={ store } />;
   const addPicsProps: AddPicsProps = { onCloseModal: closeUploadPicsScreen, shown: store.uploadPicsModalOpen, fileUpload };
-  const navBarProps: NavBarProps = { editIcon: true, id: selectedNeighborhood.ID, onEdit: openEditingScreen, name: selectedNeighborhood.Name };
+  const navBarProps: NavBarProps = { editIcon: true, id: selectedNeighborhood.Neighborhood.ID, onEdit: openEditingScreen, name: selectedNeighborhood.Neighborhood.Name };
 
   return (
     <CardsPage
       breadcrumbs={ breadCrumbsProps }
-      notes={ selectedNeighborhood.Notes }
+      notes={ selectedNeighborhood.Neighborhood.Notes }
       editModal={ editCity }
       addPicsProps={ addPicsProps }
       navBarProps={ navBarProps }

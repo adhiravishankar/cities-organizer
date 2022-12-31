@@ -1,6 +1,6 @@
 import { Neighborhood } from './Neighborhood';
 
-export interface DetailedNeighborhood extends Neighborhood {
+export interface DetailedNeighborhood {
 
   Neighborhood: Neighborhood;
 
