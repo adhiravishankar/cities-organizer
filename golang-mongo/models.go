@@ -1,13 +1,13 @@
 package main
 
 type Metro struct {
-	ID            string
-	Name          string
-	ExtendedName  string
-	Population    int64
-	MetroSizeRank int64
-	Notes         string
-	FeaturedImage string
+	ID            string `bson:"_id"`
+	Name          string `bson:"name,omitempty"`
+	ExtendedName  string `bson:"extended_name,omitempty"`
+	Population    int64  `bson:"population,omitempty"`
+	MetroSizeRank int64  `bson:"metro_size_rank,omitempty"`
+	Notes         string `bson:"notes,omitempty"`
+	FeaturedImage string `bson:"featured_image,omitempty"`
 }
 
 type DetailedMetro struct {

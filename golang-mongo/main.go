@@ -35,7 +35,7 @@ func main() {
 	router.GET("/metros", metros)
 	router.POST("/metros", insertMetro)
 	router.GET("/metros/:metro", getMetro)
-	router.PUT("/metros/:metro", editMetro)
+	router.PUT("/metros/:metro", updateMetro)
 	router.DELETE("/metros/:metro", deleteMetro)
 
 	// Cities CRUD API

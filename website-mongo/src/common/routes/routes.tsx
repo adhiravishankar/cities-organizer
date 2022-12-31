@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { AddCityPage } from '../../pages/InsertPages/AddCityPage';
 import { AddMetroPage } from '../../pages/InsertPages/AddMetroPage';
 import { AddNeighborhoodPage } from '../../pages/InsertPages/AddNeighborhoodPage';
+import { MetrosPage } from '../../pages/Metros/MetrosPage';
 import { AppStore } from '../stores/AppStore';
 
 export function createRouter(store: AppStore) {
@@ -15,14 +16,14 @@ export function createRouter(store: AppStore) {
     //   path: '/signup',
     //   element: <Signup store={ store } />,
     // },
-    // {
-    //   path: '/',
-    //   loader: async () => {
-    //     await store.initialize();
-    //     return null;
-    //   },
-    //   element: <MetrosPage store={store}/>,
-    // },
+    {
+      path: '/',
+      loader: async () => {
+        await store.initialize();
+        return null;
+      },
+      element: <MetrosPage store={store}/>,
+    },
     // {
     //   path: 'metros/:metro',
     //   loader: async ({ params }) => {

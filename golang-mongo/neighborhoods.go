@@ -2,29 +2,23 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson"
 	"log"
 )
 
 func neighborhoods(c *gin.Context) {
-	rows, err := squirrel.Select("*").From("neighborhoods").RunWith(database).Query()
+	neighborhoodsCollection := mongoDB.Collection("neighborhoods")
+	cursor, err := neighborhoodsCollection.Find(c, bson.D{{}})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	var neighborhoodList []Neighborhood
-	for rows.Next() {
-		var neighborhood Neighborhood
-		err := rows.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.MetroID, &neighborhood.Name,
-			&neighborhood.FeaturedImage, &neighborhood.HighSchoolScore, &neighborhood.MiddleSchoolScore,
-			&neighborhood.ElementarySchoolScore, &neighborhood.Address, &neighborhood.MinimumValue,
-			&neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft, &neighborhood.Notes)
-		if err != nil {
-			log.Fatal(err)
-		}
-		neighborhoodList = append(neighborhoodList, neighborhood)
+	var neighborhoods []Neighborhood
+	err = cursor.All(c, &neighborhoods)
+	if err != nil {
+		log.Fatal(err)
 	}
-
-	c.JSON(200, neighborhoodList)
+	c.JSON(200, &neighborhoods)
 }
 
 func getNeighborhood(c *gin.Context) {
@@ -95,4 +89,34 @@ func deleteNeighborhood(c *gin.Context) {
 	if rowsAffected > 0 {
 		c.String(200, "success")
 	}
+}
+
+func internalNeighborhoodsForMetro(c *gin.Context) {
+	neighborhoodsCollection := mongoDB.Collection("neighborhoods")
+	cursor, err := neighborhoodsCollection.Find(c, bson.D{{"metro_id", c.Param("metro")}})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var neighborhoods []Neighborhood
+	err = cursor.All(c, &neighborhoods)
+	if err != nil {
+		log.Fatal(err)
+	}
+	c.JSON(200, &neighborhoods)
+}
+
+func internalNeighborhoodsForCity(c *gin.Context) {
+	neighborhoodsCollection := mongoDB.Collection("neighborhoods")
+	cursor, err := neighborhoodsCollection.Find(c, bson.D{{"city_id", c.Param("city")}})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var neighborhoods []Neighborhood
+	err = cursor.All(c, &neighborhoods)
+	if err != nil {
+		log.Fatal(err)
+	}
+	c.JSON(200, &neighborhoods)
 }

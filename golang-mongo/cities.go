@@ -86,26 +86,3 @@ func deleteCity(c *gin.Context) {
 		c.String(200, "success")
 	}
 }
-
-func internalGetNeighborhoodsForCities(city string) []Neighborhood {
-	rows, err := squirrel.Select("*").From("neighborhoods").Where(squirrel.Eq{"city_id": city}).
-		RunWith(database).Query()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var neighborhoodList []Neighborhood
-	for rows.Next() {
-		var neighborhood Neighborhood
-		err := rows.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.MetroID, &neighborhood.Name,
-			&neighborhood.FeaturedImage, &neighborhood.HighSchoolScore, &neighborhood.MiddleSchoolScore,
-			&neighborhood.ElementarySchoolScore, &neighborhood.Address, &neighborhood.MinimumValue,
-			&neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft, &neighborhood.Notes)
-		if err != nil {
-			log.Fatal(err)
-		}
-		neighborhoodList = append(neighborhoodList, neighborhood)
-	}
-
-	return convertNullableNeighborhoodList(neighborhoodList)
-}

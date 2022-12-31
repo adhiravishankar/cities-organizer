@@ -1,5 +1,5 @@
 import { KyResponse } from 'ky';
-import {action, flow, makeObservable, observable } from 'mobx';
+import {action, computed, flow, makeObservable, observable} from 'mobx';
 
 import { API } from '../apis/API';
 import { CitiesAPI } from '../apis/CitiesAPI';
@@ -48,11 +48,11 @@ export class AppStore {
       fetchCities: flow,
       fetchMetros: flow,
       fetchNeighborhoods: flow,
-      filteredCitiesMap: observable,
+      filteredCitiesMap: computed,
       initialize: flow,
       insertCity: flow,
       insertMetro: flow,
-      metroNamesMap: observable,
+      metroNamesMap: computed,
       metrosMap: observable,
       neighborhoodsMap: observable,
       selectedMetroArea: observable,

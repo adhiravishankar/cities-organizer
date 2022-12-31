@@ -2,138 +2,126 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
+	"go.mongodb.org/mongo-driver/bson"
 	"log"
+	"strconv"
 )
 
 func metros(c *gin.Context) {
-	sql, _, _ := squirrel.Select("*").From("metros").ToSql()
-	rows, err := database.Query(sql)
+	metrosCollections := mongoDB.Collection("metros")
+	cursor, err := metrosCollections.Find(c, bson.D{{}})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	var metroList []NullableMetro
-	for rows.Next() {
-		var metro NullableMetro
-		err := rows.Scan(&metro.ID, &metro.Name, &metro.ExtendedName, &metro.Population, &metro.MetroSizeRank,
-			&metro.FeaturedImage, &metro.Notes)
-		if err != nil {
-			log.Fatal(err)
-		}
-		metroList = append(metroList, metro)
+	var metros []Metro
+	err = cursor.All(c, &metros)
+	if err != nil {
+		log.Fatal(err)
 	}
-
-	c.JSON(200, convertNullableMetroList(metroList))
+	c.JSON(200, &metros)
 }
 
 func getMetro(c *gin.Context) {
-	var metro Metro
-	row := squirrel.Select("*").Where(squirrel.Eq{"id": c.Param("metro")}).From("metros").
-		RunWith(database).QueryRow()
-	err := row.Scan(&metro.ID, &metro.Name, &metro.ExtendedName, &metro.Population, &metro.MetroSizeRank,
-		&metro.FeaturedImage, &metro.Notes)
+	metrosCollections := mongoDB.Collection("metros")
+
+	var result = metrosCollections.FindOne(c, bson.M{"_id": c.Param("metro")})
+	metro := Metro{}
+	err := result.Decode(&metro)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	detailedMetro := convertNullableDetailedMetroItem(metro)
-	detailedMetro.Pics = internalGetMetroPics(c)
-	detailedMetro.Cities = internalGetCitiesForMetro(c.Param("metro"))
-	detailedMetro.Neighborhoods = internalGetNeighborhoodsForMetros(c.Param("metro"))
-	c.JSON(200, detailedMetro)
+	detailedMetro := DetailedMetro{
+		Metropolitan: metro,
+	}
+
+	c.JSON(200, &detailedMetro)
 }
 
 func insertMetro(c *gin.Context) {
-	result, err := squirrel.Insert("metros").
-		Columns("name", "extended_name", "population", "metro_size_rank", "notes", "featured_image").
-		Values(c.PostForm("name"), c.PostForm("extended_name"), c.PostForm("population"),
-			c.PostForm("metro_size_rank"), c.PostForm("Notes"), c.PostForm("featured_image")).
-		RunWith(database).Exec()
+	metrosCollections := mongoDB.Collection("metros")
+
+	population, err := strconv.ParseInt(c.PostForm("population"), 10, 10)
 	if err != nil {
 		log.Fatal(err)
 	}
-	rowsAffected, err := result.RowsAffected()
+
+	metroSizeRank, err := strconv.ParseInt(c.PostForm("metro_size_rank"), 10, 10)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if rowsAffected > 0 {
-		c.String(200, "success")
+
+	metro := Metro{
+		ID:            uuid.New().String(),
+		Name:          c.PostForm("name"),
+		ExtendedName:  c.PostForm("extended_name"),
+		Population:    population,
+		MetroSizeRank: metroSizeRank,
+		Notes:         c.PostForm("notes"),
+		FeaturedImage: c.PostForm("featured_image"),
 	}
+	insertOneResult, err := metrosCollections.InsertOne(c, metro)
+	if err != nil {
+		log.Fatal(err)
+	}
+	c.JSON(200, insertOneResult)
 }
 
-func editMetro(c *gin.Context) {
-	result, err := squirrel.Update("metros").Set("name", c.PostForm("name")).
-		Set("extended_name", c.PostForm("extended_name")).
-		Set("notes", c.PostForm("notes")).
-		Set("population", c.PostForm("population")).
-		Set("metro_size_rank", c.PostForm("metro_size_rank")).
-		Set("featured_image", c.PostForm("featured_image")).
-		Where(squirrel.Eq{"id": c.Param("metro")}).RunWith(database).Exec()
+func updateMetro(c *gin.Context) {
+	metrosCollections := mongoDB.Collection("metros")
+
+	population, err := strconv.ParseInt(c.PostForm("population"), 10, 10)
 	if err != nil {
 		log.Fatal(err)
 	}
-	rowsAffected, err := result.RowsAffected()
+
+	metroSizeRank, err := strconv.ParseInt(c.PostForm("metro_size_rank"), 10, 10)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if rowsAffected > 0 {
-		c.String(200, "success")
+
+	metro := Metro{
+		ID:            uuid.New().String(),
+		Name:          c.PostForm("name"),
+		ExtendedName:  c.PostForm("extended_name"),
+		Population:    population,
+		MetroSizeRank: metroSizeRank,
+		Notes:         c.PostForm("notes"),
+		FeaturedImage: c.PostForm("featured_image"),
 	}
+
+	id, err := metrosCollections.UpdateByID(c, bson.D{{"_id", c.Param("metro")}}, metro)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	c.JSON(200, id)
 }
 
 func deleteMetro(c *gin.Context) {
-	result, err := squirrel.Delete("metros").Where(squirrel.Eq{"id": c.Param("metro")}).RunWith(database).
-		Exec()
-	if err != nil {
-		log.Fatal(err)
-	}
-	rowsAffected, err := result.RowsAffected()
-	if err != nil {
-		log.Fatal(err)
-	}
-	if rowsAffected > 0 {
-		c.String(200, "success")
-	}
-}
+	metrosCollections := mongoDB.Collection("metros")
+	citiesCollections := mongoDB.Collection("cities")
+	neighborhoodsCollections := mongoDB.Collection("neighborhoods")
 
-func internalGetCitiesForMetro(metro string) []City {
-	rows, err := squirrel.Select("*").From("cities").Where(squirrel.Eq{"metro_id": metro}).RunWith(database).Query()
+	// Delete neighborhoods associated with metro
+	_, err := neighborhoodsCollections.DeleteMany(c, bson.D{{"metro_id", c.Param("metro")}})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	var cityList []NullableCity
-	for rows.Next() {
-		var city NullableCity
-		err := rows.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population, &city.FeaturedImage, &city.Notes)
-		if err != nil {
-			log.Fatal(err)
-		}
-		cityList = append(cityList, city)
-	}
-
-	return convertNullableCityList(cityList)
-}
-
-func internalGetNeighborhoodsForMetros(metro string) []Neighborhood {
-	rows, err := squirrel.Select("*").From("neighborhoods").Where(squirrel.Eq{"metro_id": metro}).
-		RunWith(database).Query()
+	// Delete cities associated with metro
+	_, err = citiesCollections.DeleteMany(c, bson.D{{"metro_id", c.Param("metro")}})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	var neighborhoodList []NullableNeighborhood
-	for rows.Next() {
-		var neighborhood NullableNeighborhood
-		err := rows.Scan(&neighborhood.ID, &neighborhood.CityID, &neighborhood.MetroID, &neighborhood.Name,
-			&neighborhood.FeaturedImage, &neighborhood.HighSchoolScore, &neighborhood.MiddleSchoolScore,
-			&neighborhood.ElementarySchoolScore, &neighborhood.Address, &neighborhood.MinimumValue,
-			&neighborhood.MaximumValue, &neighborhood.MinSqft, &neighborhood.MaxSqft, &neighborhood.Notes)
-		if err != nil {
-			log.Fatal(err)
-		}
-		neighborhoodList = append(neighborhoodList, neighborhood)
+	/// Delete metro
+	_, err = metrosCollections.DeleteOne(c, bson.D{{"_id", c.Param("cologne")}})
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	return convertNullableNeighborhoodList(neighborhoodList)
+	c.String(200, "success")
 }
