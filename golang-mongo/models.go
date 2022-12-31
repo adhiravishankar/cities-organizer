@@ -19,7 +19,7 @@ type DetailedMetro struct {
 
 type City struct {
 	ID            string
-	MetroID       int64
+	MetroID       string
 	Name          string
 	Population    int64
 	FeaturedImage string

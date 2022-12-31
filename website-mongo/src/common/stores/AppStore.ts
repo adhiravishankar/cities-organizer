@@ -1,12 +1,14 @@
 import { KyResponse } from 'ky';
-import {action, computed, flow, makeObservable, observable} from 'mobx';
+import { action, computed, flow, makeObservable, observable } from 'mobx';
 
 import { API } from '../apis/API';
 import { CitiesAPI } from '../apis/CitiesAPI';
 import { MetroAPI } from '../apis/MetroAPI';
 import { City } from '../interfaces/City';
+import { DetailedMetro } from '../interfaces/DetailedMetro';
 import { Metro } from '../interfaces/Metro';
 import { Neighborhood } from '../interfaces/Neighborhood';
+import {Ky} from "ky/distribution/core/Ky";
 
 
 export class AppStore {
@@ -17,13 +19,22 @@ export class AppStore {
 
   citiesAPI: CitiesAPI;
 
+  selectedMetro: DetailedMetro;
+
   metrosMap: Map<string, Metro> = observable.map();
+
+  get metroNamesMap(): Map<string, string> {
+    const namesMap = new Map<string, string>();
+    this.metrosMap.forEach((value: Metro, key: string) => namesMap.set(key, value.Name));
+    return namesMap;
+  }
 
   citiesMap: Map<string, City> = observable.map();
 
   selectedMetroArea: string;
 
   neighborhoodsMap: Map<string, Neighborhood> = observable.map();
+
 
   get filteredCitiesMap(): Map<string, string> {
     const namesMap = new Map<string, string>();
@@ -33,11 +44,9 @@ export class AppStore {
     return namesMap;
   }
 
-  get metroNamesMap(): Map<string, string> {
-    const namesMap = new Map<string, string>();
-    this.metrosMap.forEach((value: Metro, key: string) => namesMap.set(key, value.Name));
-    return namesMap;
-  }
+  editingModalOpen: boolean;
+
+  uploadPicsModalOpen: boolean;
 
   constructor() {
     this.api = new API(process.env.BASE_URL);
@@ -45,6 +54,8 @@ export class AppStore {
     this.citiesAPI = new CitiesAPI(process.env.BASE_URL);
     makeObservable(this, {
       citiesMap: observable,
+      editingModalOpen: observable,
+      editingModalVisibilityChange: action,
       fetchCities: flow,
       fetchMetros: flow,
       fetchNeighborhoods: flow,
@@ -55,8 +66,11 @@ export class AppStore {
       metroNamesMap: computed,
       metrosMap: observable,
       neighborhoodsMap: observable,
+      selectedMetro: observable,
       selectedMetroArea: observable,
       updateSelectedMetro: action,
+      uploadPicsModalOpen: observable,
+      uploadPicsModalVisibilityChange: action,
     });
   }
 
@@ -78,6 +92,14 @@ export class AppStore {
       const metroID = yield response.text();
       const metro: Metro = { Name: name, ExtendedName: extendedName, MetroSizeRank: metroSizeRank, Population: population, FeaturedImage: featuredImage, ID: metroID, Notes: notes };
       this.metrosMap.set(metroID, metro);
+    }
+  }
+
+  *updateMetro(id: string, name: string, extendedName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string) {
+    const success: KyResponse = yield this.metroAPI.editMetro(id, name, extendedName, metroSizeRank, population, featuredImage, notes);
+    if (success.ok) {
+      const metro = this.metrosMap.get(id);
+      this.metrosMap.set(id, { ...metro, Name: name, ExtendedName: extendedName, Population: population, FeaturedImage: featuredImage });
     }
   }
 
@@ -104,6 +126,21 @@ export class AppStore {
     const response: KyResponse = yield this.api.neighborhoods();
     const neighborhoods: Neighborhood[] = yield response.json<Neighborhood[]>();
     neighborhoods.forEach((neighboorhood: Neighborhood) => this.neighborhoodsMap.set(neighboorhood.ID, neighboorhood));
+  }
+
+  *uploadPic(id: string, file: File) {
+    const response: KyResponse = yield this.api.uploadPic(id, file);
+    const picID = yield response.text();
+    console.log(picID);
+    // todo add uploaded pic
+  }
+
+  editingModalVisibilityChange(visibility: boolean) {
+    this.editingModalOpen = visibility;
+  }
+
+  uploadPicsModalVisibilityChange(visibility: boolean) {
+    this.uploadPicsModalOpen = visibility;
   }
 
 }

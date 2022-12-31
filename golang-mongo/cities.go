@@ -2,87 +2,126 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
+	"go.mongodb.org/mongo-driver/bson"
 	"log"
+	"strconv"
 )
 
 func cities(c *gin.Context) {
-	rows, err := squirrel.Select("*").From("cities").RunWith(database).Query()
+	citiesCollections := mongoDB.Collection("cities")
+
+	cursor, err := citiesCollections.Find(c, bson.D{{}})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	var cityList []City
-	for rows.Next() {
-		var city City
-		err := rows.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population, &city.FeaturedImage, &city.Notes)
-		if err != nil {
-			log.Fatal(err)
-		}
-		cityList = append(cityList, city)
+	var cities []City
+	err = cursor.All(c, &cities)
+	if err != nil {
+		log.Fatal(err)
 	}
-
-	c.JSON(200, convertNullableCityList(cityList))
+	c.JSON(200, &cities)
 }
 
 func insertCity(c *gin.Context) {
-	result, err := squirrel.Insert("cities").
-		Columns("name", "metro_id", "population", "featured_image", "notes").
-		Values(c.PostForm("name"), c.PostForm("metro_id"), c.PostForm("population"), c.PostForm("featured_image"), c.PostForm("notes")).
-		RunWith(database).Exec()
+	citiesCollections := mongoDB.Collection("cities")
+
+	population, err := strconv.ParseInt(c.PostForm("population"), 10, 10)
 	if err != nil {
 		log.Fatal(err)
 	}
-	rowsAffected, err := result.RowsAffected()
+
+	city := City{
+		ID:            uuid.New().String(),
+		MetroID:       c.PostForm("metro_id"),
+		Name:          c.PostForm("name"),
+		Population:    population,
+		FeaturedImage: c.PostForm("featured_image"),
+		Notes:         c.PostForm("notes"),
+	}
+
+	insertOneResult, err := citiesCollections.InsertOne(c, city)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if rowsAffected > 0 {
-		c.String(200, "success")
-	}
+	c.JSON(200, insertOneResult)
 }
 
 func getCity(c *gin.Context) {
-	var city City
-	row := squirrel.Select("*").Where(squirrel.Eq{"id": c.Param("city")}).From("cities").
-		RunWith(database).QueryRow()
-	err := row.Scan(&city.ID, &city.MetroID, &city.Name, &city.Population, &city.FeaturedImage, &city.Notes)
+	citiesCollections := mongoDB.Collection("cities")
+
+	var result = citiesCollections.FindOne(c, bson.M{"_id": c.Param("metro")})
+	city := City{}
+	err := result.Decode(&city)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	newCity := convertNullableDetailedCityItem(city)
-	newCity.Pics = internalGetCityPics(c)
-	newCity.Neighborhoods = internalGetNeighborhoodsForCities(c.Param("city"))
-	c.JSON(200, newCity)
+	detailedCity := DetailedCity{
+		City:          city,
+		Neighborhoods: internalNeighborhoodsForMetro(c),
+	}
+
+	c.JSON(200, &detailedCity)
 }
 
 func editCity(c *gin.Context) {
-	result, err := squirrel.Update("cities").Set("name", c.PostForm("name")).
-		Set("extended_name", c.PostForm("extended_name")).Set("population", c.PostForm("population")).
-		Set("notes", c.PostForm("notes")).Where(squirrel.Eq{"id": c.Param("city")}).RunWith(database).Exec()
+	citiesCollections := mongoDB.Collection("cities")
+
+	population, err := strconv.ParseInt(c.PostForm("population"), 10, 10)
 	if err != nil {
 		log.Fatal(err)
 	}
-	rowsAffected, err := result.RowsAffected()
+
+	city := City{
+		ID:            c.Param("city"),
+		MetroID:       c.PostForm("metro_id"),
+		Name:          c.PostForm("name"),
+		Population:    population,
+		FeaturedImage: c.PostForm("featured_image"),
+		Notes:         c.PostForm("notes"),
+	}
+
+	id, err := citiesCollections.UpdateByID(c, bson.D{{"_id", c.Param("metro")}}, city)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if rowsAffected > 0 {
-		c.String(200, "success")
-	}
+
+	c.JSON(200, id)
 }
 
 func deleteCity(c *gin.Context) {
-	result, err := squirrel.Delete("cities").Where(squirrel.Eq{"id": c.Param("city")}).RunWith(database).
-		Exec()
+	citiesCollections := mongoDB.Collection("cities")
+	neighborhoodsCollections := mongoDB.Collection("neighborhoods")
+
+	// Delete neighborhoods associated with metro
+	_, err := neighborhoodsCollections.DeleteMany(c, bson.D{{"city_id", c.Param("city")}})
 	if err != nil {
 		log.Fatal(err)
 	}
-	rowsAffected, err := result.RowsAffected()
+
+	/// Delete metro
+	_, err = citiesCollections.DeleteOne(c, bson.D{{"_id", c.Param("city")}})
 	if err != nil {
 		log.Fatal(err)
 	}
-	if rowsAffected > 0 {
-		c.String(200, "success")
+
+	c.String(200, "success")
+}
+
+func internalCitiesForMetro(c *gin.Context) []City {
+	citiesCollections := mongoDB.Collection("cities")
+
+	cursor, err := citiesCollections.Find(c, bson.D{{}})
+	if err != nil {
+		log.Fatal(err)
 	}
+
+	var cities []City
+	err = cursor.All(c, &cities)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return cities
 }

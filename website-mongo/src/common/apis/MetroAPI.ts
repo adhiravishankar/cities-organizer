@@ -26,7 +26,7 @@ export class MetroAPI {
     return ky.post(this.baseURL + '/metros', { body: formData });
   }
 
-  async editMetro(id: number, name: string, extendedName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string): Promise<KyResponse> {
+  async editMetro(id: string, name: string, extendedName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string): Promise<KyResponse> {
     const formData = new FormData();
     formData.set('name', name);
     formData.set('extended_name', extendedName);

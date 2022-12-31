@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { AddCityPage } from '../../pages/InsertPages/AddCityPage';
 import { AddMetroPage } from '../../pages/InsertPages/AddMetroPage';
 import { AddNeighborhoodPage } from '../../pages/InsertPages/AddNeighborhoodPage';
+import { MetroPage } from '../../pages/MetroDetails/MetroPage';
 import { MetrosPage } from '../../pages/Metros/MetrosPage';
 import { AppStore } from '../stores/AppStore';
 
@@ -24,16 +25,16 @@ export function createRouter(store: AppStore) {
       },
       element: <MetrosPage store={store}/>,
     },
-    // {
-    //   path: 'metros/:metro',
-    //   loader: async ({ params }) => {
-    //     await store.initialize();
-    //     // @ts-ignore
-    //     await store.fetchMetro(params.metro);
-    //     return null;
-    //   },
-    //   element: <MetroPage store={store}/>,
-    // },
+    {
+      path: 'metros/:metro',
+      loader: async ({ params }) => {
+        await store.initialize();
+        // @ts-ignore
+        await store.fetchMetro(params.metro);
+        return null;
+      },
+      element: <MetroPage store={store}/>,
+    },
     // {
     //   path: 'cities/:city',
     //   loader: async ({ params }) => {

@@ -32,8 +32,8 @@ func main() {
 	router.POST("/signup", signup)
 
 	// Metros CRUD API
-	router.GET("/metros", metros)
-	router.POST("/metros", insertMetro)
+	router.GET("/metros", listMetros)
+	router.POST("/metros", createMetro)
 	router.GET("/metros/:metro", getMetro)
 	router.PUT("/metros/:metro", updateMetro)
 	router.DELETE("/metros/:metro", deleteMetro)

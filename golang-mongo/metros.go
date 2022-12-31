@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func metros(c *gin.Context) {
+func listMetros(c *gin.Context) {
 	metrosCollections := mongoDB.Collection("metros")
 	cursor, err := metrosCollections.Find(c, bson.D{{}})
 	if err != nil {
@@ -34,13 +34,15 @@ func getMetro(c *gin.Context) {
 	}
 
 	detailedMetro := DetailedMetro{
-		Metropolitan: metro,
+		Metropolitan:  metro,
+		Cities:        internalCitiesForMetro(c),
+		Neighborhoods: internalNeighborhoodsForMetro(c),
 	}
 
 	c.JSON(200, &detailedMetro)
 }
 
-func insertMetro(c *gin.Context) {
+func createMetro(c *gin.Context) {
 	metrosCollections := mongoDB.Collection("metros")
 
 	population, err := strconv.ParseInt(c.PostForm("population"), 10, 10)
@@ -83,7 +85,7 @@ func updateMetro(c *gin.Context) {
 	}
 
 	metro := Metro{
-		ID:            uuid.New().String(),
+		ID:            c.Param("metro"),
 		Name:          c.PostForm("name"),
 		ExtendedName:  c.PostForm("extended_name"),
 		Population:    population,

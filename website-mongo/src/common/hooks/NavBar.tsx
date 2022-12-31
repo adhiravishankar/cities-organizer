@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 export interface NavBarProps {
   name: string;
 
-  id?: number;
+  id?: string;
 
   editIcon: boolean;
 

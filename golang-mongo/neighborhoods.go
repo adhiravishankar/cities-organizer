@@ -91,7 +91,7 @@ func deleteNeighborhood(c *gin.Context) {
 	}
 }
 
-func internalNeighborhoodsForMetro(c *gin.Context) {
+func internalNeighborhoodsForMetro(c *gin.Context) []Neighborhood {
 	neighborhoodsCollection := mongoDB.Collection("neighborhoods")
 	cursor, err := neighborhoodsCollection.Find(c, bson.D{{"metro_id", c.Param("metro")}})
 	if err != nil {
@@ -103,10 +103,10 @@ func internalNeighborhoodsForMetro(c *gin.Context) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	c.JSON(200, &neighborhoods)
+	return neighborhoods
 }
 
-func internalNeighborhoodsForCity(c *gin.Context) {
+func internalNeighborhoodsForCity(c *gin.Context) []Neighborhood {
 	neighborhoodsCollection := mongoDB.Collection("neighborhoods")
 	cursor, err := neighborhoodsCollection.Find(c, bson.D{{"city_id", c.Param("city")}})
 	if err != nil {
@@ -118,5 +118,5 @@ func internalNeighborhoodsForCity(c *gin.Context) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	c.JSON(200, &neighborhoods)
+	return neighborhoods
 }
