@@ -3,6 +3,7 @@ import { Fragment, PropsWithChildren } from 'react';
 import { Col, Container, Row, Stack } from 'react-bootstrap';
 
 import { NavBar } from './NavBar';
+import {Breadcrumbs} from "./Breadcrumbs";
 
 interface Props {
   title: string;
@@ -18,6 +19,7 @@ export function FormsPage(props: FormsPageProps) {
       <Container className="body-container">
         <Row>
           <Col>
+            <Breadcrumbs active="insertion" insertionText={ title } />
             <Card>
               <CardContent>
                 <h1>{ title }</h1>

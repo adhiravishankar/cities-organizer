@@ -1,11 +1,13 @@
-import { MenuItem, Select, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { useCallback } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
+import Select from 'react-select';
 
 import { FormsPage } from '../../common/hooks/FormsPage';
 import { City } from '../../common/interfaces/City';
+import { DropdownOption } from '../../common/interfaces/DropdownOption';
 import { AppStore } from '../../common/stores/AppStore';
 
 
@@ -26,9 +28,8 @@ export function AddCityPage(props: AddCityPageProps) {
 
   const { field: miField } = useController({ name: 'MetroID', control });
 
-  const metroItems: JSX.Element[] = [];
-  store.metroNamesMap.forEach((text: string, id: string) =>
-    metroItems.push(<MenuItem key={ id } value={ id }>{ text }</MenuItem>));
+  const metroItems: DropdownOption[] = [];
+  store.metroNamesMap.forEach((text: string, id: string) => metroItems.push({ value: id, label: text }));
 
   return (
     <FormsPage title="Add City">
@@ -36,13 +37,11 @@ export function AddCityPage(props: AddCityPageProps) {
         <Col>
           <Controller name="Name" control={control} render={({ field }) => <TextField { ...field } fullWidth id="name" placeholder="Name" /> }/>
         </Col>
-        <Col>
+        <Col className="col-2">
           <Controller name="Population" control={control} render={({ field }) => <TextField { ...field } fullWidth id="population" placeholder="Population" type="number" /> }/>
         </Col>
-        <Col className="col-2">
-          <Select onChange={ miField.onChange } label="Metro Area" value={ miField.value }>
-            { metroItems }
-          </Select>
+        <Col className="col-3">
+          <Select options={ metroItems } classNames={{ control: () => 'dropdown' }} />
         </Col>
       </Row>
       <Row>

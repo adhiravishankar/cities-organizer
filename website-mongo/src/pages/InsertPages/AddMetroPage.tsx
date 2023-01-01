@@ -32,10 +32,10 @@ export function AddMetroPage(props: AddMetroPageProps) {
         <Col>
           <Controller name="ExtendedName" control={control} render={({ field }) => <TextField { ...field } fullWidth id="extended_name" label="Extended Name" placeholder="Extended Name" /> }/>
         </Col>
-        <Col>
+        <Col className="col-2">
           <Controller name="Population" control={control} render={({ field }) => <TextField { ...field } fullWidth id="population" label="Population" placeholder="Population" type="number" /> }/>
         </Col>
-        <Col>
+        <Col className="col-2">
           <Controller name="MetroSizeRank" control={control} render={({ field }) => <TextField { ...field } fullWidth id="MetroSizeRank" label="Metro Size Rank" placeholder="Metro Size Rank" type="number" /> }/>
         </Col>
       </Row>

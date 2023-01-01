@@ -1,8 +1,9 @@
 import { useCallback } from 'react';
-import { Card, Row, Stack } from 'react-bootstrap';
+import { Stack } from 'react-bootstrap';
 
 import { LabeledImage } from '../interfaces/LabeledImage';
 import { LabeledImageItem } from './LabeledImageItem';
+import {Card, CardContent} from "@mui/material";
 
 export interface LabeledImagesCardProps {
   name: string;
@@ -36,11 +37,13 @@ export function LabeledImagesCard(props: LabeledImagesCardProps) {
 
   return (
     <Card className="images-card">
-      <Card.Header className="card-actions-header">
-        <Card.Title>{ name }</Card.Title>
-        <div className="card-add" onClick={ onItemAddClickHandler }><i className="fas fa-plus" /></div>
-      </Card.Header>
-      <Card.Body>{ itemsJSX }</Card.Body>
+      <CardContent>
+        <div className="card-actions-header">
+          <h6>{ name }</h6>
+          <div className="card-add" onClick={ onItemAddClickHandler }><i className="fas fa-plus" /></div>
+        </div>
+        { itemsJSX }
+      </CardContent>
     </Card>
   );
 }

@@ -1,6 +1,6 @@
-import { Card, Stack } from 'react-bootstrap';
-
 import { ImageItem } from './ImageItem';
+import {Card, CardContent} from "@mui/material";
+import {Stack} from "react-bootstrap";
 
 export interface ImagesCardProps {
   errorMessage: string;
@@ -20,15 +20,15 @@ export function ImagesCard(props: ImagesCardProps) {
   }
   return (
     <Card className="images-card">
-      <Card.Header className="card-actions-header">
-        <Card.Title>Images</Card.Title>
-        <div className="card-add" onClick={ props.openAddPics }><i className="fas fa-plus" /></div>
-      </Card.Header>
-      <Card.Body>
+      <CardContent>
+        <div className="card-actions-header">
+          <h6>Images</h6>
+          <div className="card-add" onClick={ props.openAddPics }><i className="fas fa-plus" /></div>
+        </div>
         <Stack className="images-stack" gap={1} direction="horizontal">
-          { imagesJSX }
+          { imagesJSX.length === 0 ? 'No images attached' : imagesJSX }
         </Stack>
-      </Card.Body>
+      </CardContent>
     </Card>
   );
 }

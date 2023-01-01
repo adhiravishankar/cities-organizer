@@ -50,7 +50,8 @@ export const CityPage = observer<CityProps>((props: CityProps) => {
   const metroName = store.metrosMap.get(selectedCity.City.MetroID)?.Name;
   const cityName = selectedCity.City.Name;
 
-  const breadCrumbsProps: BreadcrumbsProps = { active: 'metro', metroID: selectedCity.City.MetroID, cityID: selectedCity.City.ID, metro: metroName, city: cityName };
+  const breadCrumbsProps: BreadcrumbsProps = { active: 'city', metroID: selectedCity.City.MetroID,
+    cityID: selectedCity.City.ID, metro: metroName, city: cityName };
   const editCity = <EditCity id={ selectedCity.City.ID } store={ store } />;
   const addPicsProps: AddPicsProps = { onCloseModal: closeUploadPicsScreen, shown: store.uploadPicsModalOpen, fileUpload };
   const navBarProps: NavBarProps = { editIcon: true, id: selectedCity.City.ID, onEdit: openEditingScreen, name: selectedCity.City.Name };

@@ -1,6 +1,6 @@
-import { Fragment, useCallback } from 'react';
+import { AppBar, Box, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
+import { Fragment, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
-import {AppBar, Box, Toolbar, Typography} from "@mui/material";
 
 export interface NavBarProps {
   name: string;
@@ -14,8 +14,17 @@ export interface NavBarProps {
 
 export function NavBar(props: NavBarProps) {
   const { editIcon, id, name, onEdit } = props;
-
   const navigation = useNavigate();
+
+  const [addMenu, setAddMenu] = useState<null | HTMLElement>(null);
+  
+  const openAddMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAddMenu(event.currentTarget);
+  };
+
+  const closeAddMenu = () => {
+    setAddMenu(null);
+  };
 
   const onClickEditIcon = useCallback(() => {
     onEdit();
@@ -27,8 +36,36 @@ export function NavBar(props: NavBarProps) {
 
   const plusIconJSX = (
     <Fragment>
-      <i className="fas fa-plus" />
-      Add
+      <div onClick={ openAddMenu } className="plus-icon">
+        <i className="fas fa-plus" />
+        Add
+      </div>
+      <Menu
+        sx={{ mt: '45px' }}
+        id="menu-appbar"
+        anchorEl={addMenu}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        keepMounted
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={Boolean(addMenu)}
+        onClose={closeAddMenu}
+      >
+        <MenuItem key="metro" onClick={onAddMetro}>
+          <Typography textAlign="center">Metro</Typography>
+        </MenuItem>
+        <MenuItem key="city" onClick={onAddCity}>
+          <Typography textAlign="center">City</Typography>
+        </MenuItem>
+        <MenuItem key="neighborhood" onClick={onAddNeighborhood}>
+          <Typography textAlign="center">Neighborhood</Typography>
+        </MenuItem>
+      </Menu>
     </Fragment>
   );
   const editIconJSX = editIcon ? <i className="fas fa-pen" /> : null;

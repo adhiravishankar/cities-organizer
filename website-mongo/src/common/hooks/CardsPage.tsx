@@ -1,10 +1,11 @@
 import { Fragment, PropsWithChildren, ReactNode } from 'react';
-import { Card, Col, Container, Row, Stack } from 'react-bootstrap';
+import { Col, Container, Row, Stack } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 
 import { AddPics, AddPicsProps } from './AddPics';
 import { Breadcrumbs, BreadcrumbsProps } from './Breadcrumbs';
 import { NavBar, NavBarProps } from './NavBar';
+import {Card, CardContent} from "@mui/material";
 
 export interface CardsPageProps {
   breadcrumbs: BreadcrumbsProps;
@@ -30,10 +31,10 @@ export function CardsPage(props: PropsWithChildren<CardsPageProps>) {
               <Breadcrumbs { ...breadcrumbs } />
               { children }
               <Card>
-                <Card.Header><Card.Title>Notes</Card.Title></Card.Header>
-                <Card.Body>
+                <CardContent>
+                  <div><h6>Notes</h6></div>
                   <ReactMarkdown>{ notes }</ReactMarkdown>
-                </Card.Body>
+                </CardContent>
               </Card>
             </Stack>
           </Col>

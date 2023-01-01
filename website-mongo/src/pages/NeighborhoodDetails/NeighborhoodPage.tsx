@@ -36,8 +36,9 @@ export const NeighborhoodPage = observer<NeighborhoodProps>((props: Neighborhood
   const metroName = store.metrosMap.get(selectedNeighborhood.Neighborhood.MetroID)?.Name;
   const cityName = store.citiesMap.get(selectedNeighborhood.Neighborhood.CityID)?.Name;
 
-  const breadCrumbsProps: BreadcrumbsProps = { active: 'metro', neighborhoodID: selectedNeighborhood.Neighborhood.ID,
-    metroID: selectedNeighborhood.Neighborhood.MetroID, cityID: selectedNeighborhood.Neighborhood.ID, neighborhood: selectedNeighborhood.Neighborhood.Name,
+  const breadCrumbsProps: BreadcrumbsProps = { active: 'neighborhood',
+    neighborhoodID: selectedNeighborhood.Neighborhood.ID, metroID: selectedNeighborhood.Neighborhood.MetroID,
+    cityID: selectedNeighborhood.Neighborhood.CityID, neighborhood: selectedNeighborhood.Neighborhood.Name,
     metro: metroName, city: cityName };
   const editCity = <EditNeighborhood id={ selectedNeighborhood.Neighborhood.ID } store={ store } />;
   const addPicsProps: AddPicsProps = { onCloseModal: closeUploadPicsScreen, shown: store.uploadPicsModalOpen, fileUpload };
