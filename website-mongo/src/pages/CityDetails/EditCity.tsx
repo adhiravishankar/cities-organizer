@@ -1,3 +1,4 @@
+import { MenuItem, Select, TextField } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
@@ -5,7 +6,6 @@ import { Controller, useController, useForm } from 'react-hook-form';
 
 import { City } from '../../common/interfaces/City';
 import { AppStore } from '../../common/stores/AppStore';
-import {MenuItem, Select, TextField} from "@mui/material";
 
 
 export interface EditCityProps {

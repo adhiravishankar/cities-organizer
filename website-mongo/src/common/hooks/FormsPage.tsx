@@ -1,8 +1,8 @@
+import { Card, CardContent, CardHeader, Typography } from '@mui/material';
 import { Fragment, PropsWithChildren } from 'react';
 import { Col, Container, Row, Stack } from 'react-bootstrap';
 
 import { NavBar } from './NavBar';
-import {Card, CardContent, CardHeader, Typography} from "@mui/material";
 
 interface Props {
   title: string;

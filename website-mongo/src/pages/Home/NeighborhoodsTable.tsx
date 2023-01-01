@@ -38,6 +38,6 @@ export function NeighborhoodsTable(props: NeighborhoodsTableProps) {
     },
   ] as MRT_ColumnDef<Neighborhood>[], []);
 
-  return <MaterialReactTable columns={ columns } data={ props.store.neighborhoodsArray } />;
+  return <MaterialReactTable columns={ columns } data={ props.store.neighborhoodsArray } enableColumnActions={ false } />;
 }
 

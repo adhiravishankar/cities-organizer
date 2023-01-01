@@ -1,8 +1,9 @@
 
+import MaterialReactTable, { MRT_ColumnDef } from 'material-react-table';
+import { useMemo } from 'react';
+
 import { City } from '../../common/interfaces/City';
 import { AppStore } from '../../common/stores/AppStore';
-import MaterialReactTable, {MRT_ColumnDef} from "material-react-table";
-import {useMemo} from "react";
 
 export interface CitiesTableProps {
   store: AppStore;

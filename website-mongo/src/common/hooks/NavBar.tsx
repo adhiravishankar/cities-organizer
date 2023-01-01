@@ -1,6 +1,6 @@
 import { Fragment, useCallback } from 'react';
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
+import {AppBar, Box, Toolbar, Typography} from "@mui/material";
 
 export interface NavBarProps {
   name: string;
@@ -31,25 +31,19 @@ export function NavBar(props: NavBarProps) {
       Add
     </Fragment>
   );
-  const editIconJSX = editIcon ? <Nav.Item onClick={ onClickEditIcon }><i className="fas fa-pen" /></Nav.Item> : null;
+  const editIconJSX = editIcon ? <i className="fas fa-pen" /> : null;
 
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-      <Container>
-        <Navbar.Brand>{ name }</Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto" />
-          <Nav className="nav-right">
-            <NavDropdown title={ plusIconJSX }>
-              <NavDropdown.Item onClick={ onAddMetro }>Metro</NavDropdown.Item>
-              <NavDropdown.Item onClick={ onAddCity }>City</NavDropdown.Item>
-              <NavDropdown.Item onClick={ onAddNeighborhood }>Neighborhood</NavDropdown.Item>
-            </NavDropdown>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>{ name }</Typography>
+          <div>
             { editIconJSX }
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+            { plusIconJSX }
+          </div>
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
 }

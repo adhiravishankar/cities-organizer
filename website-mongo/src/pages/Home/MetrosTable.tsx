@@ -33,6 +33,6 @@ export function MetrosTable(props: MetrosTableProps) {
     },
   ] as MRT_ColumnDef<Metro>[], []);
 
-  return <MaterialReactTable columns={ columns } data={ props.store.metrosArray } />;
+  return <MaterialReactTable columns={ columns } data={ props.store.metrosArray } enableColumnActions={ false } />;
 }
 
