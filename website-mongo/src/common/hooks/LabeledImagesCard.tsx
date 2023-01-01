@@ -1,9 +1,9 @@
+import { Card, CardContent } from '@mui/material';
 import { useCallback } from 'react';
 import { Stack } from 'react-bootstrap';
 
 import { LabeledImage } from '../interfaces/LabeledImage';
 import { LabeledImageItem } from './LabeledImageItem';
-import {Card, CardContent} from "@mui/material";
 
 export interface LabeledImagesCardProps {
   name: string;

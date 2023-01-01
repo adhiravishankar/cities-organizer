@@ -50,6 +50,28 @@ type Neighborhood struct {
 	Notes                 string `bson:"notes"`
 }
 
+type DerivedNeighborhood struct {
+	ID                    string `bson:"_id"`
+	CityID                string `bson:"city_id"`
+	MetroID               string `bson:"metro_id"`
+	FeaturedImage         string `bson:"featured_image"`
+	Link                  string `bson:"link"`
+	Name                  string `bson:"name"`
+	HighSchoolScore       int64  `bson:"high_school_score"`
+	MiddleSchoolScore     int64  `bson:"middle_school_score"`
+	ElementarySchoolScore int64  `bson:"elementary_school_score"`
+	Address               string `bson:"address"`
+	MinimumValue          int64  `bson:"minimum_value"`
+	MaximumValue          int64  `bson:"maximum_value"`
+	MinSqft               int64  `bson:"min_sqft"`
+	MaxSqft               int64  `bson:"max_sqft"`
+	Notes                 string `bson:"notes"`
+
+	Scores      string
+	ValuesRange string
+	SqFtRange   string
+}
+
 type DetailedNeighborhood struct {
 	Neighborhood Neighborhood
 	Pics         []string

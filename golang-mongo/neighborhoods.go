@@ -6,6 +6,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"log"
 	"strconv"
+	"strings"
 )
 
 func neighborhoods(c *gin.Context) {
@@ -21,11 +22,56 @@ func neighborhoods(c *gin.Context) {
 		log.Fatal(err)
 	}
 
-	if neighborhoods == nil {
-		neighborhoods = make([]Neighborhood, 0)
+	var derivedNeighborhoods []DerivedNeighborhood
+	for _, neighborhood := range neighborhoods {
+
+		var scoresBuilder strings.Builder
+		scoresBuilder.WriteString(strconv.FormatInt(neighborhood.ElementarySchoolScore, 10))
+		scoresBuilder.WriteString(", ")
+		scoresBuilder.WriteString(strconv.FormatInt(neighborhood.MiddleSchoolScore, 10))
+		scoresBuilder.WriteString(", ")
+		scoresBuilder.WriteString(strconv.FormatInt(neighborhood.HighSchoolScore, 10))
+
+		var sqftBuilder strings.Builder
+		sqftBuilder.WriteString(strconv.FormatInt(neighborhood.MinSqft, 10))
+		sqftBuilder.WriteString(" - ")
+		sqftBuilder.WriteString(strconv.FormatInt(neighborhood.MaxSqft, 10))
+		sqftBuilder.WriteString(" sq. ft.")
+
+		var valuesBuilder strings.Builder
+		valuesBuilder.WriteString("$")
+		valuesBuilder.WriteString(strconv.FormatInt(neighborhood.MinimumValue, 10))
+		valuesBuilder.WriteString(" - $")
+		valuesBuilder.WriteString(strconv.FormatInt(neighborhood.MaximumValue, 10))
+
+		derivedNeighborhood := DerivedNeighborhood{
+			ID:                    neighborhood.ID,
+			CityID:                neighborhood.CityID,
+			MetroID:               neighborhood.MetroID,
+			FeaturedImage:         neighborhood.FeaturedImage,
+			Link:                  neighborhood.Link,
+			Name:                  neighborhood.Name,
+			HighSchoolScore:       neighborhood.HighSchoolScore,
+			MiddleSchoolScore:     neighborhood.MiddleSchoolScore,
+			ElementarySchoolScore: neighborhood.ElementarySchoolScore,
+			Address:               neighborhood.Address,
+			MinimumValue:          neighborhood.MinimumValue,
+			MaximumValue:          neighborhood.MaximumValue,
+			MinSqft:               neighborhood.MinSqft,
+			MaxSqft:               neighborhood.MaxSqft,
+			Notes:                 neighborhood.Notes,
+			Scores:                scoresBuilder.String(),
+			ValuesRange:           valuesBuilder.String(),
+			SqFtRange:             sqftBuilder.String(),
+		}
+		derivedNeighborhoods = append(derivedNeighborhoods, derivedNeighborhood)
 	}
 
-	c.JSON(200, &neighborhoods)
+	if derivedNeighborhoods == nil {
+		derivedNeighborhoods = make([]DerivedNeighborhood, 0)
+	}
+
+	c.JSON(200, &derivedNeighborhoods)
 }
 
 func readNeighborhood(c *gin.Context) {

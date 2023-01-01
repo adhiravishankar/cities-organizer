@@ -1,10 +1,9 @@
-import { Box, Tab, Tabs } from '@mui/material';
+import { Box, ImageList, ImageListItem, Paper, Tab, Tabs } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { Fragment, SyntheticEvent, useCallback, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
-import { ImageList } from '../../common/hooks/ImageList';
 import { LabeledImageItem } from '../../common/hooks/LabeledImageItem';
 import { NavBar } from '../../common/hooks/NavBar';
 import { TabPanel } from '../../common/hooks/TabPanel';
@@ -34,33 +33,39 @@ export const Home = observer<HomePageProps>((props: HomePageProps) => {
 
   store.metrosMap.forEach((metro: Metro) => {
     const { ID, FeaturedImage, Name } = metro;
-    metrosJSX.push(<LabeledImageItem onClick={ onClickHandler } id={ ID } name={ Name } source={ FeaturedImage } />);
+    metrosJSX.push(
+      <ImageListItem key={ ID }>
+        <LabeledImageItem onClick={ onClickHandler } id={ ID } name={ Name } source={ FeaturedImage } />
+      </ImageListItem>,
+    );
   });
 
   return (
     <Fragment>
       <NavBar editIcon={ false } name="Metros" />
       <Container className="body-container images-grid">
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={index} onChange={setTabIndex} aria-label="basic tabs example">
-            <Tab label="Metros" {...tabProps(0)} />
-            <Tab label="Metros Table" {...tabProps(1)} />
-            <Tab label="Cities Table" {...tabProps(2)} />
-            <Tab label="Neighborhoods Table" {...tabProps(3)} />
-          </Tabs>
-        </Box>
-        <TabPanel value={index} index={0}>
-          <ImageList columns={ 3 }>{ metrosJSX }</ImageList>
-        </TabPanel>
-        <TabPanel value={index} index={1}>
-          <MetrosTable store={ store } />
-        </TabPanel>
-        <TabPanel value={index} index={2}>
-          <CitiesTable store={ store } />
-        </TabPanel>
-        <TabPanel value={index} index={3}>
-          <NeighborhoodsTable store={ store } />
-        </TabPanel>
+        <Paper>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs value={index} onChange={setTabIndex} aria-label="basic tabs example">
+              <Tab label="Metros" {...tabProps(0)} />
+              <Tab label="Metros Table" {...tabProps(1)} />
+              <Tab label="Cities Table" {...tabProps(2)} />
+              <Tab label="Neighborhoods Table" {...tabProps(3)} />
+            </Tabs>
+          </Box>
+          <TabPanel value={index} index={0}>
+            <ImageList cols={ 5 }>{ metrosJSX }</ImageList>
+          </TabPanel>
+          <TabPanel value={index} index={1}>
+            <MetrosTable store={ store } />
+          </TabPanel>
+          <TabPanel value={index} index={2}>
+            <CitiesTable store={ store } />
+          </TabPanel>
+          <TabPanel value={index} index={3}>
+            <NeighborhoodsTable store={ store } />
+          </TabPanel>
+        </Paper>
       </Container>
     </Fragment>
   );

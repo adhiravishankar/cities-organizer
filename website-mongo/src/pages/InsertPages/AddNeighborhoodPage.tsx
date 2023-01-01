@@ -4,12 +4,12 @@ import { useCallback } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
+import Select from 'react-select';
 
 import { FormsPage } from '../../common/hooks/FormsPage';
+import { DropdownOption } from '../../common/interfaces/DropdownOption';
 import { Neighborhood } from '../../common/interfaces/Neighborhood';
 import { AppStore } from '../../common/stores/AppStore';
-import Select from "react-select";
-import { DropdownOption } from '../../common/interfaces/DropdownOption';
 
 export interface AddNeighborhoodPageProps {
   store: AppStore;

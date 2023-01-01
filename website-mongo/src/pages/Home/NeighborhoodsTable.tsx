@@ -31,11 +31,6 @@ export function NeighborhoodsTable(props: NeighborhoodsTableProps) {
       accessorKey: 'Link',
       Cell: ({ cell }) => cell.getValue(),
     },
-    {
-      header: 'Address',
-      accessorKey: 'Address',
-      Cell: ({ cell }) => cell.getValue(),
-    },
   ] as MRT_ColumnDef<Neighborhood>[], []);
 
   return <MaterialReactTable columns={ columns } data={ props.store.neighborhoodsArray } enableColumnActions={ false } />;

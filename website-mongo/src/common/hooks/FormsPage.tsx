@@ -2,8 +2,8 @@ import { Card, CardContent, CardHeader, Typography } from '@mui/material';
 import { Fragment, PropsWithChildren } from 'react';
 import { Col, Container, Row, Stack } from 'react-bootstrap';
 
+import { Breadcrumbs } from './Breadcrumbs';
 import { NavBar } from './NavBar';
-import {Breadcrumbs} from "./Breadcrumbs";
 
 interface Props {
   title: string;

@@ -1,6 +1,7 @@
+import { Card, CardContent } from '@mui/material';
+import { Stack } from 'react-bootstrap';
+
 import { ImageItem } from './ImageItem';
-import {Card, CardContent} from "@mui/material";
-import {Stack} from "react-bootstrap";
 
 export interface ImagesCardProps {
   errorMessage: string;

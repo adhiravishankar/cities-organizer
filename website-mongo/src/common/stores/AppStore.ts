@@ -10,6 +10,7 @@ import { DetailedMetro } from '../interfaces/DetailedMetro';
 import { DetailedNeighborhood } from '../interfaces/DetailedNeighborhood';
 import { Metro } from '../interfaces/Metro';
 import { Neighborhood } from '../interfaces/Neighborhood';
+import {DerivedNeighborhood} from "../interfaces/DerivedNeighborhood";
 
 
 export class AppStore {
@@ -50,9 +51,9 @@ export class AppStore {
 
   selectedNeighborhood: DetailedNeighborhood;
 
-  neighborhoodsArray: Neighborhood[] = observable.array();
+  neighborhoodsArray: DerivedNeighborhood[] = observable.array();
 
-  neighborhoodsMap: Map<string, Neighborhood> = observable.map();
+  neighborhoodsMap: Map<string, DerivedNeighborhood> = observable.map();
 
   editingModalOpen: boolean;
 
@@ -163,9 +164,9 @@ export class AppStore {
 
   *fetchNeighborhoods() {
     const response: KyResponse = yield this.api.neighborhoods();
-    this.neighborhoodsArray = yield response.json<Neighborhood[]>();
+    this.neighborhoodsArray = yield response.json<DerivedNeighborhood[]>();
     this.neighborhoodsMap.clear();
-    this.neighborhoodsArray.forEach((neighboorhood: Neighborhood) => this.neighborhoodsMap.set(neighboorhood.ID, neighboorhood));
+    this.neighborhoodsArray.forEach((neighboorhood: DerivedNeighborhood) => this.neighborhoodsMap.set(neighboorhood.ID, neighboorhood));
   }
 
   *fetchNeighborhood(id: string) {

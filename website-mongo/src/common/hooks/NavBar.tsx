@@ -36,7 +36,7 @@ export function NavBar(props: NavBarProps) {
 
   const plusIconJSX = (
     <Fragment>
-      <div onClick={ openAddMenu } className="plus-icon">
+      <div onClick={ openAddMenu } className="nav-icon">
         <i className="fas fa-plus" />
         Add
       </div>
@@ -68,14 +68,19 @@ export function NavBar(props: NavBarProps) {
       </Menu>
     </Fragment>
   );
-  const editIconJSX = editIcon ? <i className="fas fa-pen" /> : null;
+  const editIconJSX = !editIcon ? null : (
+    <div onClick={ onClickEditIcon } className="nav-icon">
+      <i className="fas fa-pen"/>
+      Edit
+    </div>
+  );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>{ name }</Typography>
-          <div>
+          <div className="nav-icons">
             { editIconJSX }
             { plusIconJSX }
           </div>
