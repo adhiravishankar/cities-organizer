@@ -53,8 +53,6 @@ public class ObjectMapperUtils {
      * @return list of mapped object with <code><D></code> type.
      */
     public static <D, T> List<D> mapAll(final Collection<T> entityList, Class<D> outCLass) {
-        return entityList.stream()
-                .map(entity -> map(entity, outCLass))
-                .collect(Collectors.toList());
+        return entityList.stream().map(entity -> map(entity, outCLass)).collect(Collectors.toList());
     }
 }

@@ -9,79 +9,61 @@ import java.util.UUID;
 public class Metro {
 
     @Id
-    private String id;
-    private String name;
-    private String extendedName;
-    private Integer population;
-    private String notes;
-    private String featuredImage;
+    private String ID;
+    private String Name;
+    private String ExtendedName;
+    private Integer Population;
+    private String Notes;
+    private String FeaturedImage;
 
-    public Metro(String name, String extendedName, Integer population, String notes, String featuredImage) {
-        this.id = UUID.randomUUID().toString();
-        this.name = name;
-        this.extendedName = extendedName;
-        this.population = population;
-        this.notes = notes;
-        this.featuredImage = featuredImage;
+    public Metro() {
     }
 
-    public String getId() {
-        return id;
+    public String getID() {
+        return ID;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        Name = name;
     }
 
     public String getExtendedName() {
-        return extendedName;
+        return ExtendedName;
     }
 
     public void setExtendedName(String extendedName) {
-        this.extendedName = extendedName;
+        ExtendedName = extendedName;
     }
 
     public Integer getPopulation() {
-        return population;
+        return Population;
     }
 
     public void setPopulation(Integer population) {
-        this.population = population;
+        Population = population;
     }
 
     public String getNotes() {
-        return notes;
+        return Notes;
     }
 
     public void setNotes(String notes) {
-        this.notes = notes;
+        Notes = notes;
     }
 
     public String getFeaturedImage() {
-        return featuredImage;
+        return FeaturedImage;
     }
 
     public void setFeaturedImage(String featuredImage) {
-        this.featuredImage = featuredImage;
-    }
-
-    @Override
-    public String toString() {
-        return "Metro{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", extendedName='" + extendedName + '\'' +
-                ", population=" + population +
-                ", notes='" + notes + '\'' +
-                ", featuredImage='" + featuredImage + '\'' +
-                '}';
+        FeaturedImage = featuredImage;
     }
 }
