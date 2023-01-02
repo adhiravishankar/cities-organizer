@@ -1,6 +1,5 @@
 package com.adhiravishankar.citiesorganizer.implementations;
 
-import com.adhiravishankar.citiesorganizer.dtos.CityDTO;
 import com.adhiravishankar.citiesorganizer.models.City;
 import com.adhiravishankar.citiesorganizer.repositories.CityRepository;
 import com.adhiravishankar.citiesorganizer.services.CityService;
@@ -22,17 +21,17 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public Optional<City> readCity(String id) {
-        return Optional.empty();
+        return cityRepository.findById(id);
     }
 
     @Override
-    public void saveCity(CityDTO city) {
-
+    public void saveCity(City city) {
+        cityRepository.insert(city);
     }
 
     @Override
-    public void updateCity(String id, CityDTO city) {
-
+    public void updateCity(City city) {
+        cityRepository.save(city);
     }
 
     @Override

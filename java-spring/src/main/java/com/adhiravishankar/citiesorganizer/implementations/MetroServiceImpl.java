@@ -1,6 +1,5 @@
 package com.adhiravishankar.citiesorganizer.implementations;
 
-import com.adhiravishankar.citiesorganizer.dtos.MetroDTO;
 import com.adhiravishankar.citiesorganizer.models.Metro;
 import com.adhiravishankar.citiesorganizer.repositories.MetroRepository;
 import com.adhiravishankar.citiesorganizer.services.MetroService;
@@ -26,13 +25,13 @@ public class MetroServiceImpl implements MetroService {
     }
 
     @Override
-    public void saveMetro(MetroDTO metro) {
-
+    public void saveMetro(Metro metro) {
+        metroRepository.insert(metro);
     }
 
     @Override
-    public void updateMetro(String id, MetroDTO metro) {
-
+    public void updateMetro(Metro metro) {
+        metroRepository.save(metro);
     }
 
     @Override

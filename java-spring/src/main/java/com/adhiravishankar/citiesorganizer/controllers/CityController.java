@@ -25,17 +25,17 @@ public class CityController {
     }
 
     @GetMapping("/cities/{city}")
-    public void readCity() {
+    public void readCity(@PathVariable String city) {
 
     }
 
     @PutMapping("/cities/{city}")
-    public void updateCity() {
+    public void updateCity(@PathVariable String city) {
 
     }
 
     @DeleteMapping("/cities/{city}")
-    public void deleteCity() {
+    public void deleteCity(@PathVariable String city) {
 
     }
 

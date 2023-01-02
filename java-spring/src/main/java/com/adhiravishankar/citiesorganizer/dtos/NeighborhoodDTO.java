@@ -1,35 +1,52 @@
 package com.adhiravishankar.citiesorganizer.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class NeighborhoodDTO {
 
+    @JsonProperty("ID")
     String ID;
 
+    @JsonProperty("CityID")
     String CityID;
 
+    @JsonProperty("MetroID")
     String MetroID;
 
+    @JsonProperty("FeaturedImage")
     String FeaturedImage;
 
+    @JsonProperty("Link")
     String Link;
 
+    @JsonProperty("Name")
     String Name;
 
+    @JsonProperty("HighSchoolScore")
     Integer HighSchoolScore;
 
+    @JsonProperty("MiddleSchoolScore")
     Integer MiddleSchoolScore;
 
+    @JsonProperty("ElementarySchoolScore")
     Integer ElementarySchoolScore;
 
+    @JsonProperty("Address")
     String Address;
 
+    @JsonProperty("MinimumValue")
     Integer MinimumValue;
 
+    @JsonProperty("MaximumValue")
     Integer MaximumValue;
 
+    @JsonProperty("MinSqft")
     Integer MinSqft;
 
+    @JsonProperty("MaxSqft")
     Integer MaxSqft;
 
+    @JsonProperty("Notes")
     String Notes;
 
     public NeighborhoodDTO() {
@@ -153,5 +170,20 @@ public class NeighborhoodDTO {
 
     public void setNotes(String notes) {
         Notes = notes;
+    }
+
+    @JsonProperty("Scores")
+    public String getScores() {
+        return getElementarySchoolScore() + ", " + getMiddleSchoolScore() + ", " + getHighSchoolScore();
+    }
+
+    @JsonProperty("ValuesRange")
+    public String getValuesRange() {
+        return "$" + getMinimumValue() + " - $" + getMaximumValue();
+    }
+
+    @JsonProperty("SqFtRange")
+    public String getSqFtRange() {
+        return getMinSqft() + " - " + getMaxSqft() + " sq. ft.";
     }
 }

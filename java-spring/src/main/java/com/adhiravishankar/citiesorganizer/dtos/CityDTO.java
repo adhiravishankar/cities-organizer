@@ -2,7 +2,7 @@ package com.adhiravishankar.citiesorganizer.dtos;
 
 public class CityDTO {
 
-    String id;
+    String ID;
 
     String MetroID;
 
@@ -16,12 +16,12 @@ public class CityDTO {
 
     public CityDTO() {}
 
-    public String getId() {
-        return id;
+    public String getID() {
+        return ID;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getMetroID() {

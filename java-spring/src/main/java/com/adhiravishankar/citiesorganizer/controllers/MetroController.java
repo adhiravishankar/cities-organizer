@@ -34,7 +34,7 @@ public class MetroController {
     }
 
     @PutMapping("/metros/{metro}")
-    public void updateMetro() {
+    public void updateMetro(@PathVariable String metro) {
 
     }
 

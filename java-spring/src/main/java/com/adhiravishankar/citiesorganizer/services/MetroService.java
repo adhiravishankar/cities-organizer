@@ -13,9 +13,9 @@ public interface MetroService {
 
     Optional<Metro> readMetro(String id);
 
-    void saveMetro(@RequestBody MetroDTO metro);
+    void saveMetro(Metro metro);
 
-    void updateMetro(String id, @RequestBody MetroDTO metro);
+    void updateMetro(Metro metro);
 
     void deleteByMetro(String id);
 

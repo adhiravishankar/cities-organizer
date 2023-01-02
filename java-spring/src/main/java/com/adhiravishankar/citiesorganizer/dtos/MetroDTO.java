@@ -1,12 +1,25 @@
 package com.adhiravishankar.citiesorganizer.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class MetroDTO {
 
+    @JsonProperty("ID")
     private String ID;
+
+    @JsonProperty("Name")
     private String Name;
+
+    @JsonProperty("ExtendedName")
     private String ExtendedName;
+
+    @JsonProperty("Population")
     private Integer Population;
+
+    @JsonProperty("Notes")
     private String Notes;
+
+    @JsonProperty("FeaturedImage")
     private String FeaturedImage;
 
     public MetroDTO() {

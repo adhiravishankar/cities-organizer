@@ -2,6 +2,7 @@ package com.adhiravishankar.citiesorganizer.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.UUID;
 
@@ -10,10 +11,20 @@ public class Metro {
 
     @Id
     private String ID;
+
+    @Field("name")
     private String Name;
+
+    @Field("extended_name")
     private String ExtendedName;
+
+    @Field("population")
     private Integer Population;
+
+    @Field("notes")
     private String Notes;
+
+    @Field("featured_image")
     private String FeaturedImage;
 
     public Metro() {

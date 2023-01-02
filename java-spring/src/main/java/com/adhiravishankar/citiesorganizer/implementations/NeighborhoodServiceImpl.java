@@ -5,10 +5,12 @@ import com.adhiravishankar.citiesorganizer.models.Neighborhood;
 import com.adhiravishankar.citiesorganizer.repositories.NeighborhoodRepository;
 import com.adhiravishankar.citiesorganizer.services.NeighborhoodService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class NeighborhoodServiceImpl implements NeighborhoodService {
 
     @Autowired
@@ -25,13 +27,13 @@ public class NeighborhoodServiceImpl implements NeighborhoodService {
     }
 
     @Override
-    public void saveNeighborhood(NeighborhoodDTO city) {
-
+    public void saveNeighborhood(Neighborhood city) {
+        neighborhoodRepository.insert(city);
     }
 
     @Override
-    public void updateNeighborhood(String id, NeighborhoodDTO city) {
-
+    public void updateNeighborhood(Neighborhood city) {
+        neighborhoodRepository.save(city);
     }
 
     @Override
