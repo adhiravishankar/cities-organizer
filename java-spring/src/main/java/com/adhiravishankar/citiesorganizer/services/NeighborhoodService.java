@@ -1,7 +1,6 @@
 package com.adhiravishankar.citiesorganizer.services;
 
 import com.adhiravishankar.citiesorganizer.models.Neighborhood;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,9 +11,9 @@ public interface NeighborhoodService {
 
     Optional<Neighborhood> readNeighborhood(String id);
 
-    void saveNeighborhood(Neighborhood city);
+    void saveNeighborhood(Neighborhood neighborhood);
 
-    void updateNeighborhood(Neighborhood city);
+    void updateNeighborhood(Neighborhood neighborhood);
 
     void deleteByNeighborhood(String id);
 

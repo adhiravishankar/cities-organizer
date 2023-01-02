@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class NeighborhoodServiceImpl implements NeighborhoodService {
@@ -27,13 +28,14 @@ public class NeighborhoodServiceImpl implements NeighborhoodService {
     }
 
     @Override
-    public void saveNeighborhood(Neighborhood city) {
-        neighborhoodRepository.insert(city);
+    public void saveNeighborhood(Neighborhood neighborhood) {
+        neighborhood.setID(UUID.randomUUID().toString());
+        neighborhoodRepository.insert(neighborhood);
     }
 
     @Override
-    public void updateNeighborhood(Neighborhood city) {
-        neighborhoodRepository.save(city);
+    public void updateNeighborhood(Neighborhood neighborhood) {
+        neighborhoodRepository.save(neighborhood);
     }
 
     @Override

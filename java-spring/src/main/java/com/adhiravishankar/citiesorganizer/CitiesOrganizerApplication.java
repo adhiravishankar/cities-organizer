@@ -15,9 +15,6 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 @EnableMongoRepositories
 public class CitiesOrganizerApplication {
 
-	@Autowired
-	MetroRepository metroRepository;
-
 	public static void main(String[] args) {
 		SpringApplication.run(CitiesOrganizerApplication.class, args);
 	}

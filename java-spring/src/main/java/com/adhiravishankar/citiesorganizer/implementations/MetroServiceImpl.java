@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class MetroServiceImpl implements MetroService {
@@ -26,6 +27,7 @@ public class MetroServiceImpl implements MetroService {
 
     @Override
     public void saveMetro(Metro metro) {
+        metro.setID(UUID.randomUUID().toString());
         metroRepository.insert(metro);
     }
 

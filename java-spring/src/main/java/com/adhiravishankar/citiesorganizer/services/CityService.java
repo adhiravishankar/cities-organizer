@@ -1,5 +1,6 @@
 package com.adhiravishankar.citiesorganizer.services;
 
+import com.adhiravishankar.citiesorganizer.dtos.DetailedCityDTO;
 import com.adhiravishankar.citiesorganizer.models.City;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public interface CityService {
 
     List<City> findAll();
 
-    Optional<City> readCity(String id);
+    DetailedCityDTO readCity(String id);
 
     void saveCity(City city);
 

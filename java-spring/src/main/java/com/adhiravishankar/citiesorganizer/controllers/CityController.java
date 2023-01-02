@@ -1,9 +1,12 @@
 package com.adhiravishankar.citiesorganizer.controllers;
 
 import com.adhiravishankar.citiesorganizer.dtos.CityDTO;
+import com.adhiravishankar.citiesorganizer.dtos.DetailedCityDTO;
+import com.adhiravishankar.citiesorganizer.models.City;
 import com.adhiravishankar.citiesorganizer.services.CityService;
 import com.adhiravishankar.citiesorganizer.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,23 +23,26 @@ public class CityController {
     }
 
     @PostMapping("/cities")
-    public void postCity() {
-
+    public ResponseEntity<?> postCity() {
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/cities/{city}")
-    public void readCity(@PathVariable String city) {
-
+    public DetailedCityDTO readCity(@PathVariable String city) {
+        return service.readCity(city);
     }
 
     @PutMapping("/cities/{city}")
-    public void updateCity(@PathVariable String city) {
-
+    public ResponseEntity<?> updateCity(@RequestBody CityDTO cityDTO) {
+        City city = ObjectMapperUtils.map(cityDTO, City.class);
+        service.updateCity(city);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/cities/{city}")
-    public void deleteCity(@PathVariable String city) {
-
+    public ResponseEntity<?> deleteCity(@PathVariable String city) {
+        service.deleteByCity(city);
+        return ResponseEntity.ok().build();
     }
 
 }

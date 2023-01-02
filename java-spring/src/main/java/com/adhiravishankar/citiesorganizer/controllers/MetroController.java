@@ -5,12 +5,10 @@ import com.adhiravishankar.citiesorganizer.models.Metro;
 import com.adhiravishankar.citiesorganizer.services.MetroService;
 import com.adhiravishankar.citiesorganizer.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class MetroController {
@@ -24,8 +22,10 @@ public class MetroController {
     }
 
     @PostMapping("/metros")
-    public void postMetro() {
-
+    public ResponseEntity<?> postMetro(@RequestBody MetroDTO metroDTO) {
+        Metro metro = ObjectMapperUtils.map(metroDTO, Metro.class);
+        service.saveMetro(metro);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/metros/{metro}")
@@ -34,13 +34,16 @@ public class MetroController {
     }
 
     @PutMapping("/metros/{metro}")
-    public void updateMetro(@PathVariable String metro) {
-
+    public ResponseEntity<?> updateMetro(@RequestBody MetroDTO metroDTO) {
+        Metro metro = ObjectMapperUtils.map(metroDTO, Metro.class);
+        service.updateMetro(metro);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/metros/{metro}")
-    public void deleteMetro(@PathVariable String metro) {
+    public ResponseEntity<?> deleteMetro(@PathVariable String metro) {
         service.deleteByMetro(metro);
+        return ResponseEntity.ok().build();
     }
 
 }
