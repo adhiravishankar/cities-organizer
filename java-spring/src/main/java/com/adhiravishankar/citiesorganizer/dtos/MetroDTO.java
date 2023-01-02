@@ -1,14 +1,7 @@
-package com.adhiravishankar.citiesorganizer.models;
+package com.adhiravishankar.citiesorganizer.dtos;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+public class MetroDTO {
 
-import java.util.UUID;
-
-@Document("metros")
-public class Metro {
-
-    @Id
     private String id;
     private String name;
     private String extendedName;
@@ -16,13 +9,7 @@ public class Metro {
     private String notes;
     private String featuredImage;
 
-    public Metro(String name, String extendedName, Integer population, String notes, String featuredImage) {
-        this.id = UUID.randomUUID().toString();
-        this.name = name;
-        this.extendedName = extendedName;
-        this.population = population;
-        this.notes = notes;
-        this.featuredImage = featuredImage;
+    public MetroDTO() {
     }
 
     public String getId() {
@@ -71,17 +58,5 @@ public class Metro {
 
     public void setFeaturedImage(String featuredImage) {
         this.featuredImage = featuredImage;
-    }
-
-    @Override
-    public String toString() {
-        return "Metro{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", extendedName='" + extendedName + '\'' +
-                ", population=" + population +
-                ", notes='" + notes + '\'' +
-                ", featuredImage='" + featuredImage + '\'' +
-                '}';
     }
 }

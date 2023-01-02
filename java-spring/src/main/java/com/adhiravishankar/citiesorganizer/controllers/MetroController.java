@@ -1,19 +1,24 @@
 package com.adhiravishankar.citiesorganizer.controllers;
 
+import com.adhiravishankar.citiesorganizer.dtos.MetroDTO;
 import com.adhiravishankar.citiesorganizer.models.Metro;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.adhiravishankar.citiesorganizer.services.MetroService;
+import com.adhiravishankar.citiesorganizer.utils.ObjectMapperUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class MetroController {
 
-    @RequestMapping("/metros")
-    public List<Metro> getMetros() {
-        List<Metro> metros = new ArrayList<>();
-        return metros;
+    @Autowired
+    private MetroService service;
+
+    @GetMapping("/metros")
+    public List<MetroDTO> getMetros() {
+        return ObjectMapperUtils.mapAll(service.findAll(), MetroDTO.class);
     }
 
 }
