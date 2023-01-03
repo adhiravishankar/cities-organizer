@@ -1,5 +1,6 @@
 package com.adhiravishankar.citiesorganizer.services;
 
+import com.adhiravishankar.citiesorganizer.dtos.DetailedNeighborhoodDTO;
 import com.adhiravishankar.citiesorganizer.models.Neighborhood;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public interface NeighborhoodService {
 
     List<Neighborhood> findAll();
 
-    Optional<Neighborhood> readNeighborhood(String id);
+    DetailedNeighborhoodDTO readNeighborhood(String id);
 
     void saveNeighborhood(Neighborhood neighborhood);
 

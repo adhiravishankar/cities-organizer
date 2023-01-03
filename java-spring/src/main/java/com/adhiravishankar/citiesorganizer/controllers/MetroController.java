@@ -1,5 +1,6 @@
 package com.adhiravishankar.citiesorganizer.controllers;
 
+import com.adhiravishankar.citiesorganizer.dtos.DetailedMetroDTO;
 import com.adhiravishankar.citiesorganizer.dtos.MetroDTO;
 import com.adhiravishankar.citiesorganizer.models.Metro;
 import com.adhiravishankar.citiesorganizer.services.MetroService;
@@ -29,8 +30,8 @@ public class MetroController {
     }
 
     @GetMapping("/metros/{metro}")
-    public MetroDTO readMetro(@PathVariable String metro) {
-        return ObjectMapperUtils.map(service.readMetro(metro), MetroDTO.class);
+    public DetailedMetroDTO readMetro(@PathVariable String metro) {
+        return service.readMetro(metro);
     }
 
     @PutMapping("/metros/{metro}")

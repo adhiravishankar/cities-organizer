@@ -44,7 +44,7 @@ public class CityServiceImpl implements CityService {
             throw new ResponseStatusException(NOT_FOUND, "Unable to find city");
         }
 
-        List<Picture> pictures = pictureRepository.findPicturesByCity(id);
+        List<Picture> pictures = pictureRepository.findPicturesByID(id);
         List<String> pictureURLs = new ArrayList<>();
         for (Picture picture : pictures) {
             pictureURLs.add(picture.getURL());

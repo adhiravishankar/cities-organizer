@@ -1,5 +1,6 @@
 package com.adhiravishankar.citiesorganizer.controllers;
 
+import com.adhiravishankar.citiesorganizer.dtos.DetailedNeighborhoodDTO;
 import com.adhiravishankar.citiesorganizer.dtos.NeighborhoodDTO;
 import com.adhiravishankar.citiesorganizer.models.Neighborhood;
 import com.adhiravishankar.citiesorganizer.services.NeighborhoodService;
@@ -29,8 +30,8 @@ public class NeighborhoodController {
     }
 
     @GetMapping("/neighborhoods/{neighborhood}")
-    public NeighborhoodDTO readNeighborhood(@PathVariable String neighborhood) {
-        return ObjectMapperUtils.map(service.readNeighborhood(neighborhood), NeighborhoodDTO.class);
+    public DetailedNeighborhoodDTO readNeighborhood(@PathVariable String neighborhood) {
+        return service.readNeighborhood(neighborhood);
     }
 
     @PutMapping("/neighborhoods/{neighborhood}")
