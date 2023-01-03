@@ -28,9 +28,6 @@ func main() {
 	router := gin.Default()
 	router.Use(CORSMiddleware())
 
-	router.POST("/login", login)
-	router.POST("/signup", signup)
-
 	// Metros CRUD API
 	router.GET("/metros", listMetros)
 	router.POST("/metros", createMetro)

@@ -47,10 +47,7 @@ func main() {
 	}
 
 	s3Client = s3.New(options)
-
-	router.POST("/login", login)
-	router.POST("/signup", signup)
-
+	
 	// Metros CRUD API
 	router.GET("/metros", metros)
 	router.POST("/metros", insertMetro)
