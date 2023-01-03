@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Metro;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -15,30 +17,32 @@ class MetroController extends Controller
      */
     public function getMetros(): Collection
     {
-        return DB::table('metros')->get();
+        return Metro::all();
     }
 
     /**
      * Show a metro
      *
      * @param $id
-     * @return object
+     * @return Metro
      */
-    public function readMetro($id): object
+    public function readMetro($id): Metro
     {
-        return DB::table('metros')->find($id)->first();
+        return Metro::find($id)->first();
     }
 
 
     /**
      * Show a metro
      *
-     * @param $metro
+     * @param $request Request
      * @return object
      */
-    public function createMetro($metro): object
+    public function createMetro($request): object
     {
-        return DB::table('metros')->find($id)->first();
+        $metro = new Metro();
+        $metro->name = $request->name;
+        $metro->save();
     }
 
 }

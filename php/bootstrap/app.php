@@ -27,6 +27,9 @@ $app = new Laravel\Lumen\Application(
 
 $app->withEloquent();
 
+// Register AWS Provider
+$app->register(\Aws\Laravel\AwsServiceProvider::class);
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
