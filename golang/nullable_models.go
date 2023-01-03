@@ -3,7 +3,7 @@ package main
 import "database/sql"
 
 type NullableMetro struct {
-	ID            int64
+	ID            sql.NullString
 	Name          sql.NullString
 	ExtendedName  sql.NullString
 	Population    sql.NullInt64
@@ -13,7 +13,7 @@ type NullableMetro struct {
 }
 
 type NullableCity struct {
-	ID            int64
+	ID            sql.NullString
 	MetroID       sql.NullInt64
 	Name          sql.NullString
 	Population    sql.NullInt64
@@ -22,7 +22,7 @@ type NullableCity struct {
 }
 
 type NullableNeighborhood struct {
-	ID                    int64
+	ID                    sql.NullString
 	CityID                sql.NullInt64
 	MetroID               sql.NullInt64
 	FeaturedImage         sql.NullString
