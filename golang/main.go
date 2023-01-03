@@ -47,7 +47,7 @@ func main() {
 	}
 
 	s3Client = s3.New(options)
-	
+
 	// Metros CRUD API
 	router.GET("/metros", metros)
 	router.POST("/metros", insertMetro)

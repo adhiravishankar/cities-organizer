@@ -24,8 +24,3 @@ pub(crate) async fn delete_metro(req: HttpRequest) -> impl Responder {
     let name = req.match_info().get("name").unwrap_or("World");
     format!("Hello {}!", &name)
 }
-
-pub(crate) async fn upload_pics_for_metro(req: HttpRequest) -> impl Responder {
-    let name = req.match_info().get("name").unwrap_or("World");
-    format!("Hello {}!", &name)
-}

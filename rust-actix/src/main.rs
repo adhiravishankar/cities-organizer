@@ -1,6 +1,8 @@
 mod metros;
 mod cities;
 mod neighborhoods;
+mod pics;
+mod models;
 
 use actix_web::{App, HttpServer, web};
 
@@ -8,12 +10,12 @@ use actix_web::{App, HttpServer, web};
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
+            .route("/pics/upload", web::post().to(pics::upload_pics))
             .route("/metros", web::get().to(metros::list_metros))
             .route("/metros", web::post().to(metros::create_metro))
             .route("/metros/{metro}", web::get().to(metros::get_metro))
             .route("/metros/{metro}", web::put().to(metros::update_metro))
             .route("/metros/{metro}", web::delete().to(metros::delete_metro))
-            .route("/metros/{metro}/upload", web::post().to(metros::upload_pics_for_metro))
             .route("/cities", web::get().to(cities::list_cities))
             .route("/cities", web::post().to(cities::create_city))
             .route("/cities/{city}", web::get().to(cities::get_city))
@@ -25,7 +27,7 @@ async fn main() -> std::io::Result<()> {
             .route("/neighborhoods/{neighborhood}", web::put().to(neighborhoods::update_neighborhood))
             .route("/neighborhoods/{neighborhood}", web::delete().to(neighborhoods::delete_neighborhood))
     })
-        .bind(("localhost", 7002))?
+        .bind(("localhost", 7005))?
         .run()
         .await
 }
