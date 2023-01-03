@@ -1,5 +1,25 @@
 # README
 
+## Languages Used So Far
+1. Golang
+2. Java
+3. Python
+4. Typescript/Javascript
+5. SQL
+6. Rust
+7. PHP
+8. Ruby
+
+### Frameworks Used So Far
+1. Spring on Java
+2. Gin on Go
+3. Django on Python
+4. Express on Typescript
+5. React on Typescript
+6. Ruby on Rails
+7. Actix on Rust
+8. Lumen/Laravel on PHP
+
 ## Projects
 
 1. Golang folder -> Golang application, MySQL backend, Gonic Router
