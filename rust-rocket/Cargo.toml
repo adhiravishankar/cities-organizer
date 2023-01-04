@@ -1,0 +1,15 @@
+[package]
+name = "rust-rocket"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rocket = "0.5.0-rc.2"
+dotenv = "0.15.0"
+serde_json = "1.0.91"
+mongodb = "2.3.1"
+aws-sdk-s3 = "0.22.0"
+tokio = { version = "1", features = ["full"] }
+aws-config = "0.52.0"
