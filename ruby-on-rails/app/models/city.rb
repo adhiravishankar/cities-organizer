@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-class City
+class City < ApplicationRecord
 end

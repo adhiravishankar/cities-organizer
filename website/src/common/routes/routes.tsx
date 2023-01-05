@@ -11,14 +11,6 @@ import { AppStore } from '../stores/AppStore';
 
 export function createRouter(store: AppStore) {
   return createBrowserRouter([
-    // {
-    //   path: '/login',
-    //   element: <Login store={ store } />,
-    // },
-    // {
-    //   path: '/signup',
-    //   element: <Signup store={ store } />,
-    // },
     {
       path: '/',
       loader: async () => {

@@ -7,7 +7,9 @@
     "build:sass": "node sass-compile.js",
     "build:tsc": "tsc -p .",
     "build:parcel": "parcel build/index.html",
-    "lint": "eslint . --ext .ts,.tsx --fix"
+    "lint": "eslint . --ext .ts,.tsx --fix",
+    "test": "redrun --serial test:e2e",
+    "test:e2e": "cypress open"
   },
   "dependencies": {
     "@babel/core": "^7.20.7",

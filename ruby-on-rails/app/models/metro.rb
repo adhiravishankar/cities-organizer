@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-class Metro
+class Metro < ApplicationRecord
 end
