@@ -5,12 +5,12 @@ import { API } from '../apis/API';
 import { CitiesAPI } from '../apis/CitiesAPI';
 import { MetroAPI } from '../apis/MetroAPI';
 import { City } from '../interfaces/City';
+import { DerivedNeighborhood } from '../interfaces/DerivedNeighborhood';
 import { DetailedCity } from '../interfaces/DetailedCity';
 import { DetailedMetro } from '../interfaces/DetailedMetro';
 import { DetailedNeighborhood } from '../interfaces/DetailedNeighborhood';
 import { Metro } from '../interfaces/Metro';
 import { Neighborhood } from '../interfaces/Neighborhood';
-import {DerivedNeighborhood} from "../interfaces/DerivedNeighborhood";
 
 
 export class AppStore {

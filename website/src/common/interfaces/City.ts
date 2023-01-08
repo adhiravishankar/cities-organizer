@@ -1,5 +1,10 @@
-
+/**
+ *
+ */
 export interface City {
+  /**
+   * UUID for city
+   */
   ID: string;
 
   Name: string
