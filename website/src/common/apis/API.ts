@@ -28,7 +28,7 @@ export class API {
     const formData = new FormData();
     formData.set('attribute', id);
     formData.set('picture', picture);
-    return ky.post(this.baseURL + '/cities/' + id + '/upload', { body: formData }).text();
+    return ky.post(this.baseURL + '/upload', { body: formData }).text();
   }
 
   async neighborhoods(): Promise<KyResponse> {

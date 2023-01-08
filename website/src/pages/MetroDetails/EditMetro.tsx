@@ -1,7 +1,7 @@
 import { MenuItem, Select, TextField } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, Stack } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
 
 import { Metro } from '../../common/interfaces/Metro';
@@ -39,12 +39,14 @@ export const EditMetro = observer<EditMetroProps>((props: EditMetroProps) => {
       </Modal.Header>
       <Modal.Body>
         <form>
-          <Controller name="Name" control={control} render={({ field }) => <TextField { ...field } id="name" placeholder="Name" /> }/>
-          <Controller name="ExtendedName" control={control} render={({ field }) => <TextField { ...field } id="extended_name" placeholder="Extended Name" /> }/>
-          <Controller name="Population" control={control} render={({ field }) => <TextField { ...field } id="population" placeholder="Population" type="number" /> }/>
-          <Controller name="MetroSizeRank" control={control} render={({ field }) => <TextField { ...field } id="MetroSizeRank" placeholder="Metro Size Rank" type="number" /> }/>
-          <Select onChange={ fiField.onChange } value={ fiField.value } label="Featured Image">{ picsJSX }</Select>
-          <Button variant="contained" onClick={ handleSubmit(onSubmit) } type="submit">Submit</Button>
+          <Stack direction="vertical" gap={ 2 }>
+            <Controller name="Name" control={control} render={({ field }) => <TextField { ...field } id="name" fullWidth placeholder="Name" /> }/>
+            <Controller name="ExtendedName" control={control} render={({ field }) => <TextField { ...field } id="extended_name" fullWidth placeholder="Extended Name" /> }/>
+            <Controller name="Population" control={control} render={({ field }) => <TextField { ...field } id="population" fullWidth placeholder="Population" type="number" /> }/>
+            <Controller name="MetroSizeRank" control={control} render={({ field }) => <TextField { ...field } id="MetroSizeRank" fullWidth placeholder="Metro Size Rank" type="number" /> }/>
+            <Select onChange={ fiField.onChange } value={ fiField.value } label="Featured Image">{ picsJSX }</Select>
+            <Button variant="contained" onClick={ handleSubmit(onSubmit) } type="submit">Submit</Button>
+          </Stack>
         </form>
       </Modal.Body>
     </Modal>

@@ -37,3 +37,22 @@ body {
 .dropdown {
   min-height: 3.5rem !important;
 }
+
+.dropzone-wrapper {
+  display: flex;
+}
+
+.dropzone-text {
+  width: 100%;
+  text-align: center;
+
+  p {
+    margin-top: 3rem;
+  }
+
+  i {
+    font-size: 2rem;
+    margin: 2rem;
+  }
+}
+

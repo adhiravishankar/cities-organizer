@@ -89,6 +89,7 @@ export class AppStore {
       selectedMetroArea: observable,
       updateCity: flow,
       updateSelectedMetro: action,
+      uploadPic: flow,
       uploadPicsModalOpen: observable,
       uploadPicsModalVisibilityChange: action,
     });
