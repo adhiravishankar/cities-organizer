@@ -23,7 +23,7 @@ export const LabeledImageItem = (image: LabeledImageItemProps) => {
   return (
     <div key={ name } className="labeled-image-item" onClick={ onClickHandler }>
       <img src={ source } alt={ name } loading="lazy" />
-      <div className="image-label" title={ name } />
+      <div className="image-label" title={ name }>{ name }</div>
     </div>
   );
 };

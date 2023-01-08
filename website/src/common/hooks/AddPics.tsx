@@ -12,7 +12,6 @@ export interface AddPicsProps {
 
 export function AddPics(props: AddPicsProps) {
   const onDropAccepted = useCallback((files: File[]) => {
-    console.log(onDropAccepted);
     files.forEach((file: File) => props.fileUpload(file));
   }, [props.fileUpload]);
   const dropzone = useDropzone({ onDropAccepted });

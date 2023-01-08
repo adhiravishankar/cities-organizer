@@ -88,6 +88,8 @@ export class AppStore {
       selectedMetro: observable,
       selectedMetroArea: observable,
       updateCity: flow,
+      updateMetro: flow,
+      updateNeighborhood: flow,
       updateSelectedMetro: action,
       uploadPic: flow,
       uploadPicsModalOpen: observable,
@@ -179,15 +181,19 @@ export class AppStore {
     const response: KyResponse = yield this.api.insertNeighborhood(neighborhood);
     if (response.ok) {
       const neighborhoodID = yield response.text();
-      console.log(neighborhoodID);
+    }
+  }
+
+  *updateNeighborhood(neighborhood: Neighborhood) {
+    const response: KyResponse = yield this.api.updateNeighborhood(neighborhood);
+    if (response.ok) {
+      const neighborhoodID = yield response.text();
     }
   }
 
   *uploadPic(id: string, file: File) {
     const response: KyResponse = yield this.api.uploadPic(id, file);
-    const picID = yield response.text();
-    console.log(picID);
-    // todo add uploaded pic
+    return yield response.text();
   }
 
   editingModalVisibilityChange(visibility: boolean) {

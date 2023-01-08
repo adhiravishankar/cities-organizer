@@ -5,7 +5,7 @@
     "build": "redrun --series build:components build:parcel",
     "build:components": "redrun --parallel build:sass build:tsc",
     "build:sass": "node sass-compile.js",
-    "build:tsc": "tsc -p .",
+    "build:tsc": "tsc",
     "build:parcel": "parcel build/index.html",
     "lint": "eslint . --ext .ts,.tsx --fix",
     "test": "redrun --serial test:e2e",

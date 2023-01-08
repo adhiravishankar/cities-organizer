@@ -89,7 +89,7 @@ func updateCity(c *gin.Context) {
 		Notes:         c.PostForm("notes"),
 	}
 
-	id, err := citiesCollections.UpdateByID(c, bson.D{{"_id", c.Param("city")}}, city)
+	id, err := citiesCollections.ReplaceOne(c, bson.D{{"_id", c.Param("city")}}, city)
 	if err != nil {
 		log.Fatal(err)
 	}

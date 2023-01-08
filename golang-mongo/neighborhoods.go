@@ -211,7 +211,8 @@ func updateNeighborhood(c *gin.Context) {
 		Notes:                 c.PostForm("notes"),
 	}
 
-	id, err := neighborhoodCollection.UpdateByID(c, bson.D{{"_id", c.Param("neighborhood")}}, neighborhood)
+	neighborhoodID := bson.D{{"_id", c.Param("neighborhood")}}
+	id, err := neighborhoodCollection.ReplaceOne(c, neighborhoodID, neighborhood)
 	if err != nil {
 		log.Fatal(err)
 	}

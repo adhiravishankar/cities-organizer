@@ -101,7 +101,7 @@ func updateMetro(c *gin.Context) {
 		FeaturedImage: c.PostForm("featured_image"),
 	}
 
-	id, err := metrosCollections.UpdateByID(c, bson.D{{"_id", c.Param("metro")}}, metro)
+	id, err := metrosCollections.ReplaceOne(c, bson.D{{"_id", c.Param("metro")}}, metro)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -1,8 +1,9 @@
 {
+  "ignorePatterns": ["node_modules/**/*"],
   "extends": ["airbnb-typescript"],
   "plugins": ["import","react","simple-import-sort"],
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": "./tsconfig.eslint.json"
   },
   "rules": {
     "import/no-extraneous-dependencies": 0,

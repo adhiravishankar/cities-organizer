@@ -28,7 +28,7 @@ export class API {
     const formData = new FormData();
     formData.set('attribute', id);
     formData.set('picture', picture);
-    return ky.post(this.baseURL + '/upload', { body: formData }).text();
+    return ky.post(this.baseURL + '/upload-pics', { body: formData }).text();
   }
 
   async neighborhoods(): Promise<KyResponse> {
@@ -56,6 +56,25 @@ export class API {
     formData.set('max_sqft', neighborhood.MaxSqft.toString());
     formData.set('notes', neighborhood.Notes);
     return ky.post(this.baseURL + '/neighborhoods', { body: formData });
+  }
+
+  async updateNeighborhood(neighborhood: Neighborhood): Promise<KyResponse> {
+    const formData = new FormData();
+    formData.set('city_id', neighborhood.CityID);
+    formData.set('metro_id', neighborhood.MetroID);
+    formData.set('featured_image', neighborhood.FeaturedImage);
+    formData.set('link', neighborhood.Link);
+    formData.set('name', neighborhood.Name);
+    formData.set('high_school_score', neighborhood.HighSchoolScore.toString());
+    formData.set('middle_school_score', neighborhood.MiddleSchoolScore.toString());
+    formData.set('elementary_school_score', neighborhood.ElementarySchoolScore.toString());
+    formData.set('address', neighborhood.Address);
+    formData.set('minimum_value', neighborhood.MinimumValue.toString());
+    formData.set('maximum_value', neighborhood.MaximumValue.toString());
+    formData.set('min_sqft', neighborhood.MinSqft.toString());
+    formData.set('max_sqft', neighborhood.MaxSqft.toString());
+    formData.set('notes', neighborhood.Notes);
+    return ky.post(this.baseURL + '/neighborhoods/' + neighborhood.ID, { body: formData });
   }
 
 }

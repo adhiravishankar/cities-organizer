@@ -50,7 +50,7 @@ func main() {
 	router.DELETE("/neighborhoods/:neighborhood", deleteNeighborhood)
 
 	// Pics API
-	router.POST("/pics", uploadPics)
+	router.POST("/upload-pics", uploadPics)
 
 	err = router.Run(":7003")
 	if err != nil {
@@ -82,4 +82,13 @@ func connectToS3() {
 	}
 
 	s3Client = s3.New(options)
+}
+
+func about(c *gin.Context) {
+	aboutMap := make(map[string]string)
+	aboutMap["language"] = "Go"
+	aboutMap["framework"] = "Gin"
+	aboutMap["database"] = "Mongo"
+	aboutMap["cloud"] = "AWS"
+	c.JSON(200, aboutMap)
 }
