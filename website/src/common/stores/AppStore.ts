@@ -21,6 +21,8 @@ export class AppStore {
 
   citiesAPI: CitiesAPI;
 
+  aboutMap: Map<string, string> = observable.map();
+
   selectedMetro: DetailedMetro;
 
   metrosArray: Metro[] = observable.array();
@@ -64,6 +66,8 @@ export class AppStore {
     this.metroAPI = new MetroAPI(process.env.BASE_URL);
     this.citiesAPI = new CitiesAPI(process.env.BASE_URL);
     makeObservable(this, {
+      about: flow,
+      aboutMap: observable,
       citiesArray: observable,
       citiesMap: observable,
       editingModalOpen: observable,
@@ -101,6 +105,16 @@ export class AppStore {
     yield this.fetchMetros();
     yield this.fetchCities();
     yield this.fetchNeighborhoods();
+  }
+
+  *about() {
+    const response: KyResponse = yield this.api.about();
+    const aboutText: Record<string, string> = yield response.json<Record<string, string>>();
+    Object.entries(aboutText).forEach(([value, key]: [string, string]) => this.aboutMap.set(key, value));
+    this.aboutMap.set('Frontend', 'React');
+    this.aboutMap.set('Store', 'MobX');
+    this.aboutMap.set('Router', 'React Router');
+    this.aboutMap.set('Styling Frameworks', 'Bootstrap & Material UI');
   }
 
   *fetchMetros() {

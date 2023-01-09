@@ -9,19 +9,8 @@ export class API {
     this.baseURL = baseURL;
   }
 
-  async login(username: string, password: string): Promise<KyResponse> {
-    const formData = new FormData();
-    formData.set('username', username);
-    formData.set('password', password);
-    return ky.post(this.baseURL + '/login', { body: formData });
-  }
-
-  async signup(username: string, password: string, name: string): Promise<KyResponse> {
-    const formData = new FormData();
-    formData.set('username', username);
-    formData.set('password', password);
-    formData.set('name', name);
-    return ky.post(this.baseURL + '/signup', { body: formData });
+  async about(): Promise<KyResponse> {
+    return ky.get('/about');
   }
 
   async uploadPic(id: string, picture: File): Promise<string> {

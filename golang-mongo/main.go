@@ -28,6 +28,8 @@ func main() {
 	router := gin.Default()
 	router.Use(CORSMiddleware())
 
+	router.GET("/about", about)
+
 	// Metros CRUD API
 	router.GET("/metros", listMetros)
 	router.POST("/metros", createMetro)
@@ -86,9 +88,9 @@ func connectToS3() {
 
 func about(c *gin.Context) {
 	aboutMap := make(map[string]string)
-	aboutMap["language"] = "Go"
-	aboutMap["framework"] = "Gin"
-	aboutMap["database"] = "Mongo"
-	aboutMap["cloud"] = "AWS"
+	aboutMap["Language"] = "Go"
+	aboutMap["Framework"] = "Gin"
+	aboutMap["Database"] = "Mongo"
+	aboutMap["Cloud"] = "AWS"
 	c.JSON(200, aboutMap)
 }

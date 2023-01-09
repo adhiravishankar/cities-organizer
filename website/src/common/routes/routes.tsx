@@ -20,6 +20,14 @@ export function createRouter(store: AppStore) {
       element: <Home store={store}/>,
     },
     {
+      path: '/about',
+      loader: async () => {
+        await store.initialize();
+        return null;
+      },
+      element: <Home store={store}/>,
+    },
+    {
       path: 'metros/:metro',
       loader: async ({ params }) => {
         await store.initialize();
