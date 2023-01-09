@@ -16,6 +16,14 @@ import { MetrosListComponent } from './metros-list/metros-list.component';
 import { MetrosTableComponent } from './metros-table/metros-table.component';
 import { CitiesTableComponent } from './cities-table/cities-table.component';
 import { NeighborhoodsTableComponent } from './neighborhoods-table/neighborhoods-table.component';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatCardModule} from "@angular/material/card";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -36,7 +44,15 @@ import { NeighborhoodsTableComponent } from './neighborhoods-table/neighborhoods
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({}, {})
+    StoreModule.forRoot({}, {}),
+    EffectsModule.forRoot([]),
+    StoreRouterConnectingModule.forRoot(),
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTabsModule,
+    MatCardModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
