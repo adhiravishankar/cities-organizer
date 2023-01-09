@@ -1,1 +1,37 @@
-<p>create-city works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Create City</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="row">
+      <div class="col">
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+      <div class="col col-2">
+        <mat-form-field>
+          <mat-label>Population</mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+      <div class="col col-3">
+        <mat-form-field>
+          <mat-label>Metropolitan Area</mat-label>
+          <mat-select>
+            <mat-option value="dc">DC</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field>
+          <mat-label>Notes</mat-label>
+          <textarea matInput></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,7 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+html, body { height: 100%; background-color: #ddd; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-/* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.mat-mdc-card-title {
+  font-size: 2rem;
+  margin-bottom: 1rem !important;
+}
