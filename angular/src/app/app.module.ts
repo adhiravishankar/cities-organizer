@@ -12,6 +12,10 @@ import { NeighborhoodDetailsComponent } from './neighborhood-details/neighborhoo
 import { CreateMetroComponent } from './create-metro/create-metro.component';
 import { CreateCityComponent } from './create-city/create-city.component';
 import { CreateNeighborhoodComponent } from './create-neighborhood/create-neighborhood.component';
+import { MetrosListComponent } from './metros-list/metros-list.component';
+import { MetrosTableComponent } from './metros-table/metros-table.component';
+import { CitiesTableComponent } from './cities-table/cities-table.component';
+import { NeighborhoodsTableComponent } from './neighborhoods-table/neighborhoods-table.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,11 @@ import { CreateNeighborhoodComponent } from './create-neighborhood/create-neighb
     NeighborhoodDetailsComponent,
     CreateMetroComponent,
     CreateCityComponent,
-    CreateNeighborhoodComponent
+    CreateNeighborhoodComponent,
+    MetrosListComponent,
+    MetrosTableComponent,
+    CitiesTableComponent,
+    NeighborhoodsTableComponent
   ],
   imports: [
     BrowserModule,
