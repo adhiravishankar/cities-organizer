@@ -56,10 +56,24 @@ body {
   }
 }
 
+.images-stack {
+  overflow-x: auto;
+}
+
 .images-stack img {
   max-height: 10rem;
 }
 
 .labeled-image-item img {
   max-height: 10rem;
+}
+
+.no-image-item .image {
+  height: 10rem;
+  min-width: 11rem;
+  display: flex;
+
+  i {
+    margin: auto;
+  }
 }

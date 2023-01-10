@@ -8,6 +8,7 @@ import { ImagesCard } from '../../common/hooks/ImagesCard';
 import { NavBarProps } from '../../common/hooks/NavBar';
 import { AppStore } from '../../common/stores/AppStore';
 import { EditNeighborhood } from './EditNeighborhood';
+import {useNavigate} from "react-router";
 
 interface NeighborhoodProps {
   store: AppStore;
@@ -16,6 +17,7 @@ interface NeighborhoodProps {
 export const NeighborhoodPage = observer<NeighborhoodProps>((props: NeighborhoodProps) => {
   const { store } = props;
   const { selectedNeighborhood } = store;
+  const navigation = useNavigate();
 
   const openEditingScreen = useCallback(() => {
     store.editingModalVisibilityChange(true);
@@ -33,6 +35,8 @@ export const NeighborhoodPage = observer<NeighborhoodProps>((props: Neighborhood
     store.uploadPic(selectedNeighborhood.Neighborhood.ID, file);
   }, [store, selectedNeighborhood]);
 
+  const refresh = useCallback(() => navigation(0), []);
+
   const metroName = store.metrosMap.get(selectedNeighborhood.Neighborhood.MetroID)?.Name;
   const cityName = store.citiesMap.get(selectedNeighborhood.Neighborhood.CityID)?.Name;
 
@@ -41,7 +45,7 @@ export const NeighborhoodPage = observer<NeighborhoodProps>((props: Neighborhood
     cityID: selectedNeighborhood.Neighborhood.CityID, neighborhood: selectedNeighborhood.Neighborhood.Name,
     metro: metroName, city: cityName };
   const editCity = <EditNeighborhood id={ selectedNeighborhood.Neighborhood.ID } store={ store } />;
-  const addPicsProps: AddPicsProps = { onCloseModal: closeUploadPicsScreen, shown: store.uploadPicsModalOpen, fileUpload };
+  const addPicsProps: AddPicsProps = { onCloseModal: closeUploadPicsScreen, shown: store.uploadPicsModalOpen, fileUpload, refresh };
   const navBarProps: NavBarProps = { editIcon: true, id: selectedNeighborhood.Neighborhood.ID, onEdit: openEditingScreen, name: selectedNeighborhood.Neighborhood.Name };
 
   return (

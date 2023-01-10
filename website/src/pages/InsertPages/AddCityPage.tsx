@@ -8,6 +8,7 @@ import Select from 'react-select';
 import { FormsPage } from '../../common/hooks/FormsPage';
 import { City } from '../../common/interfaces/City';
 import { DropdownOption } from '../../common/interfaces/DropdownOption';
+import { SelectedOption } from '../../common/interfaces/SelectedOption';
 import { AppStore } from '../../common/stores/AppStore';
 
 
@@ -28,6 +29,12 @@ export function AddCityPage(props: AddCityPageProps) {
 
   const { field: miField } = useController({ name: 'MetroID', control });
 
+  const onSetMetro = useCallback((option: SelectedOption) => {
+    store.updateSelectedMetro(option.value);
+    miField.onChange(-1);
+    miField.onChange(option.value);
+  }, []);
+
   const metroItems: DropdownOption[] = [];
   store.metroNamesMap.forEach((text: string, id: string) => metroItems.push({ value: id, label: text }));
 
@@ -41,7 +48,7 @@ export function AddCityPage(props: AddCityPageProps) {
           <Controller name="Population" control={control} render={({ field }) => <TextField { ...field } fullWidth id="population" placeholder="Population" type="number" /> }/>
         </Col>
         <Col className="col-3">
-          <Select options={ metroItems } classNames={{ control: () => 'dropdown' }} />
+          <Select options={ metroItems } classNames={{ control: () => 'dropdown' }} onChange={ onSetMetro } />
         </Col>
       </Row>
       <Row>

@@ -119,7 +119,7 @@ func deleteCity(c *gin.Context) {
 func internalCitiesForMetro(c *gin.Context) []City {
 	citiesCollections := mongoDB.Collection("cities")
 
-	cursor, err := citiesCollections.Find(c, bson.D{{}})
+	cursor, err := citiesCollections.Find(c, bson.D{{"metro_id", c.Param("metro")}})
 	if err != nil {
 		log.Fatal(err)
 	}

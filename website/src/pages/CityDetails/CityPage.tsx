@@ -42,6 +42,8 @@ export const CityPage = observer<CityProps>((props: CityProps) => {
     navigation('/neighborhoods/' + id);
   }, []);
 
+  const refresh = useCallback(() => navigation(0), []);
+
 
   const neighborhoodImages: LabeledImage[] = (selectedCity.Neighborhoods === null || selectedCity.Neighborhoods === undefined) ? null :
     selectedCity.Neighborhoods
@@ -53,7 +55,7 @@ export const CityPage = observer<CityProps>((props: CityProps) => {
   const breadCrumbsProps: BreadcrumbsProps = { active: 'city', metroID: selectedCity.City.MetroID,
     cityID: selectedCity.City.ID, metro: metroName, city: cityName };
   const editCity = <EditCity id={ selectedCity.City.ID } store={ store } />;
-  const addPicsProps: AddPicsProps = { onCloseModal: closeUploadPicsScreen, shown: store.uploadPicsModalOpen, fileUpload };
+  const addPicsProps: AddPicsProps = { onCloseModal: closeUploadPicsScreen, shown: store.uploadPicsModalOpen, fileUpload, refresh };
   const navBarProps: NavBarProps = { editIcon: true, id: selectedCity.City.ID, onEdit: openEditingScreen, name: selectedCity.City.Name };
 
   return (

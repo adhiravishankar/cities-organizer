@@ -5,6 +5,8 @@ import { useDropzone } from 'react-dropzone';
 export interface AddPicsProps {
   onCloseModal: () => void;
 
+  refresh: () => void;
+
   shown: boolean;
 
   fileUpload: (file: File) => void;
@@ -12,7 +14,11 @@ export interface AddPicsProps {
 
 export function AddPics(props: AddPicsProps) {
   const onDropAccepted = useCallback((files: File[]) => {
-    files.forEach((file: File) => props.fileUpload(file));
+    files.forEach((file: File) => {
+      props.fileUpload(file);
+      props.onCloseModal();
+      props.refresh();
+    });
   }, [props.fileUpload]);
   const dropzone = useDropzone({ onDropAccepted });
   const text = dropzone.isDragActive ? 'Drop the files here...' : 'Drag n\' drop a file here or click to select a file';

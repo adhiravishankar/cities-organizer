@@ -26,9 +26,8 @@ export function NavBar(props: NavBarProps) {
     setAddMenu(null);
   };
 
-  const onClickEditIcon = useCallback(() => {
-    onEdit();
-  }, [onEdit, id]);
+  const onClickEditIcon = useCallback(() => onEdit(), [onEdit, id]);
+  const onClickAboutIcon = useCallback(() => navigation('/about'), [onEdit, id]);
 
   const onAddMetro = useCallback(() => navigation('/add-metro'), []);
   const onAddCity = useCallback(() => navigation('/add-city'), []);
@@ -75,6 +74,13 @@ export function NavBar(props: NavBarProps) {
     </div>
   );
 
+  const aboutIconJSX = (
+    <div onClick={ onClickAboutIcon } className="nav-icon">
+      <i className="fas fa-circle-info"/>
+      About
+    </div>
+  );
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -83,6 +89,7 @@ export function NavBar(props: NavBarProps) {
           <div className="nav-icons">
             { editIconJSX }
             { plusIconJSX }
+            { aboutIconJSX }
           </div>
         </Toolbar>
       </AppBar>

@@ -10,7 +10,7 @@ export class API {
   }
 
   async about(): Promise<KyResponse> {
-    return ky.get('/about');
+    return ky.get(this.baseURL + '/about');
   }
 
   async uploadPic(id: string, picture: File): Promise<string> {

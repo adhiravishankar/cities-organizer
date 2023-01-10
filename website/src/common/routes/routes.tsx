@@ -8,6 +8,7 @@ import { AddNeighborhoodPage } from '../../pages/InsertPages/AddNeighborhoodPage
 import { MetroPage } from '../../pages/MetroDetails/MetroPage';
 import { NeighborhoodPage } from '../../pages/NeighborhoodDetails/NeighborhoodPage';
 import { AppStore } from '../stores/AppStore';
+import {About} from "../../pages/About";
 
 export function createRouter(store: AppStore) {
   return createBrowserRouter([
@@ -22,10 +23,10 @@ export function createRouter(store: AppStore) {
     {
       path: '/about',
       loader: async () => {
-        await store.initialize();
+        await store.about();
         return null;
       },
-      element: <Home store={store}/>,
+      element: <About store={store}/>,
     },
     {
       path: 'metros/:metro',

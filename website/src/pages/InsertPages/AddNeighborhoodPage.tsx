@@ -9,6 +9,7 @@ import Select from 'react-select';
 import { FormsPage } from '../../common/hooks/FormsPage';
 import { DropdownOption } from '../../common/interfaces/DropdownOption';
 import { Neighborhood } from '../../common/interfaces/Neighborhood';
+import { SelectedOption } from '../../common/interfaces/SelectedOption';
 import { AppStore } from '../../common/stores/AppStore';
 
 export interface AddNeighborhoodPageProps {
@@ -28,10 +29,15 @@ export const AddNeighborhoodPage = observer<AddNeighborhoodPageProps>((props: Ad
   const { field: ciField } = useController({ name: 'CityID', control });
   const { field: miField } = useController({ name: 'MetroID', control });
 
-  const onChangeMetroArea = useCallback((events: string) => {
-    store.updateSelectedMetro(events);
+  const onSetMetro = useCallback((option: SelectedOption) => {
+    store.updateSelectedMetro(option.value);
     miField.onChange(-1);
-    miField.onChange(events);
+    miField.onChange(option.value);
+  }, []);
+
+  const onSetCity = useCallback((option: SelectedOption) => {
+    ciField.onChange(-1);
+    ciField.onChange(option.value);
   }, []);
 
   const metroItems: DropdownOption[] = [];
@@ -50,10 +56,10 @@ export const AddNeighborhoodPage = observer<AddNeighborhoodPageProps>((props: Ad
           <Controller name="Link" control={control} render={({ field }) => <TextField { ...field } fullWidth id="Link" placeholder="Link" /> }/>
         </Col>
         <Col className="col-2">
-          <Select options={ metroItems } classNames={{ control: () => 'dropdown' }} />
+          <Select options={ metroItems } classNames={{ control: () => 'dropdown' }} onChange={ onSetMetro } />
         </Col>
         <Col className="col-2">
-          <Select options={ cityItems } classNames={{ control: () => 'dropdown' }} />
+          <Select options={ cityItems } classNames={{ control: () => 'dropdown' }} onChange={ onSetCity } />
         </Col>
       </Row>
       <Row>

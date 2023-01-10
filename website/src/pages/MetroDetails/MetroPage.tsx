@@ -53,6 +53,8 @@ export const MetroPage = observer<MetroProps>((props: MetroProps) => {
     navigation('/neighborhoods/' + id);
   }, []);
 
+  const refresh = useCallback(() => navigation(0), []);
+
 
   const neighborhoodImages: LabeledImage[] = (selectedMetro.Neighborhoods === null || selectedMetro.Neighborhoods === undefined) ? null :
     selectedMetro.Neighborhoods
@@ -66,7 +68,7 @@ export const MetroPage = observer<MetroProps>((props: MetroProps) => {
 
   const breadCrumbsProps: BreadcrumbsProps = { active: 'metro', metroID: selectedMetro.Metropolitan.ID, metro: metroName };
   const editCity = <EditMetro id={ metro.ID } store={ store } />;
-  const addPicsProps: AddPicsProps = { onCloseModal: closeUploadPicsScreen, shown: store.uploadPicsModalOpen, fileUpload };
+  const addPicsProps: AddPicsProps = { onCloseModal: closeUploadPicsScreen, shown: store.uploadPicsModalOpen, fileUpload, refresh };
   const navBarProps: NavBarProps = { editIcon: true, id: selectedMetro.Metropolitan.ID, onEdit: openEditingScreen, name: selectedMetro.Metropolitan.Name };
 
   return (
