@@ -17,7 +17,7 @@ import { MetrosTableComponent } from './metros-table/metros-table.component';
 import { CitiesTableComponent } from './cities-table/cities-table.component';
 import { NeighborhoodsTableComponent } from './neighborhoods-table/neighborhoods-table.component';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import {routerReducer, StoreRouterConnectingModule} from '@ngrx/router-store';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
@@ -29,6 +29,9 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import {NgxDatatableModule} from "@swimlane/ngx-datatable";
+import {MatMenuModule} from "@angular/material/menu";
+import {titleReducer} from "../reducers/TitleReducer";
 
 @NgModule({
   declarations: [
@@ -50,10 +53,11 @@ import {HttpClientModule} from "@angular/common/http";
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({ router: routerReducer, title: titleReducer }, {}),
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot(),
     ReactiveFormsModule,
+    NgxDatatableModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
@@ -62,7 +66,8 @@ import {HttpClientModule} from "@angular/common/http";
     NgbModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

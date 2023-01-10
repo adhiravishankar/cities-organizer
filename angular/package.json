@@ -25,6 +25,7 @@
     "@ngrx/router-store": "^15.1.0",
     "@ngrx/store": "^15.1.0",
     "@popperjs/core": "^2.11.6",
+    "@swimlane/ngx-datatable": "^20.1.0",
     "bootstrap": "^5.2.3",
     "ky": "^0.33.1",
     "rxjs": "~7.5.0",

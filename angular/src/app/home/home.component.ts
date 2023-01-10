@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {Store} from "@ngrx/store";
+import {setTitle} from "../../actions/TitleAction";
 
 @Component({
   selector: 'app-home',
@@ -6,5 +8,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+
+  constructor(private store: Store) {
+  }
+
+  ngOnInit() {
+    this.store.dispatch(setTitle({ title: "Home" }));
+  }
 
 }

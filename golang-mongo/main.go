@@ -5,6 +5,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
+	"github.com/fvbock/endless"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -54,7 +55,7 @@ func main() {
 	// Pics API
 	router.POST("/upload-pics", uploadPics)
 
-	err = router.Run(":7003")
+	err = endless.ListenAndServe(":7003", router)
 	if err != nil {
 		log.Fatal(err)
 	}
