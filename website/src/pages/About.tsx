@@ -1,13 +1,10 @@
+import { Card, CardContent } from '@mui/material';
+import { Fragment } from 'react';
+import { Container } from 'react-bootstrap';
+
+import { DetailsList } from '../common/hooks/DetailsList';
+import { NavBar } from '../common/hooks/NavBar';
 import { AppStore } from '../common/stores/AppStore';
-import {NavBar} from "../common/hooks/NavBar";
-import {Container} from "react-bootstrap";
-import {Box, ImageList, Paper, Tab, Tabs} from "@mui/material";
-import {tabProps} from "../common/hooks/tabProps";
-import {TabPanel} from "../common/hooks/TabPanel";
-import {MetrosTable} from "./Home/MetrosTable";
-import {CitiesTable} from "./Home/CitiesTable";
-import {NeighborhoodsTable} from "./Home/NeighborhoodsTable";
-import {Fragment} from "react";
 
 interface AboutProps {
   store: AppStore;
@@ -18,7 +15,12 @@ export function About(props: AboutProps) {
     <Fragment>
       <NavBar editIcon={ false } name="About" />
       <Container className="body-container images-grid">
-        <Paper>{ [...props.store.aboutMap.entries()] }</Paper>
+        <Card>
+          <CardContent>
+            <h4>About</h4>
+            <DetailsList data={ props.store.aboutMap } />
+          </CardContent>
+        </Card>
       </Container>
     </Fragment>
   );

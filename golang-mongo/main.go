@@ -20,6 +20,9 @@ var s3Client *s3.Client
 
 func main() {
 	err := godotenv.Load()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	connectToMongo()
 	connectToS3()
@@ -71,7 +74,7 @@ func connectToMongo() {
 		log.Fatal(err)
 	}
 
-	db := client.Database("cities-golang")
+	db := client.Database(os.Getenv("DB"))
 	mongoDB = db
 }
 

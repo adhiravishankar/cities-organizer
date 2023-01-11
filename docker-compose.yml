@@ -1,0 +1,9 @@
+services:
+  golang-mongo:
+    build: golang-mongo/
+    ports:
+     - 7003:7003
+  spring-mongo:
+    build: java-spring/
+    ports:
+     - 7004:7004

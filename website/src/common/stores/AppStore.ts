@@ -110,7 +110,7 @@ export class AppStore {
   *about() {
     const response: KyResponse = yield this.api.about();
     const aboutText: Record<string, string> = yield response.json<Record<string, string>>();
-    Object.entries(aboutText).forEach(([value, key]: [string, string]) => this.aboutMap.set(key, value));
+    Object.entries(aboutText).forEach(([key, value]: [string, string]) => this.aboutMap.set(key, value));
     this.aboutMap.set('Frontend', 'React');
     this.aboutMap.set('Store', 'MobX');
     this.aboutMap.set('Router', 'React Router');

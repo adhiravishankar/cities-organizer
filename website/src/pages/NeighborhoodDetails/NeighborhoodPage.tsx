@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
+import { useNavigate } from 'react-router';
 
 import { AddPicsProps } from '../../common/hooks/AddPics';
 import { BreadcrumbsProps } from '../../common/hooks/Breadcrumbs';
@@ -8,7 +9,6 @@ import { ImagesCard } from '../../common/hooks/ImagesCard';
 import { NavBarProps } from '../../common/hooks/NavBar';
 import { AppStore } from '../../common/stores/AppStore';
 import { EditNeighborhood } from './EditNeighborhood';
-import {useNavigate} from "react-router";
 
 interface NeighborhoodProps {
   store: AppStore;

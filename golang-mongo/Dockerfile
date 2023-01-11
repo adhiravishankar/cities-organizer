@@ -10,19 +10,19 @@ COPY . .
 RUN go mod download
 
 # Builds your app with optional configuration
-RUN go build -o /app/go-cities
+RUN go build -o /go-cities
 
 # Pull alpine
 FROM gcr.io/distroless/base-debian11
 
 #Copies golang build file
-COPY --from=builder /app/go-cities /app/go-cities
+COPY --from=builder /go-cities /go-cities
+
+# Copies env file
+COPY .env /.env
 
 # Tells Docker which network port your container listens on
-EXPOSE 7001
+EXPOSE 7003
 
 # Specifies the executable command that runs when the container starts
-CMD [ "/app/go-cities" ]
-
-
-
+CMD [ "/go-cities" ]

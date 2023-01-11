@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import { About } from '../../pages/About';
 import { CityPage } from '../../pages/CityDetails/CityPage';
 import { Home } from '../../pages/Home/Home';
 import { AddCityPage } from '../../pages/InsertPages/AddCityPage';
@@ -8,7 +9,6 @@ import { AddNeighborhoodPage } from '../../pages/InsertPages/AddNeighborhoodPage
 import { MetroPage } from '../../pages/MetroDetails/MetroPage';
 import { NeighborhoodPage } from '../../pages/NeighborhoodDetails/NeighborhoodPage';
 import { AppStore } from '../stores/AppStore';
-import {About} from "../../pages/About";
 
 export function createRouter(store: AppStore) {
   return createBrowserRouter([

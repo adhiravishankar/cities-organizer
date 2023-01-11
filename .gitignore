@@ -2,3 +2,10 @@
 node_modules
 rust-actix/target
 vue/.vscode/
+env.env
+
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
+.vscode/
