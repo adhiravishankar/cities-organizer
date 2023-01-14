@@ -1,6 +1,7 @@
 
 import MaterialReactTable, { MRT_ColumnDef } from 'material-react-table';
 import { useMemo } from 'react';
+import { NumericFormat } from 'react-number-format';
 
 import { City } from '../../common/interfaces/City';
 import { AppStore } from '../../common/stores/AppStore';
@@ -25,7 +26,7 @@ export function CitiesTable(props: CitiesTableProps) {
     {
       header: 'Population',
       accessorKey: 'Population',
-      Cell: ({ cell }) => cell.getValue(),
+      Cell: ({ cell }) => <NumericFormat displayType="text" thousandSeparator="," value={ cell.getValue() as number } />,
     },
   ] as MRT_ColumnDef<City>[], []);
 

@@ -1,6 +1,6 @@
 
 
-export function getOrdinal(n) {
+export function getOrdinal(n: number): string {
   let ord = 'th';
 
   if (n % 10 == 1 && n % 100 != 11) {
@@ -12,4 +12,9 @@ export function getOrdinal(n) {
   }
 
   return ord;
+}
+
+
+export function attachOrdinal(n: number): string {
+  return n + getOrdinal(n);
 }
