@@ -19,7 +19,7 @@ FROM gcr.io/distroless/base-debian11
 COPY --from=builder /go-cities /go-cities
 
 # Copies env file
-COPY .env /.env
+COPY app.env /app.env
 
 # Tells Docker which network port your container listens on
 EXPOSE 7003

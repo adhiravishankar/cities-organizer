@@ -19,7 +19,7 @@ var mongoDB *mongo.Database
 var s3Client *s3.Client
 
 func main() {
-	err := godotenv.Load()
+	err := godotenv.Load("app.env")
 	if err != nil {
 		log.Fatal(err)
 	}
