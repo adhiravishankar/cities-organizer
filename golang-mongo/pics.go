@@ -32,7 +32,7 @@ func uploadPics(c *gin.Context) {
 	pictureFileName := uuid.New().String() + fileExt
 	s3Object := s3.PutObjectInput{
 		Body:          pictureFile,
-		Bucket:        aws.String(os.Getenv("S3_BUCKET")),
+		Bucket:        aws.String(os.Getenv("GO_MONGO_S3_BUCKET")),
 		Key:           aws.String(pictureFileName),
 		ContentLength: file.Size,
 		ACL:           awstypes.ObjectCannedACL("public-read"),
@@ -42,7 +42,7 @@ func uploadPics(c *gin.Context) {
 		log.Fatal(err)
 	}
 
-	pictureURL := os.Getenv("PICTURE_URL") + pictureFileName
+	pictureURL := os.Getenv("GO_MONGO_PICTURE_URL") + pictureFileName
 	mongoPic := Pic{
 		AttributeID: c.PostForm("attribute"),
 		ID:          pictureFileName,

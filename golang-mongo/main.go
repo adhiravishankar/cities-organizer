@@ -58,7 +58,7 @@ func main() {
 	// Pics API
 	router.POST("/upload-pics", uploadPics)
 
-	err = http.ListenAndServe(":7003", router)
+	err = http.ListenAndServe(":"+os.Getenv("GO_MONGO_PORT"), router)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -66,7 +66,7 @@ func main() {
 
 func connectToMongo() {
 	apiOptions := mongoOptions.ServerAPI(mongoOptions.ServerAPIVersion1)
-	clientOptions := mongoOptions.Client().ApplyURI(os.Getenv("MONGODB_URL")).SetServerAPIOptions(apiOptions)
+	clientOptions := mongoOptions.Client().ApplyURI(os.Getenv("GO_MONGO_MONGODB_URL")).SetServerAPIOptions(apiOptions)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	client, err := mongo.Connect(ctx, clientOptions)
@@ -74,13 +74,13 @@ func connectToMongo() {
 		log.Fatal(err)
 	}
 
-	db := client.Database(os.Getenv("DB"))
+	db := client.Database(os.Getenv("GO_MONGO_DB"))
 	mongoDB = db
 }
 
 func connectToS3() {
-	awsAccessKey := os.Getenv("AWS_ACCESS_KEY")
-	awsAccessSecret := os.Getenv("AWS_ACCESS_SECRET")
+	awsAccessKey := os.Getenv("GO_MONGO_AWS_ACCESS_KEY")
+	awsAccessSecret := os.Getenv("GO_MONGO_AWS_ACCESS_SECRET")
 	awsCredentials := credentials.NewStaticCredentialsProvider(awsAccessKey, awsAccessSecret, "")
 	options := s3.Options{
 		Region:      "us-east-2",
