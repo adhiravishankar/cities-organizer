@@ -1,4 +1,4 @@
-FROM amazoncorretto:17-alpine
+FROM amazoncorretto:17-alpine as builder
 
 # Copy application directory to app dir
 COPY . /app
@@ -14,6 +14,10 @@ RUN ./gradlew build
 
 RUN mv /app/build/libs/* /app/build/libs/app.jar
 
+FROM amazoncorretto:17-alpine
+
+COPY --from=builder /app/build/libs/app.jar /app/app.jar
+
 EXPOSE 7004
 
-CMD [ "java", "-jar", "/app/build/libs/app.jar"]
+CMD [ "java", "-jar", "/app/app.jar"]

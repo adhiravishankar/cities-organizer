@@ -18,6 +18,9 @@ public class Metro {
     @Field("extended_name")
     private String ExtendedName;
 
+    @Field("small_name")
+    private String SmallName;
+
     @Field("population")
     private Integer Population;
 
@@ -76,5 +79,13 @@ public class Metro {
 
     public void setFeaturedImage(String featuredImage) {
         FeaturedImage = featuredImage;
+    }
+
+    public String getSmallName() {
+        return SmallName;
+    }
+
+    public void setSmallName(String smallName) {
+        SmallName = smallName;
     }
 }

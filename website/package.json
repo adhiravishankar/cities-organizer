@@ -22,6 +22,7 @@
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.4",
     "@tanstack/react-table": "^8.7.6",
+    "atomic-sleep": "^1.0.0",
     "ky": "^0.33.1",
     "material-colors": "^1.2.6",
     "material-react-table": "^1.5.4",

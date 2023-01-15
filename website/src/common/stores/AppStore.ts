@@ -129,20 +129,20 @@ export class AppStore {
     this.selectedMetro = yield response.json<DetailedMetro>();
   }
 
-  *insertMetro(name: string, extendedName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string) {
-    const response: KyResponse = yield this.metroAPI.insertMetro(name, extendedName, metroSizeRank, population, featuredImage, notes);
+  *insertMetro(name: string, extendedName: string, shortName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string) {
+    const response: KyResponse = yield this.metroAPI.insertMetro(name, extendedName, shortName, metroSizeRank, population, featuredImage, notes);
     if (response.ok) {
       const metroID = yield response.text();
-      const metro: Metro = { Name: name, ExtendedName: extendedName, MetroSizeRank: metroSizeRank, Population: population, FeaturedImage: featuredImage, ID: metroID, Notes: notes };
+      const metro: Metro = { Name: name, ExtendedName: extendedName, ShortName: shortName, MetroSizeRank: metroSizeRank, Population: population, FeaturedImage: featuredImage, ID: metroID, Notes: notes };
       this.metrosMap.set(metroID, metro);
     }
   }
 
-  *updateMetro(id: string, name: string, extendedName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string) {
-    const success: KyResponse = yield this.metroAPI.editMetro(id, name, extendedName, metroSizeRank, population, featuredImage, notes);
+  *updateMetro(id: string, name: string, extendedName: string, shortName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string) {
+    const success: KyResponse = yield this.metroAPI.editMetro(id, name, extendedName, shortName, metroSizeRank, population, featuredImage, notes);
     if (success.ok) {
       const metro = this.metrosMap.get(id);
-      this.metrosMap.set(id, { ...metro, Name: name, ExtendedName: extendedName, Population: population, FeaturedImage: featuredImage });
+      this.metrosMap.set(id, { ...metro, Name: name, ExtendedName: extendedName, ShortName: shortName, Population: population, FeaturedImage: featuredImage });
     }
   }
 

@@ -1,7 +1,9 @@
 
+import { Box, IconButton, MenuItem } from '@mui/material';
 import MaterialReactTable, { MRT_ColumnDef } from 'material-react-table';
-import { useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { NumericFormat } from 'react-number-format';
+import { useNavigate } from 'react-router';
 
 import { City } from '../../common/interfaces/City';
 import { AppStore } from '../../common/stores/AppStore';
@@ -12,6 +14,8 @@ export interface CitiesTableProps {
 
 
 export function CitiesTable(props: CitiesTableProps) {
+  const navigation = useNavigate();
+
   const columns: MRT_ColumnDef<City>[] = useMemo(() => [
     {
       header: 'Name',
@@ -30,6 +34,20 @@ export function CitiesTable(props: CitiesTableProps) {
     },
   ] as MRT_ColumnDef<City>[], []);
 
-  return <MaterialReactTable columns={ columns } data={ props.store.citiesArray } />;
+  return (
+    <MaterialReactTable
+      columns={ columns }
+      data={ props.store.citiesArray }
+      positionActionsColumn="last"
+      enableRowActions
+      renderRowActions={({ row }) => (
+        <Box>
+          <IconButton onClick={() => navigation('/cities/' + row.original.ID)}>
+            <i className="fas fa-circle-info" />
+          </IconButton>
+        </Box>
+      ) as ReactNode}
+    />
+  );
 }
 

@@ -12,6 +12,7 @@ specifiers:
   '@types/react-dom': ^18.0.10
   '@typescript-eslint/eslint-plugin': ^5.48.1
   '@typescript-eslint/parser': ^5.48.1
+  atomic-sleep: ^1.0.0
   cypress: ^12.3.0
   eslint: ^8.31.0
   eslint-config-airbnb-typescript: ^17.0.0
@@ -47,6 +48,7 @@ dependencies:
   '@mui/icons-material': 5.11.0_6zueiyxsk3wwk7ardr4xipkxnu
   '@mui/material': 5.11.4_lskpmcsdi7ipu6qpuapyu56ihm
   '@tanstack/react-table': 8.7.6_biqbaboplfbrettd7655fr4n2y
+  atomic-sleep: 1.0.0
   ky: 0.33.1
   material-colors: 1.2.6
   material-react-table: 1.5.4_fujqtnskkxjwgpar5io7qhjzve
@@ -3388,6 +3390,11 @@ packages:
     resolution: {integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==}
     engines: {node: '>= 4.0.0'}
     dev: true
+
+  /atomic-sleep/1.0.0:
+    resolution: {integrity: sha512-kNOjDqAh7px0XWNI+4QbzoiR/nTkHAWNud2uvnJquD1/x5a7EQZMJT0AczqK0Qn67oY/TTQ1LbUKajZpp3I9tQ==}
+    engines: {node: '>=8.0.0'}
+    dev: false
 
   /attr-accept/2.2.2:
     resolution: {integrity: sha512-7prDjvt9HmqiZ0cl5CRjtS84sEyhsHP2coDkaZKRKVfCDo9s7iw7ChVmar78Gu9pC4SoR/28wFu/G5JJhTnqEg==}

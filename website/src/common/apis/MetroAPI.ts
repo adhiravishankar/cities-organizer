@@ -15,10 +15,11 @@ export class MetroAPI {
     return ky.get(this.baseURL + '/metros/' + id);
   }
 
-  async insertMetro(name: string, extendedName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string): Promise<KyResponse> {
+  async insertMetro(name: string, extendedName: string, shortName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string): Promise<KyResponse> {
     const formData = new FormData();
     formData.set('name', name);
     formData.set('extended_name', extendedName);
+    formData.set('short_name', shortName);
     formData.set('metro_size_rank', metroSizeRank.toString());
     formData.set('featured_image', featuredImage);
     formData.set('population', population.toString());
@@ -26,10 +27,11 @@ export class MetroAPI {
     return ky.post(this.baseURL + '/metros', { body: formData });
   }
 
-  async editMetro(id: string, name: string, extendedName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string): Promise<KyResponse> {
+  async editMetro(id: string, name: string, extendedName: string, shortName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string): Promise<KyResponse> {
     const formData = new FormData();
     formData.set('name', name);
     formData.set('extended_name', extendedName);
+    formData.set('short_name', shortName);
     formData.set('notes', notes);
     formData.set('metro_size_rank', metroSizeRank.toString());
     formData.set('featured_image', featuredImage);

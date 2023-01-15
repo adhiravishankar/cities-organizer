@@ -13,6 +13,9 @@ public class MetroDTO {
     @JsonProperty("ExtendedName")
     private String ExtendedName;
 
+    @JsonProperty("SmallName")
+    private String SmallName;
+
     @JsonProperty("Population")
     private Integer Population;
 
@@ -71,5 +74,13 @@ public class MetroDTO {
 
     public void setFeaturedImage(String featuredImage) {
         FeaturedImage = featuredImage;
+    }
+
+    public String getSmallName() {
+        return SmallName;
+    }
+
+    public void setSmallName(String smallName) {
+        SmallName = smallName;
     }
 }

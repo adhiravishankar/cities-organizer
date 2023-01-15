@@ -1,5 +1,7 @@
+import { Box, IconButton } from '@mui/material';
 import MaterialReactTable, { MRT_ColumnDef } from 'material-react-table';
-import { useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
+import { useNavigate } from 'react-router';
 
 import { Neighborhood } from '../../common/interfaces/Neighborhood';
 import { AppStore } from '../../common/stores/AppStore';
@@ -10,6 +12,8 @@ export interface NeighborhoodsTableProps {
 
 
 export function NeighborhoodsTable(props: NeighborhoodsTableProps) {
+  const navigation = useNavigate();
+
   const columns: MRT_ColumnDef<Neighborhood>[] = useMemo(() => [
     {
       header: 'Name',
@@ -33,6 +37,21 @@ export function NeighborhoodsTable(props: NeighborhoodsTableProps) {
     },
   ] as MRT_ColumnDef<Neighborhood>[], []);
 
-  return <MaterialReactTable columns={ columns } data={ props.store.neighborhoodsArray } enableColumnActions={ false } />;
+  return (
+    <MaterialReactTable
+      columns={ columns }
+      data={ props.store.neighborhoodsArray }
+      enableColumnActions={ false }
+      positionActionsColumn="last"
+      enableRowActions
+      renderRowActions={({ row }) => (
+        <Box>
+          <IconButton onClick={() => navigation('/neighborhoods/' + row.original.ID)}>
+            <i className="fas fa-circle-info" />
+          </IconButton>
+        </Box>
+      ) as ReactNode}
+    />
+  );
 }
 

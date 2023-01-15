@@ -4,6 +4,7 @@ type Metro struct {
 	ID            string `bson:"_id"`
 	Name          string `bson:"name,omitempty"`
 	ExtendedName  string `bson:"extended_name,omitempty"`
+	SmallName     string `bson:"small_name,omitempty"`
 	Population    int64  `bson:"population,omitempty"`
 	MetroSizeRank int64  `bson:"metro_size_rank,omitempty"`
 	Notes         string `bson:"notes,omitempty"`

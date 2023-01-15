@@ -7,6 +7,8 @@ export interface Metro {
 
   ExtendedName: string;
 
+  ShortName: string;
+
   Population: number;
 
   MetroSizeRank: number;
