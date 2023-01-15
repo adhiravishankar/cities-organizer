@@ -1,4 +1,3 @@
-import sleep from 'atomic-sleep';
 import { useCallback } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useDropzone } from 'react-dropzone';
@@ -18,11 +17,10 @@ export function AddPics(props: AddPicsProps) {
     files.forEach((file: File) => {
       props.fileUpload(file);
     });
-    await sleep(300);
     props.refresh();
   }, [props.fileUpload, props.onCloseModal, props.refresh]);
 
-  const dropzone = useDropzone({ onDropAccepted });
+  const dropzone = useDropzone({ onDropAccepted, maxFiles: 1 });
   const text = dropzone.isDragActive ? 'Drop the files here...' : 'Drag n\' drop a file here or click to select a file';
 
   const dropzoneJSX = (
