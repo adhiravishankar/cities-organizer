@@ -1,5 +1,5 @@
-import { CircularProgress } from '@mui/material';
-import { useCallback, useState } from 'react';
+import sleep from 'atomic-sleep';
+import { useCallback } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useDropzone } from 'react-dropzone';
 
@@ -14,10 +14,11 @@ export interface AddPicsProps {
 }
 
 export function AddPics(props: AddPicsProps) {
-  const onDropAccepted = useCallback((files: File[]) => {
+  const onDropAccepted = useCallback(async (files: File[]) => {
     files.forEach((file: File) => {
       props.fileUpload(file);
     });
+    await sleep(300);
     props.refresh();
   }, [props.fileUpload, props.onCloseModal, props.refresh]);
 
