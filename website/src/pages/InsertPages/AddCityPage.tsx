@@ -32,8 +32,9 @@ export function AddCityPage(props: AddCityPageProps) {
   const onSetMetro = useCallback((option: SelectedOption) => {
     store.updateSelectedMetro(option.value);
     miField.onChange(-1);
-    miField.onChange(option.value);
+    miField.onChange(store.selectedMetroArea);
   }, []);
+
 
   const metroItems: DropdownOption[] = [];
   store.metroNamesMap.forEach((text: string, id: string) => metroItems.push({ value: id, label: text }));

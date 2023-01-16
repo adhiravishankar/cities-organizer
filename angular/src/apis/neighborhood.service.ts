@@ -1,23 +1,30 @@
-import ky, {KyResponse} from "ky";
+import { Injectable } from '@angular/core';
 import {Neighborhood} from "../interfaces/Neighborhood";
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../environments/environment";
+import {Observable} from "rxjs";
+import {DetailedNeighborhood} from "../interfaces/DetailedNeighborhood";
 
-export class NeighborhoodAPI {
+@Injectable({
+  providedIn: 'root'
+})
+export class NeighborhoodService {
 
   baseURL: string;
 
-  constructor(baseURL: string) {
-    this.baseURL = baseURL;
+  constructor(private http: HttpClient) {
+    this.baseURL = environment.BASE_URL;
   }
 
-  async neighborhoods(): Promise<KyResponse> {
-    return ky.get(this.baseURL + '/neighborhoods');
+  neighborhoods(): Observable<Neighborhood[]> {
+    return this.http.get<Neighborhood[]>(this.baseURL + '/neighborhoods');
   }
 
-  async getNeighborhood(id: string): Promise<KyResponse> {
-    return ky.get(this.baseURL + '/neighborhoods/' + id);
+  getNeighborhood(id: string): Observable<DetailedNeighborhood> {
+    return this.http.get<DetailedNeighborhood>(this.baseURL + '/neighborhoods/' + id);
   }
 
-  async insertNeighborhood(neighborhood: Neighborhood): Promise<KyResponse> {
+  insertNeighborhood(neighborhood: Neighborhood): Observable<unknown> {
     const formData = new FormData();
     formData.set('city_id', neighborhood.CityID);
     formData.set('metro_id', neighborhood.MetroID);
@@ -33,10 +40,10 @@ export class NeighborhoodAPI {
     formData.set('min_sqft', neighborhood.MinSqft.toString());
     formData.set('max_sqft', neighborhood.MaxSqft.toString());
     formData.set('notes', neighborhood.Notes);
-    return ky.post(this.baseURL + '/neighborhoods', { body: formData });
+    return this.http.post(this.baseURL + '/neighborhoods', { body: formData });
   }
 
-  async updateNeighborhood(neighborhood: Neighborhood): Promise<KyResponse> {
+  updateNeighborhood(neighborhood: Neighborhood): Observable<unknown> {
     const formData = new FormData();
     formData.set('city_id', neighborhood.CityID);
     formData.set('metro_id', neighborhood.MetroID);
@@ -52,8 +59,6 @@ export class NeighborhoodAPI {
     formData.set('min_sqft', neighborhood.MinSqft.toString());
     formData.set('max_sqft', neighborhood.MaxSqft.toString());
     formData.set('notes', neighborhood.Notes);
-    return ky.post(this.baseURL + '/neighborhoods/' + neighborhood.ID, { body: formData });
+    return this.http.post(this.baseURL + '/neighborhoods/' + neighborhood.ID, { body: formData });
   }
-
 }
-

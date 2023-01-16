@@ -85,14 +85,12 @@ export const MetroPage = observer<MetroProps>((props: MetroProps) => {
         pics={ store.selectedMetro.Pics }
       />
       <LabeledImagesCard
-        onItemAddClick={ null }
         errorMessage="No cities in this metro currently."
         name="Cities"
         onClick={ onCityClick }
         items={ cityImages }
       />
       <LabeledImagesCard
-        onItemAddClick={ null }
         errorMessage="No neighborhoods in this metro currently."
         name="Neighborhoods"
         onClick={ onNeighborhoodClick }

@@ -1,6 +1,6 @@
 import { TextField } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
@@ -39,6 +39,9 @@ export const AddNeighborhoodPage = observer<AddNeighborhoodPageProps>((props: Ad
     ciField.onChange(-1);
     ciField.onChange(option.value);
   }, []);
+
+  useEffect(() => miField.onChange(store.selectedMetroArea));
+  useEffect(() => ciField.onChange(store.selectedCityArea));
 
   const metroItems: DropdownOption[] = [];
   store.metroNamesMap.forEach((text: string, id: string) => metroItems.push({ value: id, label: text }));

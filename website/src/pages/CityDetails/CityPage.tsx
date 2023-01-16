@@ -44,6 +44,11 @@ export const CityPage = observer<CityProps>((props: CityProps) => {
 
   const refresh = useCallback(() => navigation(0), []);
 
+  const onNeighborhoodAdd = useCallback(() => {
+    store.updateSelectedMetro(selectedCity.City.MetroID);
+    store.updateSelectedCity(selectedCity.City.ID);
+    navigation('/add-neighborhood');
+  }, []);
 
   const neighborhoodImages: LabeledImage[] = (selectedCity.Neighborhoods === null || selectedCity.Neighborhoods === undefined) ? null :
     selectedCity.Neighborhoods
@@ -72,7 +77,6 @@ export const CityPage = observer<CityProps>((props: CityProps) => {
         pics={ store.selectedCity.Pics }
       />
       <LabeledImagesCard
-        onItemAddClick={ null }
         errorMessage="No neighborhoods in this metro currently."
         name="Neighborhoods"
         onClick={ onNeighborhoodClick }

@@ -35,6 +35,8 @@ export class AppStore {
     return namesMap;
   }
 
+  selectedMetroArea: string;
+
   selectedCity: DetailedCity;
 
   citiesArray: City[] = observable.array();
@@ -49,7 +51,7 @@ export class AppStore {
     return namesMap;
   }
 
-  selectedMetroArea: string;
+  selectedCityArea: string;
 
   selectedNeighborhood: DetailedNeighborhood;
 
@@ -94,6 +96,7 @@ export class AppStore {
       updateCity: flow,
       updateMetro: flow,
       updateNeighborhood: flow,
+      updateSelectedCity: action,
       updateSelectedMetro: action,
       uploadPic: flow,
       uploadPicsModalOpen: observable,
@@ -150,6 +153,10 @@ export class AppStore {
     this.selectedMetroArea = metro;
   }
 
+  updateSelectedCity(city: string) {
+    this.selectedCityArea = city;
+  }
+
   *fetchCities() {
     const response: KyResponse = yield this.citiesAPI.cities();
     this.citiesArray = yield response.json<City[]>();
@@ -168,6 +175,7 @@ export class AppStore {
       const cityID = yield response.text();
       const city: City = { Name: name, MetroID: metroID, Population: population, FeaturedImage: featuredImage, ID: cityID, Notes: notes };
       this.citiesMap.set(cityID, city);
+      this.updateSelectedMetro('');
     }
   }
 
@@ -195,6 +203,8 @@ export class AppStore {
     const response: KyResponse = yield this.api.insertNeighborhood(neighborhood);
     if (response.ok) {
       const neighborhoodID = yield response.text();
+      this.updateSelectedCity('');
+      this.updateSelectedMetro('');
     }
   }
 
