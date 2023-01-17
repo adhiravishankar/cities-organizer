@@ -21,17 +21,18 @@ import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { titleReducer } from "../reducers/TitleReducer";
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { CitiesTableComponent } from './cities-table/cities-table.component';
-import { CityDetailsComponent } from './city-details/city-details.component';
-import { CreateCityComponent } from './create-city/create-city.component';
-import { CreateMetroComponent } from './create-metro/create-metro.component';
-import { CreateNeighborhoodComponent } from './create-neighborhood/create-neighborhood.component';
-import { HomeComponent } from './home/home.component';
-import { MetroDetailsComponent } from './metro-details/metro-details.component';
-import { MetrosListComponent } from './metros-list/metros-list.component';
-import { MetrosTableComponent } from './metros-table/metros-table.component';
-import { NeighborhoodDetailsComponent } from './neighborhood-details/neighborhood-details.component';
-import { NeighborhoodsTableComponent } from './neighborhoods-table/neighborhoods-table.component';
+import { CitiesTableComponent } from '../components/cities-table/cities-table.component';
+import { CityDetailsComponent } from '../components/city-details/city-details.component';
+import { CreateCityComponent } from '../components/create-city/create-city.component';
+import { CreateMetroComponent } from '../components/create-metro/create-metro.component';
+import { CreateNeighborhoodComponent } from '../components/create-neighborhood/create-neighborhood.component';
+import { HomeComponent } from '../components/home/home.component';
+import { MetroDetailsComponent } from '../components/metro-details/metro-details.component';
+import { MetrosListComponent } from '../components/metros-list/metros-list.component';
+import { MetrosTableComponent } from '../components/metros-table/metros-table.component';
+import { NeighborhoodDetailsComponent } from '../components/neighborhood-details/neighborhood-details.component';
+import { NeighborhoodsTableComponent } from '../components/neighborhoods-table/neighborhoods-table.component';
+import {BreadcrumbModule} from "xng-breadcrumb";
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { NeighborhoodsTableComponent } from './neighborhoods-table/neighborhoods
     StoreRouterConnectingModule.forRoot(),
     ReactiveFormsModule,
     NgxDatatableModule,
+    BreadcrumbModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
