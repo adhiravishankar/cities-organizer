@@ -1,9 +1,10 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
-import {City} from "../interfaces/City";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {DetailedCity} from "../interfaces/DetailedCity";
-import {environment} from "../environments/environment";
+import { Observable } from "rxjs";
+
+import { environment } from "../environments/environment";
+import { City } from "../interfaces/City";
+import { DetailedCity } from "../interfaces/DetailedCity";
 
 @Injectable({
   providedIn: 'root'

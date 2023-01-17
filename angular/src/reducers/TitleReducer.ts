@@ -1,5 +1,6 @@
-import {createReducer, on} from "@ngrx/store";
-import {setTitle} from "../actions/TitleAction";
+import { createReducer, on } from "@ngrx/store";
+
+import { setTitle } from "../actions/TitleAction";
 
 export interface TitleState {
   title: string;

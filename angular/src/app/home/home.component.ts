@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import {Store} from "@ngrx/store";
-import {setTitle} from "../../actions/TitleAction";
+import { Store } from "@ngrx/store";
+
+import { setTitle } from "../../actions/TitleAction";
 
 @Component({
   selector: 'app-home',
