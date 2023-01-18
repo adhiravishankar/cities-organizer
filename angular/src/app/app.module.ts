@@ -17,10 +17,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
+import { BreadcrumbModule } from "xng-breadcrumb";
 
-import { titleReducer } from "../reducers/TitleReducer";
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
 import { CitiesTableComponent } from '../components/cities-table/cities-table.component';
 import { CityDetailsComponent } from '../components/city-details/city-details.component';
 import { CreateCityComponent } from '../components/create-city/create-city.component';
@@ -32,7 +30,9 @@ import { MetrosListComponent } from '../components/metros-list/metros-list.compo
 import { MetrosTableComponent } from '../components/metros-table/metros-table.component';
 import { NeighborhoodDetailsComponent } from '../components/neighborhood-details/neighborhood-details.component';
 import { NeighborhoodsTableComponent } from '../components/neighborhoods-table/neighborhoods-table.component';
-import {BreadcrumbModule} from "xng-breadcrumb";
+import { titleReducer } from "../reducers/TitleReducer";
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
