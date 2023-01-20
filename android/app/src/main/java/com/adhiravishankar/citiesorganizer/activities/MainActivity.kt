@@ -1,4 +1,4 @@
-package com.adhiravishankar.citiesorganizer
+package com.adhiravishankar.citiesorganizer.activities
 
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
@@ -10,6 +10,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import com.adhiravishankar.citiesorganizer.R
 import com.adhiravishankar.citiesorganizer.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
