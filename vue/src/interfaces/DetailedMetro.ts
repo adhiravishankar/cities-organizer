@@ -1,7 +1,7 @@
-import { City } from "./City";
-import { Friend } from "./Friend";
-import { Metro } from "./Metro";
-import { Neighborhood } from "./Neighborhood";
+import type { City } from "./City";
+import type { Friend } from "./Friend";
+import type { Metro } from "./Metro";
+import type { Neighborhood } from "./Neighborhood";
 
 export interface DetailedMetro {
   Metropolitan: Metro;

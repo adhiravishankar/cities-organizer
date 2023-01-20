@@ -1,5 +1,5 @@
-import { City } from "./City";
-import { Neighborhood } from "./Neighborhood";
+import type { City } from "./City";
+import type { Neighborhood } from "./Neighborhood";
 
 export interface DetailedCity {
   City: City;

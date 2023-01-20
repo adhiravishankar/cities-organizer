@@ -1,4 +1,4 @@
-import { Neighborhood } from "./Neighborhood";
+import type { Neighborhood } from "./Neighborhood";
 
 export interface DerivedNeighborhood extends Neighborhood {
   Scores: string;
