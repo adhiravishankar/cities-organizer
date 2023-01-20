@@ -17,7 +17,22 @@ export default {
   <v-app>
     <v-toolbar title="Home" :elevation="2">
       <template v-slot:append>
-        <v-btn icon="mdi mdi-plus"></v-btn>
+        <v-menu>
+          <template v-slot:activator="{ props }">
+            <v-btn icon="mdi mdi-plus" v-bind="props"></v-btn>
+          </template>
+          <v-list>
+            <v-list-item to="/create-metro">
+              <v-list-item-title>Metro</v-list-item-title>
+            </v-list-item>
+            <v-list-item to="/create-city">
+              <v-list-item-title>City</v-list-item-title>
+            </v-list-item>
+            <v-list-item to="/create-neighborhood">
+              <v-list-item-title>Neighborhood</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
         <v-btn icon="mdi mdi-pencil"></v-btn>
       </template>
     </v-toolbar>
