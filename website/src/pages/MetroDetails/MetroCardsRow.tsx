@@ -20,13 +20,13 @@ export const MetroCardsRow = (props: MetroCardsRowProps) => {
       <Col>
         <ReactNumberCard numberText={ Population.toLocaleString() } labelText="Population" color="#2E7D32" />
       </Col>
-      <Col className="col-1">
+      <Col>
         <ReactNumberCard numberText={ Neighborhoods.length } labelText="Neighborhoods" color="#EF6C00" />
       </Col>
-      <Col className="col-1">
+      <Col>
         <ReactNumberCard numberText={ Cities.length } labelText="Cities" color="#AD1457" />
       </Col>
-      <Col className="col-1">
+      <Col>
         <ReactNumberCard numberText={ Pics.length } labelText="Pics" color="#C62828" />
       </Col>
     </Row>

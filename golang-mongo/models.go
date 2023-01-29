@@ -100,9 +100,9 @@ type Friend struct {
 }
 
 type Employer struct {
-	ID          string `bson:"_id"`
-	AttributeID string `bson:"attribute_id"`
-	Name        string `bson:"name"`
+	ID    string `bson:"_id"`
+	Name  string `bson:"name"`
+	Image string `bson:"image"`
 }
 
 type EmployerLocation struct {
