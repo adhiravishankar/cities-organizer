@@ -1,5 +1,5 @@
 import { City } from './City';
-import { Friend } from './Friend';
+import { Employer } from './Employer';
 import { Metro } from './Metro';
 import { Neighborhood } from './Neighborhood';
 
@@ -14,5 +14,5 @@ export interface DetailedMetro {
 
   Neighborhoods: Neighborhood[];
 
-  Friends: Friend[];
+  Friends: Employer[];
 }

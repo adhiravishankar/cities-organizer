@@ -1,5 +1,5 @@
 
-import { Box, IconButton, MenuItem } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import MaterialReactTable, { MRT_ColumnDef } from 'material-react-table';
 import { ReactNode, useMemo } from 'react';
 import { NumericFormat } from 'react-number-format';

@@ -31,12 +31,17 @@ func addEmployer(c *gin.Context) {
 func addEmployerLocation(c *gin.Context) {
 	employerLocationsCollection := mongoDB.Collection("employerLocations")
 
+	employerLocationID := uuid.New().String()
+
+	_, pictureURL := uploadPicForID(c, employerLocationID)
+
 	employerLocation := EmployerLocation{
-		ID:         uuid.New().String(),
+		ID:         employerLocationID,
 		EmployerID: c.PostForm("employer_id"),
 		Address:    c.PostForm("address"),
 		MetroID:    c.PostForm("metro_id"),
 		CityID:     c.PostForm("city_id"),
+		Image:      pictureURL,
 	}
 
 	insertOneResult, err := employerLocationsCollection.InsertOne(c, employerLocation)

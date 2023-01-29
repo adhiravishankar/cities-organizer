@@ -112,13 +112,6 @@ type Doc struct {
 	URL         string `bson:"url"`
 }
 
-type Friend struct {
-	ID      string `bson:"_id"`
-	MetroID string `bson:"metro_id"`
-	Name    string `bson:"name"`
-	Image   string `bson:"image"`
-}
-
 type Employer struct {
 	ID    string `bson:"_id"`
 	Name  string `bson:"name"`
@@ -131,4 +124,5 @@ type EmployerLocation struct {
 	Address    string `bson:"address"`
 	MetroID    string `bson:"metro_id"`
 	CityID     string `bson:"city_id"`
+	Image      string `bson:"image"`
 }

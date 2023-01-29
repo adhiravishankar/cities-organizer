@@ -4,6 +4,7 @@ import { action, computed, flow, makeObservable, observable } from 'mobx';
 import { API } from '../apis/API';
 import { CitiesAPI } from '../apis/CitiesAPI';
 import { MetroAPI } from '../apis/MetroAPI';
+import { NeighborhoodAPI } from '../apis/NeighborhoodAPI';
 import { City } from '../interfaces/City';
 import { DerivedNeighborhood } from '../interfaces/DerivedNeighborhood';
 import { DetailedCity } from '../interfaces/DetailedCity';
@@ -11,6 +12,8 @@ import { DetailedMetro } from '../interfaces/DetailedMetro';
 import { DetailedNeighborhood } from '../interfaces/DetailedNeighborhood';
 import { Metro } from '../interfaces/Metro';
 import { Neighborhood } from '../interfaces/Neighborhood';
+import {Apartment} from "../interfaces/Apartment";
+import {ApartmentAPI} from "../apis/ApartmentAPI";
 
 
 export class AppStore {
@@ -20,6 +23,10 @@ export class AppStore {
   metroAPI: MetroAPI;
 
   citiesAPI: CitiesAPI;
+
+  neighborhoodAPI: NeighborhoodAPI;
+
+  apartmentAPI: ApartmentAPI;
 
   aboutMap: Map<string, string> = observable.map();
 
@@ -59,6 +66,8 @@ export class AppStore {
 
   neighborhoodsMap: Map<string, DerivedNeighborhood> = observable.map();
 
+  apartmentsArray: Apartment[] = observable.array();
+
   editingModalOpen: boolean;
 
   uploadPicsModalOpen: boolean;
@@ -67,13 +76,16 @@ export class AppStore {
     this.api = new API(process.env.BASE_URL);
     this.metroAPI = new MetroAPI(process.env.BASE_URL);
     this.citiesAPI = new CitiesAPI(process.env.BASE_URL);
+    this.apartmentAPI = new ApartmentAPI(process.env.BASE_URL);
     makeObservable(this, {
       about: flow,
       aboutMap: observable,
+      apartmentsArray: observable,
       citiesArray: observable,
       citiesMap: observable,
       editingModalOpen: observable,
       editingModalVisibilityChange: action,
+      fetchApartments: flow,
       fetchCity: flow,
       fetchCities: flow,
       fetchMetro: flow,
@@ -108,6 +120,7 @@ export class AppStore {
     yield this.fetchMetros();
     yield this.fetchCities();
     yield this.fetchNeighborhoods();
+    yield this.fetchApartments();
   }
 
   *about() {
@@ -188,19 +201,19 @@ export class AppStore {
   }
 
   *fetchNeighborhoods() {
-    const response: KyResponse = yield this.api.neighborhoods();
+    const response: KyResponse = yield this.neighborhoodAPI.neighborhoods();
     this.neighborhoodsArray = yield response.json<DerivedNeighborhood[]>();
     this.neighborhoodsMap.clear();
     this.neighborhoodsArray.forEach((neighboorhood: DerivedNeighborhood) => this.neighborhoodsMap.set(neighboorhood.ID, neighboorhood));
   }
 
   *fetchNeighborhood(id: string) {
-    const response: KyResponse = yield this.api.getNeighborhood(id);
+    const response: KyResponse = yield this.neighborhoodAPI.getNeighborhood(id);
     this.selectedNeighborhood = yield response.json<DetailedNeighborhood>();
   }
 
   *insertNeighborhood(neighborhood: Neighborhood) {
-    const response: KyResponse = yield this.api.insertNeighborhood(neighborhood);
+    const response: KyResponse = yield this.neighborhoodAPI.insertNeighborhood(neighborhood);
     if (response.ok) {
       const neighborhoodID = yield response.text();
       this.updateSelectedCity('');
@@ -209,10 +222,15 @@ export class AppStore {
   }
 
   *updateNeighborhood(neighborhood: Neighborhood) {
-    const response: KyResponse = yield this.api.updateNeighborhood(neighborhood);
+    const response: KyResponse = yield this.neighborhoodAPI.updateNeighborhood(neighborhood);
     if (response.ok) {
       const neighborhoodID = yield response.text();
     }
+  }
+
+  *fetchApartments() {
+    const response: KyResponse = yield this.apartmentAPI.apartments();
+    this.apartmentsArray = yield response.json<Apartment[]>();
   }
 
   *uploadPic(id: string, file: File) {
