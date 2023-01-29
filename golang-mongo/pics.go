@@ -14,35 +14,8 @@ import (
 
 func uploadPics(c *gin.Context) {
 	picturesCollection := mongoDB.Collection("pictures")
+	pictureFileName, pictureURL := uploadPicForID(c, uuid.New().String())
 
-	// Pull file from request
-	file, err := c.FormFile("picture")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Open file
-	fileExt := filepath.Ext(file.Filename)
-	pictureFile, err := file.Open()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Upload file to S3
-	pictureFileName := uuid.New().String() + fileExt
-	s3Object := s3.PutObjectInput{
-		Body:          pictureFile,
-		Bucket:        aws.String(os.Getenv("GO_MONGO_S3_BUCKET")),
-		Key:           aws.String(pictureFileName),
-		ContentLength: file.Size,
-		ACL:           awstypes.ObjectCannedACL("public-read"),
-	}
-	_, err = s3Client.PutObject(c, &s3Object)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	pictureURL := os.Getenv("GO_MONGO_PICTURE_URL") + pictureFileName
 	mongoPic := Pic{
 		AttributeID: c.PostForm("attribute"),
 		ID:          pictureFileName,
@@ -78,4 +51,36 @@ func internalListPics(c *gin.Context, attribute string) []string {
 	}
 
 	return picURLs
+}
+
+func uploadPicForID(c *gin.Context, id string) (string, string) {
+	// Pull file from request
+	file, err := c.FormFile("picture")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Open file
+	fileExt := filepath.Ext(file.Filename)
+	pictureFile, err := file.Open()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Upload file to S3
+	pictureFileName := id + fileExt
+	s3Object := s3.PutObjectInput{
+		Body:          pictureFile,
+		Bucket:        aws.String(os.Getenv("GO_MONGO_S3_BUCKET")),
+		Key:           aws.String(pictureFileName),
+		ContentLength: file.Size,
+		ACL:           awstypes.ObjectCannedACL("public-read"),
+	}
+	_, err = s3Client.PutObject(c, &s3Object)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	pictureURL := os.Getenv("GO_MONGO_PICTURE_URL") + pictureFileName
+	return pictureFileName, pictureURL
 }

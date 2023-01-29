@@ -53,6 +53,25 @@ type Neighborhood struct {
 	Notes                 string `bson:"notes"`
 }
 
+type Apartment struct {
+	ID            string `bson:"_id"`
+	CityID        string `bson:"city_id"`
+	MetroID       string `bson:"metro_id"`
+	FeaturedImage string `bson:"featured_image"`
+	Link          string `bson:"link"`
+	Name          string `bson:"name"`
+	Address       string `bson:"address"`
+	Rent          int64  `bson:"rent"`
+	Sqft          int64  `bson:"sqft"`
+	Notes         string `bson:"notes"`
+}
+
+type DetailedApartment struct {
+	Apartment Apartment
+	Pics      []string
+	Docs      []string
+}
+
 type DerivedNeighborhood struct {
 	ID                    string `bson:"_id"`
 	CityID                string `bson:"city_id"`
@@ -94,9 +113,10 @@ type Doc struct {
 }
 
 type Friend struct {
-	ID          string `bson:"_id"`
-	AttributeID string `bson:"attribute_id"`
-	Name        string `bson:"name"`
+	ID      string `bson:"_id"`
+	MetroID string `bson:"metro_id"`
+	Name    string `bson:"name"`
+	Image   string `bson:"image"`
 }
 
 type Employer struct {

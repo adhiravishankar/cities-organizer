@@ -32,6 +32,8 @@ export function NavBar(props: NavBarProps) {
   const onAddMetro = useCallback(() => navigation('/add-metro'), []);
   const onAddCity = useCallback(() => navigation('/add-city'), []);
   const onAddNeighborhood = useCallback(() => navigation('/add-neighborhood'), []);
+  const onAddApartment = useCallback(() => navigation('/add-apartment'), []);
+  const onAddEmployer = useCallback(() => navigation('/add-employer'), []);
 
   const plusIconJSX = (
     <Fragment>
@@ -63,6 +65,12 @@ export function NavBar(props: NavBarProps) {
         </MenuItem>
         <MenuItem key="neighborhood" onClick={onAddNeighborhood}>
           <Typography textAlign="center">Neighborhood</Typography>
+        </MenuItem>
+        <MenuItem key="neighborhood" onClick={onAddApartment}>
+          <Typography textAlign="center">Apartment</Typography>
+        </MenuItem>
+        <MenuItem key="neighborhood" onClick={onAddEmployer}>
+          <Typography textAlign="center">Employer</Typography>
         </MenuItem>
       </Menu>
     </Fragment>

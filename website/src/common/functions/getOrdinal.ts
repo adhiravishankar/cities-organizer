@@ -1,5 +1,7 @@
-
-
+/**
+ *
+ * @param n
+ */
 export function getOrdinal(n: number): string {
   let ord = 'th';
 
