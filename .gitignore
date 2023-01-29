@@ -9,3 +9,5 @@ env.env
 !.env.project
 !.env.vault
 .vscode/
+
+*.map

@@ -86,6 +86,7 @@ func readNeighborhood(c *gin.Context) {
 
 	detailedNeighborhood := DetailedNeighborhood{
 		Neighborhood: neighborhood,
+		Docs:         internalListDocs(c, c.Param("neighborhood")),
 		Pics:         internalListPics(c, c.Param("neighborhood")),
 	}
 

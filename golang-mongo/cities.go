@@ -65,6 +65,7 @@ func readCity(c *gin.Context) {
 
 	detailedCity := DetailedCity{
 		City:          city,
+		Docs:          internalListDocs(c, c.Param("city")),
 		Pics:          internalListPics(c, c.Param("city")),
 		Neighborhoods: internalNeighborhoodsForCity(c),
 	}

@@ -55,8 +55,19 @@ func main() {
 	router.PUT("/neighborhoods/:neighborhood", updateNeighborhood)
 	router.DELETE("/neighborhoods/:neighborhood", deleteNeighborhood)
 
-	// Pics API
+	// Employers API
+	router.POST("/employers")
+	router.POST("/employer-locations")
+	router.DELETE("/employers")
+	router.DELETE("/employer-locations")
+
+	// Friends API
+	router.POST("/friends")
+	router.DELETE("/friends")
+
+	// Pics & Docs API
 	router.POST("/upload-pics", uploadPics)
+	router.POST("/upload-docs", uploadDocs)
 
 	err = http.ListenAndServe(":"+os.Getenv("GO_MONGO_PORT"), router)
 	if err != nil {

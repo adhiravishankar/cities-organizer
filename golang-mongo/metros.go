@@ -41,6 +41,7 @@ func readMetro(c *gin.Context) {
 
 	detailedMetro := DetailedMetro{
 		Metropolitan:  metro,
+		Docs:          internalListDocs(c, c.Param("metro")),
 		Pics:          internalListPics(c, c.Param("metro")),
 		Cities:        internalCitiesForMetro(c),
 		Neighborhoods: internalNeighborhoodsForMetro(c),

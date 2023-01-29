@@ -1,7 +1,10 @@
 import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
+import { Col, Row } from 'react-bootstrap';
+import { ReactNumberCard } from 'react-number-card';
 import { useNavigate, useParams } from 'react-router';
 
+import { attachOrdinal } from '../../common/functions/getOrdinal';
 import { AddPicsProps } from '../../common/hooks/AddPics';
 import { BreadcrumbsProps } from '../../common/hooks/Breadcrumbs';
 import { CardsPage } from '../../common/hooks/CardsPage';
@@ -13,6 +16,7 @@ import { LabeledImage } from '../../common/interfaces/LabeledImage';
 import { Neighborhood } from '../../common/interfaces/Neighborhood';
 import { AppStore } from '../../common/stores/AppStore';
 import { EditMetro } from './EditMetro';
+import {MetroCardsRow} from "./MetroCardsRow";
 
 type MetroParams = {
   metro: string;
@@ -79,6 +83,7 @@ export const MetroPage = observer<MetroProps>((props: MetroProps) => {
       addPicsProps={ addPicsProps }
       navBarProps={ navBarProps }
     >
+      <MetroCardsRow selectedMetro={ selectedMetro } />
       <ImagesCard
         errorMessage="No images are currently attached."
         openAddPics={ openUploadPicsScreen }

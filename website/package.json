@@ -35,7 +35,9 @@
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.42.1",
     "react-markdown": "^8.0.4",
+    "react-number-card": "^0.1.0",
     "react-number-format": "^5.1.3",
+    "react-pdf": "^6.2.2",
     "react-router": "^6.6.2",
     "react-router-dom": "^6.6.2",
     "react-select": "^5.7.0"

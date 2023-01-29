@@ -16,6 +16,7 @@ type DetailedMetro struct {
 	Pics          []string
 	Cities        []City
 	Neighborhoods []Neighborhood
+	Docs          []string
 }
 
 type City struct {
@@ -31,6 +32,7 @@ type DetailedCity struct {
 	City          City
 	Pics          []string
 	Neighborhoods []Neighborhood
+	Docs          []string
 }
 
 type Neighborhood struct {
@@ -76,10 +78,37 @@ type DerivedNeighborhood struct {
 type DetailedNeighborhood struct {
 	Neighborhood Neighborhood
 	Pics         []string
+	Docs         []string
 }
 
 type Pic struct {
 	ID          string `bson:"_id"`
 	AttributeID string `bson:"attribute_id"`
 	URL         string `bson:"url"`
+}
+
+type Doc struct {
+	ID          string `bson:"_id"`
+	AttributeID string `bson:"attribute_id"`
+	URL         string `bson:"url"`
+}
+
+type Friend struct {
+	ID          string `bson:"_id"`
+	AttributeID string `bson:"attribute_id"`
+	Name        string `bson:"name"`
+}
+
+type Employer struct {
+	ID          string `bson:"_id"`
+	AttributeID string `bson:"attribute_id"`
+	Name        string `bson:"name"`
+}
+
+type EmployerLocation struct {
+	ID         string `bson:"_id"`
+	EmployerID string `bson:"employer_id"`
+	Address    string `bson:"address"`
+	MetroID    string `bson:"metro_id"`
+	CityID     string `bson:"city_id"`
 }
