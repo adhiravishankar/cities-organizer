@@ -12,7 +12,7 @@ export function TabPanel(props: TabPanelProps) {
 
   const tabPanel = (
     <Box sx={{ p: 3 }}>
-      <Typography>{children}</Typography>
+      <div>{children}</div>
     </Box>
   );
 

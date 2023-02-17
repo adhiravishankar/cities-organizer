@@ -66,10 +66,10 @@ export function NavBar(props: NavBarProps) {
         <MenuItem key="neighborhood" onClick={onAddNeighborhood}>
           <Typography textAlign="center">Neighborhood</Typography>
         </MenuItem>
-        <MenuItem key="neighborhood" onClick={onAddApartment}>
+        <MenuItem key="apartment" onClick={onAddApartment}>
           <Typography textAlign="center">Apartment</Typography>
         </MenuItem>
-        <MenuItem key="neighborhood" onClick={onAddEmployer}>
+        <MenuItem key="employer" onClick={onAddEmployer}>
           <Typography textAlign="center">Employer</Typography>
         </MenuItem>
       </Menu>
