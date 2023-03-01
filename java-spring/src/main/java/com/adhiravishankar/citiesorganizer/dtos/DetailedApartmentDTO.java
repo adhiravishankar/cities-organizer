@@ -19,7 +19,7 @@ public class DetailedApartmentDTO {
         return apartment;
     }
 
-    public void setNeighborhood(Apartment apartment) {
+    public void setApartment(Apartment apartment) {
         this.apartment = apartment;
     }
 
