@@ -1,12 +1,10 @@
 import { KyResponse } from 'ky';
 import { action, computed, flow, makeObservable, observable } from 'mobx';
 
-import { ApartmentAPI } from '../apis/ApartmentAPI';
 import { API } from '../apis/API';
 import { CitiesAPI } from '../apis/CitiesAPI';
 import { MetroAPI } from '../apis/MetroAPI';
 import { NeighborhoodAPI } from '../apis/NeighborhoodAPI';
-import { Apartment } from '../interfaces/Apartment';
 import { City } from '../interfaces/City';
 import { DerivedNeighborhood } from '../interfaces/DerivedNeighborhood';
 import { DetailedCity } from '../interfaces/DetailedCity';
@@ -25,8 +23,6 @@ export class AppStore {
   citiesAPI: CitiesAPI;
 
   neighborhoodAPI: NeighborhoodAPI;
-
-  apartmentAPI: ApartmentAPI;
 
   aboutMap: Map<string, string> = observable.map();
 
@@ -66,8 +62,6 @@ export class AppStore {
 
   neighborhoodsMap: Map<string, DerivedNeighborhood> = observable.map();
 
-  apartmentsArray: Apartment[] = observable.array();
-
   editingModalOpen: boolean;
 
   uploadPicsModalOpen: boolean;
@@ -76,17 +70,14 @@ export class AppStore {
     this.api = new API(process.env.BASE_URL);
     this.metroAPI = new MetroAPI(process.env.BASE_URL);
     this.citiesAPI = new CitiesAPI(process.env.BASE_URL);
-    this.apartmentAPI = new ApartmentAPI(process.env.BASE_URL);
     this.neighborhoodAPI = new NeighborhoodAPI(process.env.BASE_URL);
     makeObservable(this, {
       about: flow,
       aboutMap: observable,
-      apartmentsArray: observable,
       citiesArray: observable,
       citiesMap: observable,
       editingModalOpen: observable,
       editingModalVisibilityChange: action,
-      fetchApartments: flow,
       fetchCity: flow,
       fetchCities: flow,
       fetchMetro: flow,
@@ -121,7 +112,6 @@ export class AppStore {
     yield this.fetchMetros();
     yield this.fetchCities();
     yield this.fetchNeighborhoods();
-    yield this.fetchApartments();
   }
 
   *about() {
@@ -227,11 +217,6 @@ export class AppStore {
     if (response.ok) {
       const neighborhoodID = yield response.text();
     }
-  }
-
-  *fetchApartments() {
-    const response: KyResponse = yield this.apartmentAPI.apartments();
-    this.apartmentsArray = yield response.json<Apartment[]>();
   }
 
   *uploadPic(id: string, file: File) {

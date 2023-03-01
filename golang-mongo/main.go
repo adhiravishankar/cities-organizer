@@ -55,19 +55,6 @@ func main() {
 	router.PUT("/neighborhoods/:neighborhood", updateNeighborhood)
 	router.DELETE("/neighborhoods/:neighborhood", deleteNeighborhood)
 
-	// Apartments CRUD API
-	router.GET("/apartments", apartments)
-	router.POST("/apartments", createApartment)
-	router.GET("/apartments/:apartment", readApartment)
-	router.PUT("/apartments/:apartment", updateApartment)
-	router.DELETE("/apartments/:apartment", deleteApartment)
-
-	// Employers API
-	router.POST("/employers", addEmployer)
-	router.POST("/employer-locations", addEmployerLocation)
-	router.DELETE("/employers", deleteEmployer)
-	router.DELETE("/employer-locations", deleteEmployerLocation)
-
 	// Pics & Docs API
 	router.POST("/upload-pics", uploadPics)
 	router.POST("/upload-docs", uploadDocs)
