@@ -1,13 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import { About } from '../pages/About';
-import { CityPage } from '../pages/CityDetails/CityPage';
-import { Home } from '../pages/Home/Home';
-import { AddCityPage } from '../pages/InsertPages/AddCityPage';
-import { AddMetroPage } from '../pages/InsertPages/AddMetroPage';
-import { AddNeighborhoodPage } from '../pages/InsertPages/AddNeighborhoodPage';
-import { MetroPage } from '../pages/MetroDetails/MetroPage';
-import { NeighborhoodPage } from '../pages/NeighborhoodDetails/NeighborhoodPage';
+import { CityPage } from '../pages/CityPage';
+import { Home } from '../pages/Home';
+import { AddCityPage } from '../pages/AddCityPage';
+import { AddMetroPage } from '../pages/AddMetroPage';
+import { AddNeighborhoodPage } from '../pages/AddNeighborhoodPage';
+import { MetroPage } from '../pages/MetroPage';
+import { NeighborhoodPage } from '../pages/NeighborhoodPage';
 import { AppStore } from '../stores/AppStore';
 
 export function createRouter(store: AppStore) {

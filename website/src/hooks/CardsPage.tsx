@@ -3,7 +3,7 @@ import { Fragment, PropsWithChildren, ReactNode } from 'react';
 import { Col, Container, Row, Stack } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 
-import { AddPics, AddPicsProps } from './AddPics';
+import { AddPics, AddPicsProps } from '../modals/AddPics';
 import { Breadcrumbs, BreadcrumbsProps } from './Breadcrumbs';
 import { NavBar, NavBarProps } from './NavBar';
 
