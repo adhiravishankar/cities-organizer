@@ -8,17 +8,15 @@ import { CityPage } from '../pages/CityPage';
 import { Home } from '../pages/Home';
 import { MetroPage } from '../pages/MetroPage';
 import { NeighborhoodPage } from '../pages/NeighborhoodPage';
-import { AppStore } from '../stores/AppStore';
 
-export function createRouter(store: AppStore) {
+export function createRouter() {
   return createBrowserRouter([
     {
       path: '/',
       loader: async () => {
-        await store.initialize();
         return null;
       },
-      element: <Home store={store}/>,
+      element: <Home />,
     },
     {
       path: '/about',
@@ -27,56 +25,44 @@ export function createRouter(store: AppStore) {
     {
       path: 'metros/:metro',
       loader: async ({ params }) => {
-        await store.initialize();
-        // @ts-ignore
-        await store.fetchMetro(params.metro);
         return null;
       },
-      element: <MetroPage store={store}/>,
+      element: <MetroPage />,
     },
     {
       path: 'cities/:city',
       loader: async ({ params }) => {
-        await store.initialize();
-        // @ts-ignore
-        await store.fetchCity(params.city);
         return null;
       },
-      element: <CityPage store={store}/>,
+      element: <CityPage />,
     },
     {
       path: 'neighborhoods/:neighborhood',
       loader: async ({ params }) => {
-        await store.initialize();
-        // @ts-ignore
-        await store.fetchNeighborhood(params.neighborhood);
         return null;
       },
-      element: <NeighborhoodPage store={store}/>,
+      element: <NeighborhoodPage />,
     },
     {
       path: '/add-city',
       loader: async () => {
-        await store.initialize();
         return null;
       },
-      element: <AddCityPage store={store}/>,
+      element: <AddCityPage />,
     },
     {
       path: '/add-metro',
       loader: async () => {
-        await store.initialize();
         return null;
       },
-      element: <AddMetroPage store={store}/>,
+      element: <AddMetroPage />,
     },
     {
       path: '/add-neighborhood',
       loader: async () => {
-        await store.initialize();
         return null;
       },
-      element: <AddNeighborhoodPage store={store}/>,
+      element: <AddNeighborhoodPage />,
     },
   ]);
 }

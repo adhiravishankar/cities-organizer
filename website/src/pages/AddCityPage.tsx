@@ -10,26 +10,21 @@ import { FormsPage } from '../hooks/FormsPage';
 import { City } from '../interfaces/City';
 import { DropdownOption } from '../interfaces/DropdownOption';
 import { SelectedOption } from '../interfaces/SelectedOption';
-import { AppStore } from '../stores/AppStore';
+import { CitiesContainer } from '../stores/CitiesStore';
 import { MetrosContainer } from '../stores/MetrosStore';
 
-
-export interface AddCityPageProps {
-  store: AppStore;
-}
-
-export function AddCityPage(props: AddCityPageProps) {
+export function AddCityPage() {
   const MetrosStore = useContainer(MetrosContainer);
+  const CitiesStore = useContainer(CitiesContainer);
 
-  const { store } = props;
   const navigation = useNavigate();
 
   const { handleSubmit, control } = useForm<City>();
 
   const onSubmit = useCallback(async (data: City) => {
-    await store.insertCity(data.Name, data.MetroID, data.Population, data.FeaturedImage, data.Notes);
+    await CitiesStore.insertCity(data.Name, data.MetroID, data.Population, data.FeaturedImage, data.Notes);
     navigation('/');
-  }, [store]);
+  }, []);
 
   const { field: miField } = useController({ name: 'MetroID', control });
 

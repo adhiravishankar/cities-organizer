@@ -3,9 +3,11 @@ import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
 import { Button, Modal, Stack } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
+import { useContainer } from 'unstated-next';
 
 import { UseBooleanOutput } from '../functions/UseBooleanOutput';
 import { Neighborhood } from '../interfaces/Neighborhood';
+import { NeighborhoodsContainer } from '../stores/NeighborhoodsStore';
 
 
 export interface EditNeighborhoodProps {
@@ -15,9 +17,11 @@ export interface EditNeighborhoodProps {
 }
 
 export const EditNeighborhood = observer<EditNeighborhoodProps>((props: EditNeighborhoodProps) => {
+  const NeighborhoodsStore = useContainer(NeighborhoodsContainer);
+
   const { id, open } = props;
 
-  const { handleSubmit, control } = useForm<Neighborhood>({ defaultValues: store.selectedNeighborhood.Neighborhood });
+  const { handleSubmit, control } = useForm<Neighborhood>({ defaultValues: NeighborhoodsStore.selectedNeighborhood.Neighborhood });
 
   const onSubmit = useCallback((data: Neighborhood) => {
 
@@ -27,13 +31,13 @@ export const EditNeighborhood = observer<EditNeighborhoodProps>((props: EditNeig
   const { field: fiField } = useController({ name: 'FeaturedImage', control });
 
   const picsJSX: JSX.Element[] = [];
-  store.selectedNeighborhood.Pics.forEach((text: string) =>
+  NeighborhoodsStore.selectedNeighborhood.Pics.forEach((text: string) =>
     picsJSX.push(<MenuItem key={ text } value={ text }>{ text }</MenuItem>));
 
   return (
     <Modal show={ open.value } onHide={ open.setFalse }>
       <Modal.Header closeButton>
-        <Modal.Title>{`Edit ${ store.selectedNeighborhood.Neighborhood.Name }`}</Modal.Title>
+        <Modal.Title>{`Edit ${ NeighborhoodsStore.selectedNeighborhood.Neighborhood.Name }`}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form>

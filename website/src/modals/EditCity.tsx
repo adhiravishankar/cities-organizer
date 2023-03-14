@@ -5,6 +5,8 @@ import { Controller, useController, useForm } from 'react-hook-form';
 
 import { UseBooleanOutput } from '../functions/UseBooleanOutput';
 import { City } from '../interfaces/City';
+import {useContainer} from "unstated-next";
+import {CitiesContainer} from "../stores/CitiesStore";
 
 
 export interface EditCityProps {
@@ -14,25 +16,26 @@ export interface EditCityProps {
 }
 
 export const EditCity = (props: EditCityProps) => {
+  const CitiesStore = useContainer(CitiesContainer);
   const { id, open } = props;
 
-  const { handleSubmit, control } = useForm<City>({ defaultValues: store.selectedCity.City });
+  const { handleSubmit, control } = useForm<City>({ defaultValues: CitiesStore.selectedCity.City });
 
   const onSubmit = useCallback((data: City) => {
-    store.updateCity(data.ID, data.Name, data.Population, data.FeaturedImage, data.Notes);
+    CitiesStore.updateCity(data.ID, data.Name, data.Population, data.FeaturedImage, data.Notes);
     open.setFalse();
-  }, [id, store]);
+  }, [id]);
 
   const { field: fiField } = useController({ name: 'FeaturedImage', control });
 
   const picsJSX: JSX.Element[] = [];
-  store.selectedCity.Pics.forEach((text: string) =>
+  CitiesStore.selectedCity.Pics.forEach((text: string) =>
     picsJSX.push(<MenuItem key={ text } value={ text }>{ text }</MenuItem>));
 
   return (
     <Modal show={ open.value } onHide={ open.setFalse }>
       <Modal.Header closeButton>
-        <Modal.Title>{`Edit ${ store.selectedCity.City.Name }`}</Modal.Title>
+        <Modal.Title>{`Edit ${ CitiesStore.selectedCity.City.Name }`}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form>

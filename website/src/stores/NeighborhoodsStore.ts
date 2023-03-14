@@ -43,6 +43,7 @@ export function useNeighborhoodsStore() {
   }
 
   return {
+    insertNeighborhood,
     neighborhoods,
     selectedNeighborhood,
   };

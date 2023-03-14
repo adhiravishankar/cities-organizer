@@ -1,14 +1,12 @@
 import { RouterProvider } from 'react-router';
 
 import { createRouter } from './routes/routes';
-import { AppStore } from './stores/AppStore';
 import { MetrosContainer } from './stores/MetrosStore';
 import { ModalsContainer } from './stores/ModalsStore';
 
 
 export function App() {
-  const store = new AppStore();
-  const router = createRouter(store);
+  const router = createRouter();
 
   return (
     <ModalsContainer.Provider>

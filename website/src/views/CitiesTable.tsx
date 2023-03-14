@@ -4,16 +4,16 @@ import MaterialReactTable, { MRT_ColumnDef } from 'material-react-table';
 import { ReactNode, useMemo } from 'react';
 import { NumericFormat } from 'react-number-format';
 import { useNavigate } from 'react-router';
+import { useContainer } from 'unstated-next';
 
 import { City } from '../interfaces/City';
-import { AppStore } from '../stores/AppStore';
-
-export interface CitiesTableProps {
-  store: AppStore;
-}
+import { CitiesContainer } from '../stores/CitiesStore';
+import { MetrosContainer } from '../stores/MetrosStore';
 
 
-export function CitiesTable(props: CitiesTableProps) {
+export function CitiesTable() {
+  const MetrosStore = useContainer(MetrosContainer);
+  const CitiesStore = useContainer(CitiesContainer);
   const navigation = useNavigate();
 
   const columns: MRT_ColumnDef<City>[] = useMemo(() => [
@@ -25,7 +25,7 @@ export function CitiesTable(props: CitiesTableProps) {
     {
       header: 'Metropolitan Area',
       accessorKey: 'MetroID',
-      Cell: ({ cell }) => props.store.metrosMap.get(cell.getValue() as string)?.Name ?? 'Unknown',
+      Cell: ({ cell }) => MetrosStore.metrosMap.get(cell.getValue() as string)?.Name ?? 'Unknown',
     },
     {
       header: 'Population',
@@ -37,7 +37,7 @@ export function CitiesTable(props: CitiesTableProps) {
   return (
     <MaterialReactTable
       columns={ columns }
-      data={ props.store.citiesArray }
+      data={ CitiesStore.cities }
       positionActionsColumn="last"
       enableRowActions
       renderRowActions={({ row }) => (

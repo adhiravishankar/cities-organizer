@@ -3,17 +3,15 @@ import MaterialReactTable, { MRT_ColumnDef } from 'material-react-table';
 import { ReactNode, useMemo } from 'react';
 import { NumericFormat } from 'react-number-format';
 import { useNavigate } from 'react-router';
+import { useContainer } from 'unstated-next';
 
 import { attachOrdinal } from '../functions/getOrdinal';
 import { Metro } from '../interfaces/Metro';
-import { AppStore } from '../stores/AppStore';
-
-export interface MetrosTableProps {
-  store: AppStore;
-}
+import { MetrosContainer } from '../stores/MetrosStore';
 
 
-export function MetrosTable(props: MetrosTableProps) {
+export function MetrosTable() {
+  const MetrosStore = useContainer(MetrosContainer);
   const navigation = useNavigate();
 
   const columns: MRT_ColumnDef<Metro>[] = useMemo(() => [
@@ -42,7 +40,7 @@ export function MetrosTable(props: MetrosTableProps) {
   return (
     <MaterialReactTable
       columns={ columns }
-      data={ props.store.metrosArray }
+      data={ MetrosStore.metros }
       enableColumnActions={ false }
       positionActionsColumn="last"
       enableRowActions

@@ -6,16 +6,19 @@ import { useNavigate } from 'react-router';
 
 import { FormsPage } from '../hooks/FormsPage';
 import { Metro } from '../interfaces/Metro';
+import {useContainer} from "unstated-next";
+import {MetrosContainer} from "../stores/MetrosStore";
 
 export function AddMetroPage() {
+  const MetrosStore = useContainer(MetrosContainer);
   const { handleSubmit, control } = useForm<Metro>();
 
   const navigation = useNavigate();
 
   const onSubmit = useCallback(async (data: Metro) => {
-    await store.insertMetro(data.Name, data.ExtendedName, data.ShortName, data.MetroSizeRank, data.Population, data.FeaturedImage, data.Notes);
+    await MetrosStore.insertMetro(data.Name, data.ExtendedName, data.ShortName, data.MetroSizeRank, data.Population, data.FeaturedImage, data.Notes);
     navigation('/');
-  }, [store]);
+  }, []);
 
   return (
     <FormsPage title="Add Metro">

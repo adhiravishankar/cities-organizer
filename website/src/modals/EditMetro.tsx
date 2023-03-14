@@ -3,9 +3,11 @@ import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
 import { Button, Modal, Stack } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
+import { useContainer } from 'unstated-next';
 
 import { UseBooleanOutput } from '../functions/UseBooleanOutput';
 import { Metro } from '../interfaces/Metro';
+import { MetrosContainer } from '../stores/MetrosStore';
 
 export interface EditMetroProps {
   id: string;
@@ -14,20 +16,22 @@ export interface EditMetroProps {
 }
 
 export const EditMetro = observer<EditMetroProps>((props: EditMetroProps) => {
-  const { id, store, open } = props;
-  const metro = store.metrosMap.get(id);
+  const MetrosStore = useContainer(MetrosContainer);
+
+  const { id, open } = props;
+  const metro = MetrosStore.metrosMap.get(id);
 
   const { handleSubmit, control } = useForm<Metro>({ defaultValues: metro });
 
   const onSubmit = useCallback((data: Metro) => {
-    store.updateMetro(data.ID, data.Name, data.ExtendedName, data.ShortName, data.MetroSizeRank, data.Population, data.FeaturedImage, data.Notes);
+    MetrosStore.updateMetro(data.ID, data.Name, data.ExtendedName, data.ShortName, data.MetroSizeRank, data.Population, data.FeaturedImage, data.Notes);
     open.setFalse();
-  }, [id, store]);
+  }, [id]);
 
   const { field: fiField } = useController({ name: 'FeaturedImage', control });
 
   const picsJSX: JSX.Element[] = [];
-  store.selectedMetro.Pics.forEach((text: string) =>
+  MetrosStore.selectedMetro.Pics.forEach((text: string) =>
     picsJSX.push(<MenuItem key={ text } value={ text }>{ text }</MenuItem>));
 
   return (

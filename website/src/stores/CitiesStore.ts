@@ -54,11 +54,13 @@ export function useCitiesStore() {
   }
 
   return {
-    filteredCitiesMap,
     cities,
     citiesMap,
+    filteredCitiesMap,
+    insertCity,
     selectedCity,
     selectedCityArea,
+    updateCity,
   };
 }
 

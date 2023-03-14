@@ -1,5 +1,4 @@
 import { TextField } from '@mui/material';
-import { observer } from 'mobx-react-lite';
 import { useCallback, useEffect } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
@@ -11,27 +10,22 @@ import { FormsPage } from '../hooks/FormsPage';
 import { DropdownOption } from '../interfaces/DropdownOption';
 import { Neighborhood } from '../interfaces/Neighborhood';
 import { SelectedOption } from '../interfaces/SelectedOption';
-import { AppStore } from '../stores/AppStore';
 import { CitiesContainer } from '../stores/CitiesStore';
 import { MetrosContainer } from '../stores/MetrosStore';
+import { NeighborhoodsContainer } from '../stores/NeighborhoodsStore';
 
-export interface AddNeighborhoodPageProps {
-  store: AppStore;
-}
-
-export const AddNeighborhoodPage = observer<AddNeighborhoodPageProps>((props: AddNeighborhoodPageProps) => {
+export const AddNeighborhoodPage = () => {
   const MetrosStore = useContainer(MetrosContainer);
   const CitiesStore = useContainer(CitiesContainer);
+  const NeighborhoodsStore = useContainer(NeighborhoodsContainer);
 
-
-  const { store } = props;
   const { handleSubmit, control } = useForm<Neighborhood>();
   const navigation = useNavigate();
 
   const onSubmit = useCallback(async (data: Neighborhood) => {
-    await store.insertNeighborhood(data);
+    await NeighborhoodsStore.insertNeighborhood(data);
     navigation('/');
-  }, [store]);
+  }, []);
 
   const { field: ciField } = useController({ name: 'CityID', control });
   const { field: miField } = useController({ name: 'MetroID', control });
@@ -112,4 +106,4 @@ export const AddNeighborhoodPage = observer<AddNeighborhoodPageProps>((props: Ad
       </Row>
     </FormsPage>
   );
-});
+};

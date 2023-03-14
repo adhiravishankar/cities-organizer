@@ -2,16 +2,19 @@ import { Box, IconButton } from '@mui/material';
 import MaterialReactTable, { MRT_ColumnDef } from 'material-react-table';
 import { ReactNode, useMemo } from 'react';
 import { useNavigate } from 'react-router';
+import { useContainer } from 'unstated-next';
 
 import { Neighborhood } from '../interfaces/Neighborhood';
-import { AppStore } from '../stores/AppStore';
-
-export interface NeighborhoodsTableProps {
-  store: AppStore;
-}
+import { CitiesContainer } from '../stores/CitiesStore';
+import { MetrosContainer } from '../stores/MetrosStore';
+import { NeighborhoodsContainer } from '../stores/NeighborhoodsStore';
 
 
-export function NeighborhoodsTable(props: NeighborhoodsTableProps) {
+export function NeighborhoodsTable() {
+  const MetrosStore = useContainer(MetrosContainer);
+  const CitiesStore = useContainer(CitiesContainer);
+  const NeighborhoodsStore = useContainer(NeighborhoodsContainer);
+
   const navigation = useNavigate();
 
   const columns: MRT_ColumnDef<Neighborhood>[] = useMemo(() => [
@@ -23,12 +26,12 @@ export function NeighborhoodsTable(props: NeighborhoodsTableProps) {
     {
       header: 'Metropolitan Area',
       accessorKey: 'MetroID',
-      Cell: ({ cell }) => props.store.metrosMap.get(cell.getValue() as string)?.Name ?? 'Unknown',
+      Cell: ({ cell }) => MetrosStore.metrosMap.get(cell.getValue() as string)?.Name ?? 'Unknown',
     },
     {
       header: 'City',
       accessorKey: 'CityID',
-      Cell: ({ cell }) => props.store.citiesMap.get(cell.getValue() as string)?.Name ?? 'Unknown',
+      Cell: ({ cell }) => CitiesStore.citiesMap.get(cell.getValue() as string)?.Name ?? 'Unknown',
     },
     {
       header: 'Link',
@@ -40,7 +43,7 @@ export function NeighborhoodsTable(props: NeighborhoodsTableProps) {
   return (
     <MaterialReactTable
       columns={ columns }
-      data={ props.store.neighborhoodsArray }
+      data={ NeighborhoodsStore.neighborhoods }
       enableColumnActions={ false }
       positionActionsColumn="last"
       enableRowActions

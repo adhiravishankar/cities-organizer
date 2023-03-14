@@ -53,12 +53,14 @@ export function useMetrosStore() {
 
   return {
     fetchMetros,
+    insertMetro,
     metros,
     metroNamesMap,
     metrosMap,
     selectedMetro,
     selectedMetroArea,
     setSelectedMetroArea,
+    updateMetro,
   };
 }
 
