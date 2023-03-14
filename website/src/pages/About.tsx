@@ -1,24 +1,35 @@
 import { Card, CardContent } from '@mui/material';
-import { Fragment } from 'react';
+import {Fragment, useEffect} from 'react';
 import { Container } from 'react-bootstrap';
+import { SWRResponse } from 'swr';
 
+import { API } from '../apis/API';
 import { DetailsList } from '../hooks/DetailsList';
 import { NavBar } from '../hooks/NavBar';
-import { AppStore } from '../stores/AppStore';
 
-interface AboutProps {
-  store: AppStore;
-}
+export function About() {
+  const api = new API();
+  const aboutMap = new Map<string, string>();
 
-export function About(props: AboutProps) {
+  useEffect(() => {
+    api.about().then((response: SWRResponse) => {
+      const data = response.data as { [key: string]: string };
+      Object.entries(data).forEach(([key, value]) => aboutMap.set(key, value));
+      aboutMap.set('Frontend', 'React');
+      aboutMap.set('Store', 'MobX');
+      aboutMap.set('Router', 'React Router');
+      aboutMap.set('Styling Frameworks', 'Bootstrap & Material UI');
+    });
+  }, []);
+
   return (
     <Fragment>
-      <NavBar editIcon={ false } name="About" />
+      <NavBar editIcon={false} name="About"/>
       <Container className="body-container images-grid">
         <Card>
           <CardContent>
             <h4>About</h4>
-            <DetailsList data={ props.store.aboutMap } />
+            <DetailsList data={aboutMap}/>
           </CardContent>
         </Card>
       </Container>

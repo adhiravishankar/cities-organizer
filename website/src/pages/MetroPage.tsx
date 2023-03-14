@@ -17,6 +17,7 @@ import { EditMetro } from '../modals/EditMetro';
 import { AppStore } from '../stores/AppStore';
 import { ModalsContainer } from '../stores/ModalsStore';
 import { MetroCardsRow } from '../views/MetroCardsRow';
+import {API} from "../apis/API";
 
 type MetroParams = {
   metro: string;
@@ -28,6 +29,7 @@ interface MetroProps {
 
 export const MetroPage = observer<MetroProps>((props: MetroProps) => {
   const ModalsContext = useContainer(ModalsContainer);
+  const api = new API();
 
   const { store } = props;
   const { metrosMap, selectedMetro } = store;
@@ -36,8 +38,8 @@ export const MetroPage = observer<MetroProps>((props: MetroProps) => {
   const navigation = useNavigate();
   const metro = metrosMap.get(params.metro);
 
-  const fileUpload = useCallback((file: File) => {
-    store.uploadPic(metro.ID, file);
+  const fileUpload = useCallback(async (file: File) => {
+    await api.uploadPic(metro.ID, file);
   }, [store, metro]);
 
   const onCityClick = useCallback((id: string) => {

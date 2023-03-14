@@ -22,11 +22,7 @@ export function createRouter(store: AppStore) {
     },
     {
       path: '/about',
-      loader: async () => {
-        await store.about();
-        return null;
-      },
-      element: <About store={store}/>,
+      element: <About />,
     },
     {
       path: 'metros/:metro',

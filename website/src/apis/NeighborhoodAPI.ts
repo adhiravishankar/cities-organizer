@@ -1,6 +1,8 @@
 import ky, { KyResponse } from 'ky';
+import useSWR, { SWRResponse } from 'swr';
 
 import { Neighborhood } from '../interfaces/Neighborhood';
+import { fetcher } from './API';
 
 
 export class NeighborhoodAPI {
@@ -10,12 +12,12 @@ export class NeighborhoodAPI {
     this.baseURL = process.env.BASE_URL;
   }
 
-  async neighborhoods(): Promise<KyResponse> {
-    return ky.get(this.baseURL + '/neighborhoods');
+  async neighborhoods(): Promise<SWRResponse> {
+    return useSWR(this.baseURL + '/neighborhoods', fetcher);
   }
 
-  async getNeighborhood(id: string): Promise<KyResponse> {
-    return ky.get(this.baseURL + '/neighborhoods/' + id);
+  async getNeighborhood(id: string): Promise<SWRResponse> {
+    return useSWR(this.baseURL + '/neighborhoods/' + id, fetcher);
   }
 
   async insertNeighborhood(neighborhood: Neighborhood): Promise<KyResponse> {

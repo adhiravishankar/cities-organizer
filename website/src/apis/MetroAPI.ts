@@ -1,4 +1,7 @@
 import ky, { KyResponse } from 'ky';
+import useSWR, { SWRResponse } from 'swr';
+
+import { fetcher } from './API';
 
 export class MetroAPI {
   baseURL: string;
@@ -7,12 +10,12 @@ export class MetroAPI {
     this.baseURL = process.env.BASE_URL;
   }
 
-  async metros(): Promise<KyResponse> {
-    return ky.get(this.baseURL + '/metros');
+  async metros(): Promise<SWRResponse> {
+    return useSWR(this.baseURL + '/metros', fetcher);
   }
 
-  async getMetro(id: string): Promise<KyResponse> {
-    return ky.get(this.baseURL + '/metros/' + id);
+  async getMetro(id: string): Promise<SWRResponse> {
+    return useSWR(this.baseURL + '/metros/' + id, fetcher);
   }
 
   async insertMetro(name: string, extendedName: string, shortName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string): Promise<KyResponse> {

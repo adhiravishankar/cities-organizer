@@ -1,4 +1,7 @@
-import ky, { KyResponse } from 'ky';
+import ky from 'ky';
+import useSWR, { SWRResponse } from 'swr';
+
+export const fetcher = url => fetch(url).then(r => r.json());
 
 export class API {
   baseURL: string;
@@ -7,8 +10,8 @@ export class API {
     this.baseURL = process.env.BASE_URL;
   }
 
-  async about(): Promise<KyResponse> {
-    return ky.get(this.baseURL + '/about');
+  async about(): Promise<SWRResponse> {
+    return useSWR(this.baseURL + '/about', fetcher);
   }
 
   async uploadPic(id: string, picture: File): Promise<string> {

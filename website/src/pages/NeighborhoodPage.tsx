@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import { useContainer } from 'unstated-next';
 import { useBoolean } from 'usehooks-ts';
+import { API } from '../apis/API';
 
 import { BreadcrumbsProps } from '../hooks/Breadcrumbs';
 import { CardsPage } from '../hooks/CardsPage';
@@ -19,14 +20,15 @@ interface NeighborhoodProps {
 
 export const NeighborhoodPage = observer<NeighborhoodProps>((props: NeighborhoodProps) => {
   const ModalsContext = useContainer(ModalsContainer);
+  const api = new API();
 
   const { store } = props;
   const { selectedNeighborhood } = store;
   const navigation = useNavigate();
   const openEditingScreen = useBoolean(false);
 
-  const fileUpload = useCallback((file: File) => {
-    store.uploadPic(selectedNeighborhood.Neighborhood.ID, file);
+  const fileUpload = useCallback(async (file: File) => {
+    await api.uploadPic(selectedNeighborhood.Neighborhood.ID, file);
   }, [store, selectedNeighborhood]);
 
   const refresh = useCallback(() => navigation(0), []);

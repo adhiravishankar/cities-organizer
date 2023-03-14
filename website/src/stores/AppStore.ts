@@ -1,7 +1,6 @@
 import { KyResponse } from 'ky';
 import { action, computed, flow, makeObservable, observable } from 'mobx';
 
-import { API } from '../apis/API';
 import { CitiesAPI } from '../apis/CitiesAPI';
 import { MetroAPI } from '../apis/MetroAPI';
 import { NeighborhoodAPI } from '../apis/NeighborhoodAPI';
@@ -16,15 +15,11 @@ import { Neighborhood } from '../interfaces/Neighborhood';
 
 export class AppStore {
 
-  api: API;
-
   metroAPI: MetroAPI;
 
   citiesAPI: CitiesAPI;
 
   neighborhoodAPI: NeighborhoodAPI;
-
-  aboutMap: Map<string, string> = observable.map();
 
   selectedMetro: DetailedMetro;
 
@@ -63,13 +58,10 @@ export class AppStore {
   neighborhoodsMap: Map<string, DerivedNeighborhood> = observable.map();
 
   constructor() {
-    this.api = new API();
     this.metroAPI = new MetroAPI();
     this.citiesAPI = new CitiesAPI();
     this.neighborhoodAPI = new NeighborhoodAPI();
     makeObservable(this, {
-      about: flow,
-      aboutMap: observable,
       citiesArray: observable,
       citiesMap: observable,
       fetchCity: flow,
@@ -96,7 +88,6 @@ export class AppStore {
       updateNeighborhood: flow,
       updateSelectedCity: action,
       updateSelectedMetro: action,
-      uploadPic: flow,
     });
   }
 
@@ -104,16 +95,6 @@ export class AppStore {
     yield this.fetchMetros();
     yield this.fetchCities();
     yield this.fetchNeighborhoods();
-  }
-
-  *about() {
-    const response: KyResponse = yield this.api.about();
-    const aboutText: Record<string, string> = yield response.json<Record<string, string>>();
-    Object.entries(aboutText).forEach(([key, value]: [string, string]) => this.aboutMap.set(key, value));
-    this.aboutMap.set('Frontend', 'React');
-    this.aboutMap.set('Store', 'MobX');
-    this.aboutMap.set('Router', 'React Router');
-    this.aboutMap.set('Styling Frameworks', 'Bootstrap & Material UI');
   }
 
   *fetchMetros() {
@@ -209,11 +190,6 @@ export class AppStore {
     if (response.ok) {
       const neighborhoodID = yield response.text();
     }
-  }
-
-  *uploadPic(id: string, file: File) {
-    const response: KyResponse = yield this.api.uploadPic(id, file);
-    return yield response.text();
   }
 
 }

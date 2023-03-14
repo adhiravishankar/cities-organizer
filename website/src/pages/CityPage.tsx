@@ -15,6 +15,7 @@ import { AddPicsProps } from '../modals/AddPics';
 import { EditCity } from '../modals/EditCity';
 import { AppStore } from '../stores/AppStore';
 import { ModalsContainer } from '../stores/ModalsStore';
+import {API} from "../apis/API";
 
 interface CityProps {
   store: AppStore;
@@ -22,14 +23,15 @@ interface CityProps {
 
 export const CityPage = observer<CityProps>((props: CityProps) => {
   const ModalsContext = useContainer(ModalsContainer);
+  const api = new API();
 
   const { store } = props;
   const { selectedCity } = store;
   const navigation = useNavigate();
   const editingModalOpen = useBoolean(false);
 
-  const fileUpload = useCallback((file: File) => {
-    store.uploadPic(selectedCity.City.ID, file);
+  const fileUpload = useCallback(async (file: File) => {
+    await api.uploadPic(selectedCity.City.ID, file);
   }, [store, selectedCity]);
 
   const onNeighborhoodClick = useCallback((id: string) => {

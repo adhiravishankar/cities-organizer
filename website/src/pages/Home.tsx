@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 import { LabeledImageItem } from '../hooks/LabeledImageItem';
 import { NavBar } from '../hooks/NavBar';
 import { TabPanel } from '../hooks/TabPanel';
-import { tabProps } from '../hooks/tabProps';
+import { tabProps } from '../functions/tabProps';
 import { Metro } from '../interfaces/Metro';
 import { AppStore } from '../stores/AppStore';
 import { CitiesTable } from '../views/CitiesTable';

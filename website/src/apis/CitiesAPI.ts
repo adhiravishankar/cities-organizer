@@ -1,4 +1,7 @@
 import ky, { KyResponse } from 'ky';
+import useSWR, { SWRResponse } from 'swr';
+
+import { fetcher } from './API';
 
 export class CitiesAPI {
   baseURL: string;
@@ -7,12 +10,12 @@ export class CitiesAPI {
     this.baseURL = process.env.BASE_URL;
   }
 
-  async cities(): Promise<KyResponse> {
-    return ky.get(this.baseURL + '/cities');
+  async cities(): Promise<SWRResponse> {
+    return useSWR(this.baseURL + '/cities', fetcher);
   }
 
-  async readCity(id: string): Promise<KyResponse> {
-    return ky.get(this.baseURL + '/cities/' + id);
+  async readCity(id: string): Promise<SWRResponse> {
+    return useSWR(this.baseURL + '/cities/' + id);
   }
 
   async insertCity(name: string, metroID: string, population: number, featuredImage: string, notes: string): Promise<KyResponse> {
