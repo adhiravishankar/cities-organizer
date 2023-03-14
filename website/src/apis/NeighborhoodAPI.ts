@@ -6,8 +6,8 @@ import { Neighborhood } from '../interfaces/Neighborhood';
 export class NeighborhoodAPI {
   baseURL: string;
 
-  constructor(baseURL: string) {
-    this.baseURL = baseURL;
+  constructor() {
+    this.baseURL = process.env.BASE_URL;
   }
 
   async neighborhoods(): Promise<KyResponse> {

@@ -3,8 +3,8 @@ import ky, { KyResponse } from 'ky';
 export class API {
   baseURL: string;
 
-  constructor(baseURL: string) {
-    this.baseURL = baseURL;
+  constructor() {
+    this.baseURL = process.env.BASE_URL;
   }
 
   async about(): Promise<KyResponse> {

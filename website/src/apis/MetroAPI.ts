@@ -3,8 +3,8 @@ import ky, { KyResponse } from 'ky';
 export class MetroAPI {
   baseURL: string;
 
-  constructor(baseURL: string) {
-    this.baseURL = baseURL;
+  constructor() {
+    this.baseURL = process.env.BASE_URL;
   }
 
   async metros(): Promise<KyResponse> {

@@ -62,22 +62,16 @@ export class AppStore {
 
   neighborhoodsMap: Map<string, DerivedNeighborhood> = observable.map();
 
-  editingModalOpen: boolean;
-
-  uploadPicsModalOpen: boolean;
-
   constructor() {
-    this.api = new API(process.env.BASE_URL);
-    this.metroAPI = new MetroAPI(process.env.BASE_URL);
-    this.citiesAPI = new CitiesAPI(process.env.BASE_URL);
-    this.neighborhoodAPI = new NeighborhoodAPI(process.env.BASE_URL);
+    this.api = new API();
+    this.metroAPI = new MetroAPI();
+    this.citiesAPI = new CitiesAPI();
+    this.neighborhoodAPI = new NeighborhoodAPI();
     makeObservable(this, {
       about: flow,
       aboutMap: observable,
       citiesArray: observable,
       citiesMap: observable,
-      editingModalOpen: observable,
-      editingModalVisibilityChange: action,
       fetchCity: flow,
       fetchCities: flow,
       fetchMetro: flow,
@@ -103,8 +97,6 @@ export class AppStore {
       updateSelectedCity: action,
       updateSelectedMetro: action,
       uploadPic: flow,
-      uploadPicsModalOpen: observable,
-      uploadPicsModalVisibilityChange: action,
     });
   }
 
@@ -222,14 +214,6 @@ export class AppStore {
   *uploadPic(id: string, file: File) {
     const response: KyResponse = yield this.api.uploadPic(id, file);
     return yield response.text();
-  }
-
-  editingModalVisibilityChange(visibility: boolean) {
-    this.editingModalOpen = visibility;
-  }
-
-  uploadPicsModalVisibilityChange(visibility: boolean) {
-    this.uploadPicsModalOpen = visibility;
   }
 
 }

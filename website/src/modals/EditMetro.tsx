@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 import { Button, Modal, Stack } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
 
+import { UseBooleanOutput } from '../functions/UseBooleanOutput';
 import { Metro } from '../interfaces/Metro';
 import { AppStore } from '../stores/AppStore';
 
@@ -12,18 +13,19 @@ export interface EditMetroProps {
   id: string;
 
   store: AppStore;
+
+  open: UseBooleanOutput;
 }
 
 export const EditMetro = observer<EditMetroProps>((props: EditMetroProps) => {
-  const { id, store } = props;
+  const { id, store, open } = props;
   const metro = store.metrosMap.get(id);
 
   const { handleSubmit, control } = useForm<Metro>({ defaultValues: metro });
-  const handleClose = () => store.editingModalVisibilityChange(false);
 
   const onSubmit = useCallback((data: Metro) => {
     store.updateMetro(data.ID, data.Name, data.ExtendedName, data.ShortName, data.MetroSizeRank, data.Population, data.FeaturedImage, data.Notes);
-    handleClose();
+    open.setFalse();
   }, [id, store]);
 
   const { field: fiField } = useController({ name: 'FeaturedImage', control });
@@ -33,7 +35,7 @@ export const EditMetro = observer<EditMetroProps>((props: EditMetroProps) => {
     picsJSX.push(<MenuItem key={ text } value={ text }>{ text }</MenuItem>));
 
   return (
-    <Modal show={ store.editingModalOpen } onHide={ handleClose }>
+    <Modal show={ open.value } onHide={ open.setFalse }>
       <Modal.Header closeButton>
         <Modal.Title>{`Edit ${ metro.Name }`}</Modal.Title>
       </Modal.Header>

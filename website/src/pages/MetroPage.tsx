@@ -1,11 +1,9 @@
 import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
-import { Col, Row } from 'react-bootstrap';
-import { ReactNumberCard } from 'react-number-card';
 import { useNavigate, useParams } from 'react-router';
+import { useContainer } from 'unstated-next';
+import { useBoolean } from 'usehooks-ts';
 
-import { attachOrdinal } from '../functions/getOrdinal';
-import { AddPicsProps } from '../modals/AddPics';
 import { BreadcrumbsProps } from '../hooks/Breadcrumbs';
 import { CardsPage } from '../hooks/CardsPage';
 import { ImagesCard } from '../hooks/ImagesCard';
@@ -14,9 +12,11 @@ import { NavBarProps } from '../hooks/NavBar';
 import { City } from '../interfaces/City';
 import { LabeledImage } from '../interfaces/LabeledImage';
 import { Neighborhood } from '../interfaces/Neighborhood';
-import { AppStore } from '../stores/AppStore';
+import { AddPicsProps } from '../modals/AddPics';
 import { EditMetro } from '../modals/EditMetro';
-import {MetroCardsRow} from "../views/MetroCardsRow";
+import { AppStore } from '../stores/AppStore';
+import { ModalsContainer } from '../stores/ModalsStore';
+import { MetroCardsRow } from '../views/MetroCardsRow';
 
 type MetroParams = {
   metro: string;
@@ -27,23 +27,14 @@ interface MetroProps {
 }
 
 export const MetroPage = observer<MetroProps>((props: MetroProps) => {
+  const ModalsContext = useContainer(ModalsContainer);
+
   const { store } = props;
   const { metrosMap, selectedMetro } = store;
   const params = useParams<MetroParams>();
+  const editingModalOpen = useBoolean(false);
   const navigation = useNavigate();
   const metro = metrosMap.get(params.metro);
-
-  const openEditingScreen = useCallback(() => {
-    store.editingModalVisibilityChange(true);
-  }, [store]);
-
-  const openUploadPicsScreen = useCallback(() => {
-    store.uploadPicsModalVisibilityChange(true);
-  }, [store]);
-
-  const closeUploadPicsScreen = useCallback(() => {
-    store.uploadPicsModalVisibilityChange(false);
-  }, [store]);
 
   const fileUpload = useCallback((file: File) => {
     store.uploadPic(metro.ID, file);
@@ -71,22 +62,22 @@ export const MetroPage = observer<MetroProps>((props: MetroProps) => {
   const metroName = selectedMetro.Metropolitan.Name;
 
   const breadCrumbsProps: BreadcrumbsProps = { active: 'metro', metroID: selectedMetro.Metropolitan.ID, metro: metroName };
-  const editCity = <EditMetro id={ metro.ID } store={ store } />;
-  const addPicsProps: AddPicsProps = { onCloseModal: closeUploadPicsScreen, shown: store.uploadPicsModalOpen, fileUpload, refresh };
-  const navBarProps: NavBarProps = { editIcon: true, id: selectedMetro.Metropolitan.ID, onEdit: openEditingScreen, name: selectedMetro.Metropolitan.Name };
+  const editMetro = <EditMetro open={ editingModalOpen } id={ metro.ID } store={ store } />;
+  const addPicsProps: AddPicsProps = { fileUpload, refresh };
+  const navBarProps: NavBarProps = { editIcon: true, id: selectedMetro.Metropolitan.ID, onEdit: editingModalOpen.setTrue, name: selectedMetro.Metropolitan.Name };
 
   return (
     <CardsPage
       breadcrumbs={ breadCrumbsProps }
       notes={ selectedMetro.Metropolitan.Notes }
-      editModal={ editCity }
+      editModal={ editMetro }
       addPicsProps={ addPicsProps }
       navBarProps={ navBarProps }
     >
       <MetroCardsRow selectedMetro={ selectedMetro } />
       <ImagesCard
         errorMessage="No images are currently attached."
-        openAddPics={ openUploadPicsScreen }
+        openAddPics={ ModalsContext.uploadPicsModal.setTrue }
         pics={ store.selectedMetro.Pics }
       />
       <LabeledImagesCard

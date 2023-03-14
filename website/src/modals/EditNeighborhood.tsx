@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 import { Button, Modal, Stack } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
 
+import { UseBooleanOutput } from '../functions/UseBooleanOutput';
 import { Neighborhood } from '../interfaces/Neighborhood';
 import { AppStore } from '../stores/AppStore';
 
@@ -12,17 +13,18 @@ export interface EditNeighborhoodProps {
   id: string;
 
   store: AppStore;
+
+  open: UseBooleanOutput;
 }
 
 export const EditNeighborhood = observer<EditNeighborhoodProps>((props: EditNeighborhoodProps) => {
-  const { id, store } = props;
+  const { id, open, store } = props;
 
   const { handleSubmit, control } = useForm<Neighborhood>({ defaultValues: store.selectedNeighborhood.Neighborhood });
-  const handleClose = () => store.editingModalVisibilityChange(false);
 
   const onSubmit = useCallback((data: Neighborhood) => {
 
-    handleClose();
+    open.setFalse();
   }, [id, store]);
 
   const { field: fiField } = useController({ name: 'FeaturedImage', control });
@@ -32,7 +34,7 @@ export const EditNeighborhood = observer<EditNeighborhoodProps>((props: EditNeig
     picsJSX.push(<MenuItem key={ text } value={ text }>{ text }</MenuItem>));
 
   return (
-    <Modal show={ store.editingModalOpen } onHide={ handleClose }>
+    <Modal show={ open.value } onHide={ open.setFalse }>
       <Modal.Header closeButton>
         <Modal.Title>{`Edit ${ store.selectedNeighborhood.Neighborhood.Name }`}</Modal.Title>
       </Modal.Header>

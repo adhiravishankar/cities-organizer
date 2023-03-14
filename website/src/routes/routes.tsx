@@ -1,11 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import { About } from '../pages/About';
-import { CityPage } from '../pages/CityPage';
-import { Home } from '../pages/Home';
 import { AddCityPage } from '../pages/AddCityPage';
 import { AddMetroPage } from '../pages/AddMetroPage';
 import { AddNeighborhoodPage } from '../pages/AddNeighborhoodPage';
+import { CityPage } from '../pages/CityPage';
+import { Home } from '../pages/Home';
 import { MetroPage } from '../pages/MetroPage';
 import { NeighborhoodPage } from '../pages/NeighborhoodPage';
 import { AppStore } from '../stores/AppStore';

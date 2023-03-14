@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 import { Button, Modal, Stack } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
 
+import { UseBooleanOutput } from '../functions/UseBooleanOutput';
 import { City } from '../interfaces/City';
 import { AppStore } from '../stores/AppStore';
 
@@ -12,17 +13,18 @@ export interface EditCityProps {
   id: string;
 
   store: AppStore;
+
+  open: UseBooleanOutput;
 }
 
 export const EditCity = observer<EditCityProps>((props: EditCityProps) => {
-  const { id, store } = props;
+  const { id, store, open } = props;
 
   const { handleSubmit, control } = useForm<City>({ defaultValues: store.selectedCity.City });
-  const handleClose = () => store.editingModalVisibilityChange(false);
 
   const onSubmit = useCallback((data: City) => {
     store.updateCity(data.ID, data.Name, data.Population, data.FeaturedImage, data.Notes);
-    handleClose();
+    open.setFalse();
   }, [id, store]);
 
   const { field: fiField } = useController({ name: 'FeaturedImage', control });
@@ -32,7 +34,7 @@ export const EditCity = observer<EditCityProps>((props: EditCityProps) => {
     picsJSX.push(<MenuItem key={ text } value={ text }>{ text }</MenuItem>));
 
   return (
-    <Modal show={ store.editingModalOpen } onHide={ handleClose }>
+    <Modal show={ open.value } onHide={ open.setFalse }>
       <Modal.Header closeButton>
         <Modal.Title>{`Edit ${ store.selectedCity.City.Name }`}</Modal.Title>
       </Modal.Header>

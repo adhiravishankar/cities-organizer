@@ -44,6 +44,8 @@ specifiers:
   sass: ^1.57.1
   swr: ^2.0.3
   typescript: ^4.9.4
+  unstated-next: ^1.1.0
+  usehooks-ts: ^2.9.1
 
 dependencies:
   '@babel/core': 7.20.12
@@ -73,6 +75,8 @@ dependencies:
   react-router-dom: 6.6.2_biqbaboplfbrettd7655fr4n2y
   react-select: 5.7.0_vwskmg7mzf6u2jufkkmcrhvxcm
   swr: 2.0.3_react@18.2.0
+  unstated-next: 1.1.0
+  usehooks-ts: 2.9.1_biqbaboplfbrettd7655fr4n2y
 
 devDependencies:
   '@types/node': 18.11.18
@@ -8211,6 +8215,10 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: true
 
+  /unstated-next/1.1.0:
+    resolution: {integrity: sha512-AAn47ZncPvgBGOvMcn8tSRxsrqwf2VdAPxLASTuLJvZt4rhKfDvUkmYZLGfclImSfTVMv7tF4ynaVxin0JjDCA==}
+    dev: false
+
   /untildify/4.0.0:
     resolution: {integrity: sha512-KK8xQ1mkzZeg9inewmFVDNkg3l5LUhoq9kN6iWYB/CC9YMG8HA+c1Q8HwDe6dEX7kErrEVNVBO3fWsVq5iDgtw==}
     engines: {node: '>=8'}
@@ -8251,6 +8259,17 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.2.0
+    dev: false
+
+  /usehooks-ts/2.9.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-2FAuSIGHlY+apM9FVlj8/oNhd+1y+Uwv5QNkMQz1oSfdHk4PXo1qoCw9I5M7j0vpH8CSWFJwXbVPeYDjLCx9PA==}
+    engines: {node: '>=16.15.0', npm: '>=8'}
+    peerDependencies:
+      react: ^16.8.0  || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0  || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /util-deprecate/1.0.2:

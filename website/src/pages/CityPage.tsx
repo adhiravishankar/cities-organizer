@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
+import { useContainer } from 'unstated-next';
+import { useBoolean } from 'usehooks-ts';
 
-import { AddPicsProps } from '../modals/AddPics';
 import { BreadcrumbsProps } from '../hooks/Breadcrumbs';
 import { CardsPage } from '../hooks/CardsPage';
 import { ImagesCard } from '../hooks/ImagesCard';
@@ -10,29 +11,22 @@ import { LabeledImagesCard } from '../hooks/LabeledImagesCard';
 import { NavBarProps } from '../hooks/NavBar';
 import { LabeledImage } from '../interfaces/LabeledImage';
 import { Neighborhood } from '../interfaces/Neighborhood';
-import { AppStore } from '../stores/AppStore';
+import { AddPicsProps } from '../modals/AddPics';
 import { EditCity } from '../modals/EditCity';
+import { AppStore } from '../stores/AppStore';
+import { ModalsContainer } from '../stores/ModalsStore';
 
 interface CityProps {
   store: AppStore;
 }
 
 export const CityPage = observer<CityProps>((props: CityProps) => {
+  const ModalsContext = useContainer(ModalsContainer);
+
   const { store } = props;
   const { selectedCity } = store;
   const navigation = useNavigate();
-
-  const openEditingScreen = useCallback(() => {
-    store.editingModalVisibilityChange(true);
-  }, [store]);
-
-  const openUploadPicsScreen = useCallback(() => {
-    store.uploadPicsModalVisibilityChange(true);
-  }, [store]);
-
-  const closeUploadPicsScreen = useCallback(() => {
-    store.uploadPicsModalVisibilityChange(false);
-  }, [store]);
+  const editingModalOpen = useBoolean(false);
 
   const fileUpload = useCallback((file: File) => {
     store.uploadPic(selectedCity.City.ID, file);
@@ -53,9 +47,9 @@ export const CityPage = observer<CityProps>((props: CityProps) => {
 
   const breadCrumbsProps: BreadcrumbsProps = { active: 'city', metroID: selectedCity.City.MetroID,
     cityID: selectedCity.City.ID, metro: metroName, city: cityName };
-  const editCity = <EditCity id={ selectedCity.City.ID } store={ store } />;
-  const addPicsProps: AddPicsProps = { onCloseModal: closeUploadPicsScreen, shown: store.uploadPicsModalOpen, fileUpload, refresh };
-  const navBarProps: NavBarProps = { editIcon: true, id: selectedCity.City.ID, onEdit: openEditingScreen, name: selectedCity.City.Name };
+  const editCity = <EditCity open={ editingModalOpen } id={ selectedCity.City.ID } store={ store } />;
+  const addPicsProps: AddPicsProps = { fileUpload, refresh };
+  const navBarProps: NavBarProps = { editIcon: true, id: selectedCity.City.ID, onEdit: editingModalOpen.setTrue, name: selectedCity.City.Name };
 
   return (
     <CardsPage
@@ -67,7 +61,7 @@ export const CityPage = observer<CityProps>((props: CityProps) => {
     >
       <ImagesCard
         errorMessage="No images are currently attached."
-        openAddPics={ openUploadPicsScreen }
+        openAddPics={ ModalsContext.uploadPicsModal.setTrue }
         pics={ store.selectedCity.Pics }
       />
       <LabeledImagesCard
