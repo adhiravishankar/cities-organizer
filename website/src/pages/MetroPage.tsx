@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useLoaderData, useNavigate, useParams } from 'react-router';
+import { SWRResponse } from 'swr';
 import { useContainer } from 'unstated-next';
 import { useBoolean } from 'usehooks-ts';
 
@@ -26,6 +27,7 @@ type MetroParams = {
 export const MetroPage = () => {
   const ModalsContext = useContainer(ModalsContainer);
   const MetrosContext = useContainer(MetrosContainer);
+  const metroResponse: SWRResponse = useLoaderData();
   const api = new API();
 
   const params = useParams<MetroParams>();

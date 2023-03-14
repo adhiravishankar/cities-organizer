@@ -9,3 +9,6 @@ node_modules
 !.env.project
 !.env.vault
 *.map
+build
+dist
+dist-prod

@@ -1,42 +1,50 @@
 import { KyResponse } from 'ky';
 import { useState } from 'react';
-import { createContainer } from 'unstated-next';
+import { SWRResponse } from 'swr';
+import { createContainer, useContainer } from 'unstated-next';
+import { useMap } from 'usehooks-ts';
 
 import { NeighborhoodAPI } from '../apis/NeighborhoodAPI';
 import { DerivedNeighborhood } from '../interfaces/DerivedNeighborhood';
 import { DetailedNeighborhood } from '../interfaces/DetailedNeighborhood';
 import { Neighborhood } from '../interfaces/Neighborhood';
+import { CitiesContainer } from './CitiesStore';
+import { MetrosContainer } from './MetrosStore';
 
 export function useNeighborhoodsStore() {
+  const MetrosStore = useContainer(MetrosContainer);
+  const CitiesStore = useContainer(CitiesContainer);
+  
   const neighborhoodAPI = new NeighborhoodAPI();
 
   const [neighborhoods, setNeighborhoods] = useState<DerivedNeighborhood[]>([]);
+  const [neighborhoodsMap, setNeighborhoodsMap] = useMap<string, DerivedNeighborhood>();
   const [selectedNeighborhood, setSelectedNeighborhood] = useState<DetailedNeighborhood>(null);
 
 
-  function fetchNeighborhoods() {
-    const response: KyResponse = await this.neighborhoodAPI.neighborhoods();
-    this.neighborhoodsArray = await response.json<DerivedNeighborhood[]>();
-    this.neighborhoodsMap.clear();
-    this.neighborhoodsArray.forEach((neighboorhood: DerivedNeighborhood) => this.neighborhoodsMap.set(neighboorhood.ID, neighboorhood));
+  async function fetchNeighborhoods() {
+    const response: SWRResponse = await neighborhoodAPI.neighborhoods();
+    const data = response.data as DerivedNeighborhood[];
+    setNeighborhoodsMap.reset();
+    data.forEach((neighboorhood: DerivedNeighborhood) => setNeighborhoodsMap.set(neighboorhood.ID, neighboorhood));
   }
 
-  function fetchNeighborhood(id: string) {
-    const response: KyResponse = await this.neighborhoodAPI.getNeighborhood(id);
-    this.selectedNeighborhood = await response.json<DetailedNeighborhood>();
+  async function fetchNeighborhood(id: string) {
+    const response: SWRResponse = await neighborhoodAPI.getNeighborhood(id);
+    setSelectedNeighborhood(response.data as DetailedNeighborhood);
   }
 
-  function insertNeighborhood(neighborhood: Neighborhood) {
-    const response: KyResponse = await this.neighborhoodAPI.insertNeighborhood(neighborhood);
+  async function insertNeighborhood(neighborhood: Neighborhood) {
+    const response: KyResponse = await neighborhoodAPI.insertNeighborhood(neighborhood);
     if (response.ok) {
       const neighborhoodID = await response.text();
-      this.updateSelectedCity('');
-      this.updateSelectedMetro('');
+      CitiesStore.setSelectedCityArea('');
+      MetrosStore.setSelectedMetroArea('');
     }
   }
 
-  function updateNeighborhood(neighborhood: Neighborhood) {
-    const response: KyResponse = await this.neighborhoodAPI.updateNeighborhood(neighborhood);
+  async function updateNeighborhood(neighborhood: Neighborhood) {
+    const response: KyResponse = await neighborhoodAPI.updateNeighborhood(neighborhood);
     if (response.ok) {
       const neighborhoodID = await response.text();
     }

@@ -1,6 +1,6 @@
 {
   "ignorePatterns": ["node_modules/**/*"],
-  "extends": ["airbnb-typescript"],
+  "extends": ["eslint:recommended", "plugin:import/recommended", "plugin:import/typescript", "airbnb-typescript"],
   "plugins": ["import","react","simple-import-sort"],
   "parserOptions": {
     "project": "./tsconfig.eslint.json"

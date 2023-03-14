@@ -24,34 +24,52 @@ export function useMetrosStore() {
 
   async function fetchMetros() {
     const response: SWRResponse = await metroAPI.metros();
-    setMetros(response.data as Metro[]);
-    this.metrosMap.clear();
-    this.metrosArray.forEach((metro: Metro) => setMetrosMap.set(metro.ID, metro));
+    const data = response.data as Metro[];
+    setMetros(data);
+    setMetrosMap.reset();
+    data.forEach((metro: Metro) => setMetrosMap.set(metro.ID, metro));
   }
 
-  function fetchMetro(id: string) {
+  async function fetchMetro(id: string) {
     const response: SWRResponse = await metroAPI.getMetro(id);
-    this.selectedMetro = await response.json<DetailedMetro>();
+    setSelectedMetro(response.data as DetailedMetro);
   }
 
-  function insertMetro(name: string, extendedName: string, shortName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string) {
+  async function insertMetro(name: string, extendedName: string, shortName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string) {
     const response: KyResponse = await metroAPI.insertMetro(name, extendedName, shortName, metroSizeRank, population, featuredImage, notes);
     if (response.ok) {
       const metroID = await response.text();
-      const metro: Metro = { Name: name, ExtendedName: extendedName, ShortName: shortName, MetroSizeRank: metroSizeRank, Population: population, FeaturedImage: featuredImage, ID: metroID, Notes: notes };
-      this.metrosMap.set(metroID, metro);
+      const metro: Metro = {
+        Name: name,
+        ExtendedName: extendedName,
+        ShortName: shortName,
+        MetroSizeRank: metroSizeRank,
+        Population: population,
+        FeaturedImage: featuredImage,
+        ID: metroID,
+        Notes: notes,
+      };
+      setMetrosMap.set(metroID, metro);
     }
   }
 
-  function updateMetro(id: string, name: string, extendedName: string, shortName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string) {
+  async function updateMetro(id: string, name: string, extendedName: string, shortName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string) {
     const success: KyResponse = await metroAPI.editMetro(id, name, extendedName, shortName, metroSizeRank, population, featuredImage, notes);
     if (success.ok) {
-      const metro = this.metrosMap.get(id);
-      this.metrosMap.set(id, { ...metro, Name: name, ExtendedName: extendedName, ShortName: shortName, Population: population, FeaturedImage: featuredImage });
+      const metro = metrosMap.get(id);
+      setMetrosMap.set(id, {
+        ...metro,
+        Name: name,
+        ExtendedName: extendedName,
+        ShortName: shortName,
+        Population: population,
+        FeaturedImage: featuredImage,
+      });
     }
   }
 
   return {
+    fetchMetro,
     fetchMetros,
     insertMetro,
     metros,

@@ -1,5 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import { CitiesAPI } from '../apis/CitiesAPI';
+import { MetroAPI } from '../apis/MetroAPI';
+import { NeighborhoodAPI } from '../apis/NeighborhoodAPI';
 import { About } from '../pages/About';
 import { AddCityPage } from '../pages/AddCityPage';
 import { AddMetroPage } from '../pages/AddMetroPage';
@@ -10,6 +13,9 @@ import { MetroPage } from '../pages/MetroPage';
 import { NeighborhoodPage } from '../pages/NeighborhoodPage';
 
 export function createRouter() {
+  const metroAPI = new MetroAPI();
+  const cityAPI = new CitiesAPI();
+  const neighborhoodAPI = new NeighborhoodAPI();
   return createBrowserRouter([
     {
       path: '/',
@@ -24,23 +30,17 @@ export function createRouter() {
     },
     {
       path: 'metros/:metro',
-      loader: async ({ params }) => {
-        return null;
-      },
+      loader: async ({ params }) => metroAPI.getMetro(params.metro),
       element: <MetroPage />,
     },
     {
       path: 'cities/:city',
-      loader: async ({ params }) => {
-        return null;
-      },
+      loader: async ({ params }) => cityAPI.readCity(params.city),
       element: <CityPage />,
     },
     {
       path: 'neighborhoods/:neighborhood',
-      loader: async ({ params }) => {
-        return null;
-      },
+      loader: async ({ params }) => neighborhoodAPI.getNeighborhood(params.neighborhood),
       element: <NeighborhoodPage />,
     },
     {
@@ -52,9 +52,6 @@ export function createRouter() {
     },
     {
       path: '/add-metro',
-      loader: async () => {
-        return null;
-      },
       element: <AddMetroPage />,
     },
     {
