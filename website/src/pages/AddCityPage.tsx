@@ -4,12 +4,14 @@ import { Button, Col, Row } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import Select from 'react-select';
+import { useContainer } from 'unstated-next';
 
 import { FormsPage } from '../hooks/FormsPage';
 import { City } from '../interfaces/City';
 import { DropdownOption } from '../interfaces/DropdownOption';
 import { SelectedOption } from '../interfaces/SelectedOption';
 import { AppStore } from '../stores/AppStore';
+import { MetrosContainer } from '../stores/MetrosStore';
 
 
 export interface AddCityPageProps {
@@ -17,6 +19,8 @@ export interface AddCityPageProps {
 }
 
 export function AddCityPage(props: AddCityPageProps) {
+  const MetrosStore = useContainer(MetrosContainer);
+
   const { store } = props;
   const navigation = useNavigate();
 
@@ -30,14 +34,14 @@ export function AddCityPage(props: AddCityPageProps) {
   const { field: miField } = useController({ name: 'MetroID', control });
 
   const onSetMetro = useCallback((option: SelectedOption) => {
-    store.updateSelectedMetro(option.value);
+    MetrosStore.setSelectedMetroArea(option.value);
     miField.onChange(-1);
-    miField.onChange(store.selectedMetroArea);
+    miField.onChange(MetrosStore.selectedMetroArea);
   }, []);
 
 
   const metroItems: DropdownOption[] = [];
-  store.metroNamesMap.forEach((text: string, id: string) => metroItems.push({ value: id, label: text }));
+  MetrosStore.metroNamesMap.forEach((text: string, id: string) => metroItems.push({ value: id, label: text }));
 
   return (
     <FormsPage title="Add City">

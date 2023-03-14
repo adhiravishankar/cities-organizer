@@ -6,26 +6,23 @@ import { Controller, useController, useForm } from 'react-hook-form';
 
 import { UseBooleanOutput } from '../functions/UseBooleanOutput';
 import { Neighborhood } from '../interfaces/Neighborhood';
-import { AppStore } from '../stores/AppStore';
 
 
 export interface EditNeighborhoodProps {
   id: string;
 
-  store: AppStore;
-
   open: UseBooleanOutput;
 }
 
 export const EditNeighborhood = observer<EditNeighborhoodProps>((props: EditNeighborhoodProps) => {
-  const { id, open, store } = props;
+  const { id, open } = props;
 
   const { handleSubmit, control } = useForm<Neighborhood>({ defaultValues: store.selectedNeighborhood.Neighborhood });
 
   const onSubmit = useCallback((data: Neighborhood) => {
 
     open.setFalse();
-  }, [id, store]);
+  }, [id]);
 
   const { field: fiField } = useController({ name: 'FeaturedImage', control });
 

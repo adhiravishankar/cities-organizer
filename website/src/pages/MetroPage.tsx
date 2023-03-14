@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router';
 import { useContainer } from 'unstated-next';
 import { useBoolean } from 'usehooks-ts';
 
+import { API } from '../apis/API';
 import { BreadcrumbsProps } from '../hooks/Breadcrumbs';
 import { CardsPage } from '../hooks/CardsPage';
 import { ImagesCard } from '../hooks/ImagesCard';
@@ -17,7 +18,6 @@ import { EditMetro } from '../modals/EditMetro';
 import { AppStore } from '../stores/AppStore';
 import { ModalsContainer } from '../stores/ModalsStore';
 import { MetroCardsRow } from '../views/MetroCardsRow';
-import {API} from "../apis/API";
 
 type MetroParams = {
   metro: string;

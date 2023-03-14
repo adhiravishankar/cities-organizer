@@ -1,24 +1,20 @@
 import { MenuItem, Select, TextField } from '@mui/material';
-import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
 import { Button, Modal, Stack } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
 
 import { UseBooleanOutput } from '../functions/UseBooleanOutput';
 import { City } from '../interfaces/City';
-import { AppStore } from '../stores/AppStore';
 
 
 export interface EditCityProps {
   id: string;
 
-  store: AppStore;
-
   open: UseBooleanOutput;
 }
 
-export const EditCity = observer<EditCityProps>((props: EditCityProps) => {
-  const { id, store, open } = props;
+export const EditCity = (props: EditCityProps) => {
+  const { id, open } = props;
 
   const { handleSubmit, control } = useForm<City>({ defaultValues: store.selectedCity.City });
 
@@ -50,4 +46,4 @@ export const EditCity = observer<EditCityProps>((props: EditCityProps) => {
       </Modal.Body>
     </Modal>
   );
-});
+};

@@ -2,6 +2,7 @@ import { RouterProvider } from 'react-router';
 
 import { createRouter } from './routes/routes';
 import { AppStore } from './stores/AppStore';
+import { MetrosContainer } from './stores/MetrosStore';
 import { ModalsContainer } from './stores/ModalsStore';
 
 
@@ -11,7 +12,9 @@ export function App() {
 
   return (
     <ModalsContainer.Provider>
-      <RouterProvider router={ router } />
+      <MetrosContainer.Provider>
+        <RouterProvider router={ router } />
+      </MetrosContainer.Provider>
     </ModalsContainer.Provider>
   );
 }

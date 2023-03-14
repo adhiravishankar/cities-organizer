@@ -1,26 +1,18 @@
 import { Box, ImageList, ImageListItem, Paper, Tab, Tabs } from '@mui/material';
-import { observer } from 'mobx-react-lite';
 import { Fragment, SyntheticEvent, useCallback, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
+import { tabProps } from '../functions/tabProps';
 import { LabeledImageItem } from '../hooks/LabeledImageItem';
 import { NavBar } from '../hooks/NavBar';
 import { TabPanel } from '../hooks/TabPanel';
-import { tabProps } from '../functions/tabProps';
 import { Metro } from '../interfaces/Metro';
-import { AppStore } from '../stores/AppStore';
 import { CitiesTable } from '../views/CitiesTable';
 import { MetrosTable } from '../views/MetrosTable';
 import { NeighborhoodsTable } from '../views/NeighborhoodsTable';
 
-export interface HomePageProps {
-  store: AppStore;
-}
-
-export const Home = observer<HomePageProps>((props: HomePageProps) => {
-  const { store } = props;
-
+export const Home = () => {
   const metrosJSX: JSX.Element[] = [];
   const navigation = useNavigate();
   const onClickHandler = useCallback((id: string) => navigation('/metros/' + id), []);
@@ -69,4 +61,4 @@ export const Home = observer<HomePageProps>((props: HomePageProps) => {
       </Container>
     </Fragment>
   );
-});
+};

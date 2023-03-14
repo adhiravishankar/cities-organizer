@@ -3,8 +3,8 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import { useContainer } from 'unstated-next';
 import { useBoolean } from 'usehooks-ts';
-import { API } from '../apis/API';
 
+import { API } from '../apis/API';
 import { BreadcrumbsProps } from '../hooks/Breadcrumbs';
 import { CardsPage } from '../hooks/CardsPage';
 import { ImagesCard } from '../hooks/ImagesCard';

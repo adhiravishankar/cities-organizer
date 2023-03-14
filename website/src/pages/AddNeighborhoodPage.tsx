@@ -5,18 +5,25 @@ import { Button, Col, Row } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import Select from 'react-select';
+import { useContainer } from 'unstated-next';
 
 import { FormsPage } from '../hooks/FormsPage';
 import { DropdownOption } from '../interfaces/DropdownOption';
 import { Neighborhood } from '../interfaces/Neighborhood';
 import { SelectedOption } from '../interfaces/SelectedOption';
 import { AppStore } from '../stores/AppStore';
+import { CitiesContainer } from '../stores/CitiesStore';
+import { MetrosContainer } from '../stores/MetrosStore';
 
 export interface AddNeighborhoodPageProps {
   store: AppStore;
 }
 
 export const AddNeighborhoodPage = observer<AddNeighborhoodPageProps>((props: AddNeighborhoodPageProps) => {
+  const MetrosStore = useContainer(MetrosContainer);
+  const CitiesStore = useContainer(CitiesContainer);
+
+
   const { store } = props;
   const { handleSubmit, control } = useForm<Neighborhood>();
   const navigation = useNavigate();
@@ -30,7 +37,7 @@ export const AddNeighborhoodPage = observer<AddNeighborhoodPageProps>((props: Ad
   const { field: miField } = useController({ name: 'MetroID', control });
 
   const onSetMetro = useCallback((option: SelectedOption) => {
-    store.updateSelectedMetro(option.value);
+    MetrosStore.setSelectedMetroArea(option.value);
     miField.onChange(-1);
     miField.onChange(option.value);
   }, []);
@@ -40,14 +47,14 @@ export const AddNeighborhoodPage = observer<AddNeighborhoodPageProps>((props: Ad
     ciField.onChange(option.value);
   }, []);
 
-  useEffect(() => miField.onChange(store.selectedMetroArea));
-  useEffect(() => ciField.onChange(store.selectedCityArea));
+  useEffect(() => miField.onChange(MetrosStore.selectedMetroArea));
+  useEffect(() => ciField.onChange(CitiesStore.selectedCityArea));
 
   const metroItems: DropdownOption[] = [];
-  store.metroNamesMap.forEach((text: string, id: string) => metroItems.push({ value: id, label: text }));
+  MetrosStore.metroNamesMap.forEach((text: string, id: string) => metroItems.push({ value: id, label: text }));
 
   const cityItems: DropdownOption[] = [];
-  store.filteredCitiesMap.forEach((text: string, id: string) => cityItems.push({ value: id, label: text }));
+  CitiesStore.filteredCitiesMap.forEach((text: string, id: string) => cityItems.push({ value: id, label: text }));
 
   return (
     <FormsPage title="Add Neighborhood">

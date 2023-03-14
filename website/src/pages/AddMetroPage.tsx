@@ -6,14 +6,8 @@ import { useNavigate } from 'react-router';
 
 import { FormsPage } from '../hooks/FormsPage';
 import { Metro } from '../interfaces/Metro';
-import { AppStore } from '../stores/AppStore';
 
-export interface AddMetroPageProps {
-  store: AppStore;
-}
-
-export function AddMetroPage(props: AddMetroPageProps) {
-  const { store } = props;
+export function AddMetroPage() {
   const { handleSubmit, control } = useForm<Metro>();
 
   const navigation = useNavigate();

@@ -1,9 +1,9 @@
-import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import { useContainer } from 'unstated-next';
 import { useBoolean } from 'usehooks-ts';
 
+import { API } from '../apis/API';
 import { BreadcrumbsProps } from '../hooks/Breadcrumbs';
 import { CardsPage } from '../hooks/CardsPage';
 import { ImagesCard } from '../hooks/ImagesCard';
@@ -13,19 +13,12 @@ import { LabeledImage } from '../interfaces/LabeledImage';
 import { Neighborhood } from '../interfaces/Neighborhood';
 import { AddPicsProps } from '../modals/AddPics';
 import { EditCity } from '../modals/EditCity';
-import { AppStore } from '../stores/AppStore';
 import { ModalsContainer } from '../stores/ModalsStore';
-import {API} from "../apis/API";
 
-interface CityProps {
-  store: AppStore;
-}
-
-export const CityPage = observer<CityProps>((props: CityProps) => {
+export const CityPage = () => {
   const ModalsContext = useContainer(ModalsContainer);
   const api = new API();
 
-  const { store } = props;
   const { selectedCity } = store;
   const navigation = useNavigate();
   const editingModalOpen = useBoolean(false);

@@ -1,5 +1,5 @@
 import { Card, CardContent } from '@mui/material';
-import {Fragment, useEffect} from 'react';
+import { Fragment, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { SWRResponse } from 'swr';
 

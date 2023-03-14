@@ -6,13 +6,9 @@ import { Controller, useController, useForm } from 'react-hook-form';
 
 import { UseBooleanOutput } from '../functions/UseBooleanOutput';
 import { Metro } from '../interfaces/Metro';
-import { AppStore } from '../stores/AppStore';
-
 
 export interface EditMetroProps {
   id: string;
-
-  store: AppStore;
 
   open: UseBooleanOutput;
 }
