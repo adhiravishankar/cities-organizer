@@ -2,9 +2,9 @@ import { Card, CardContent } from '@mui/material';
 import { Fragment } from 'react';
 import { Container } from 'react-bootstrap';
 
-import { DetailsList } from '../common/hooks/DetailsList';
-import { NavBar } from '../common/hooks/NavBar';
-import { AppStore } from '../common/stores/AppStore';
+import { DetailsList } from '../hooks/DetailsList';
+import { NavBar } from '../hooks/NavBar';
+import { AppStore } from '../stores/AppStore';
 
 interface AboutProps {
   store: AppStore;

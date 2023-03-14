@@ -5,11 +5,11 @@ import { Controller, useController, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import Select from 'react-select';
 
-import { FormsPage } from '../../common/hooks/FormsPage';
-import { City } from '../../common/interfaces/City';
-import { DropdownOption } from '../../common/interfaces/DropdownOption';
-import { SelectedOption } from '../../common/interfaces/SelectedOption';
-import { AppStore } from '../../common/stores/AppStore';
+import { FormsPage } from '../../hooks/FormsPage';
+import { City } from '../../interfaces/City';
+import { DropdownOption } from '../../interfaces/DropdownOption';
+import { SelectedOption } from '../../interfaces/SelectedOption';
+import { AppStore } from '../../stores/AppStore';
 
 
 export interface AddCityPageProps {

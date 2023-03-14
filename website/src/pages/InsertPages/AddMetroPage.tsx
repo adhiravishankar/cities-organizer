@@ -4,9 +4,9 @@ import { Col, Row } from 'react-bootstrap';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
-import { FormsPage } from '../../common/hooks/FormsPage';
-import { Metro } from '../../common/interfaces/Metro';
-import { AppStore } from '../../common/stores/AppStore';
+import { FormsPage } from '../../hooks/FormsPage';
+import { Metro } from '../../interfaces/Metro';
+import { AppStore } from '../../stores/AppStore';
 
 export interface AddMetroPageProps {
   store: AppStore;

@@ -4,8 +4,8 @@ import { useCallback } from 'react';
 import { Button, Modal, Stack } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
 
-import { Metro } from '../../common/interfaces/Metro';
-import { AppStore } from '../../common/stores/AppStore';
+import { Metro } from '../../interfaces/Metro';
+import { AppStore } from '../../stores/AppStore';
 
 
 export interface EditMetroProps {

@@ -4,17 +4,17 @@ import { Col, Row } from 'react-bootstrap';
 import { ReactNumberCard } from 'react-number-card';
 import { useNavigate, useParams } from 'react-router';
 
-import { attachOrdinal } from '../../common/functions/getOrdinal';
-import { AddPicsProps } from '../../common/hooks/AddPics';
-import { BreadcrumbsProps } from '../../common/hooks/Breadcrumbs';
-import { CardsPage } from '../../common/hooks/CardsPage';
-import { ImagesCard } from '../../common/hooks/ImagesCard';
-import { LabeledImagesCard } from '../../common/hooks/LabeledImagesCard';
-import { NavBarProps } from '../../common/hooks/NavBar';
-import { City } from '../../common/interfaces/City';
-import { LabeledImage } from '../../common/interfaces/LabeledImage';
-import { Neighborhood } from '../../common/interfaces/Neighborhood';
-import { AppStore } from '../../common/stores/AppStore';
+import { attachOrdinal } from '../../functions/getOrdinal';
+import { AddPicsProps } from '../../hooks/AddPics';
+import { BreadcrumbsProps } from '../../hooks/Breadcrumbs';
+import { CardsPage } from '../../hooks/CardsPage';
+import { ImagesCard } from '../../hooks/ImagesCard';
+import { LabeledImagesCard } from '../../hooks/LabeledImagesCard';
+import { NavBarProps } from '../../hooks/NavBar';
+import { City } from '../../interfaces/City';
+import { LabeledImage } from '../../interfaces/LabeledImage';
+import { Neighborhood } from '../../interfaces/Neighborhood';
+import { AppStore } from '../../stores/AppStore';
 import { EditMetro } from './EditMetro';
 import {MetroCardsRow} from "./MetroCardsRow";
 

@@ -4,12 +4,12 @@ import { Fragment, SyntheticEvent, useCallback, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
-import { LabeledImageItem } from '../../common/hooks/LabeledImageItem';
-import { NavBar } from '../../common/hooks/NavBar';
-import { TabPanel } from '../../common/hooks/TabPanel';
-import { tabProps } from '../../common/hooks/tabProps';
-import { Metro } from '../../common/interfaces/Metro';
-import { AppStore } from '../../common/stores/AppStore';
+import { LabeledImageItem } from '../../hooks/LabeledImageItem';
+import { NavBar } from '../../hooks/NavBar';
+import { TabPanel } from '../../hooks/TabPanel';
+import { tabProps } from '../../hooks/tabProps';
+import { Metro } from '../../interfaces/Metro';
+import { AppStore } from '../../stores/AppStore';
 import { CitiesTable } from './CitiesTable';
 import { MetrosTable } from './MetrosTable';
 import { NeighborhoodsTable } from './NeighborhoodsTable';

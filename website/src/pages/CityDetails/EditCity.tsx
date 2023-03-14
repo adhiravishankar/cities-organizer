@@ -4,8 +4,8 @@ import { useCallback } from 'react';
 import { Button, Modal, Stack } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
 
-import { City } from '../../common/interfaces/City';
-import { AppStore } from '../../common/stores/AppStore';
+import { City } from '../../interfaces/City';
+import { AppStore } from '../../stores/AppStore';
 
 
 export interface EditCityProps {

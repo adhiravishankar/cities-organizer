@@ -2,15 +2,15 @@ import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 
-import { AddPicsProps } from '../../common/hooks/AddPics';
-import { BreadcrumbsProps } from '../../common/hooks/Breadcrumbs';
-import { CardsPage } from '../../common/hooks/CardsPage';
-import { ImagesCard } from '../../common/hooks/ImagesCard';
-import { LabeledImagesCard } from '../../common/hooks/LabeledImagesCard';
-import { NavBarProps } from '../../common/hooks/NavBar';
-import { LabeledImage } from '../../common/interfaces/LabeledImage';
-import { Neighborhood } from '../../common/interfaces/Neighborhood';
-import { AppStore } from '../../common/stores/AppStore';
+import { AddPicsProps } from '../../hooks/AddPics';
+import { BreadcrumbsProps } from '../../hooks/Breadcrumbs';
+import { CardsPage } from '../../hooks/CardsPage';
+import { ImagesCard } from '../../hooks/ImagesCard';
+import { LabeledImagesCard } from '../../hooks/LabeledImagesCard';
+import { NavBarProps } from '../../hooks/NavBar';
+import { LabeledImage } from '../../interfaces/LabeledImage';
+import { Neighborhood } from '../../interfaces/Neighborhood';
+import { AppStore } from '../../stores/AppStore';
 import { EditCity } from './EditCity';
 
 interface CityProps {

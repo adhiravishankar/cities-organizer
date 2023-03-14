@@ -6,11 +6,11 @@ import { Controller, useController, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import Select from 'react-select';
 
-import { FormsPage } from '../../common/hooks/FormsPage';
-import { DropdownOption } from '../../common/interfaces/DropdownOption';
-import { Neighborhood } from '../../common/interfaces/Neighborhood';
-import { SelectedOption } from '../../common/interfaces/SelectedOption';
-import { AppStore } from '../../common/stores/AppStore';
+import { FormsPage } from '../../hooks/FormsPage';
+import { DropdownOption } from '../../interfaces/DropdownOption';
+import { Neighborhood } from '../../interfaces/Neighborhood';
+import { SelectedOption } from '../../interfaces/SelectedOption';
+import { AppStore } from '../../stores/AppStore';
 
 export interface AddNeighborhoodPageProps {
   store: AppStore;

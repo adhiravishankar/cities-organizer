@@ -5,8 +5,8 @@ import { ReactNode, useMemo } from 'react';
 import { NumericFormat } from 'react-number-format';
 import { useNavigate } from 'react-router';
 
-import { City } from '../../common/interfaces/City';
-import { AppStore } from '../../common/stores/AppStore';
+import { City } from '../../interfaces/City';
+import { AppStore } from '../../stores/AppStore';
 
 export interface CitiesTableProps {
   store: AppStore;

@@ -2,12 +2,12 @@ import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 
-import { AddPicsProps } from '../../common/hooks/AddPics';
-import { BreadcrumbsProps } from '../../common/hooks/Breadcrumbs';
-import { CardsPage } from '../../common/hooks/CardsPage';
-import { ImagesCard } from '../../common/hooks/ImagesCard';
-import { NavBarProps } from '../../common/hooks/NavBar';
-import { AppStore } from '../../common/stores/AppStore';
+import { AddPicsProps } from '../../hooks/AddPics';
+import { BreadcrumbsProps } from '../../hooks/Breadcrumbs';
+import { CardsPage } from '../../hooks/CardsPage';
+import { ImagesCard } from '../../hooks/ImagesCard';
+import { NavBarProps } from '../../hooks/NavBar';
+import { AppStore } from '../../stores/AppStore';
 import { EditNeighborhood } from './EditNeighborhood';
 
 interface NeighborhoodProps {

@@ -4,9 +4,9 @@ import { ReactNode, useMemo } from 'react';
 import { NumericFormat } from 'react-number-format';
 import { useNavigate } from 'react-router';
 
-import { attachOrdinal } from '../../common/functions/getOrdinal';
-import { Metro } from '../../common/interfaces/Metro';
-import { AppStore } from '../../common/stores/AppStore';
+import { attachOrdinal } from '../../functions/getOrdinal';
+import { Metro } from '../../interfaces/Metro';
+import { AppStore } from '../../stores/AppStore';
 
 export interface MetrosTableProps {
   store: AppStore;

@@ -1,8 +1,8 @@
 import { Col, Row } from 'react-bootstrap';
 import { ReactNumberCard } from 'react-number-card';
 
-import { attachOrdinal } from '../../common/functions/getOrdinal';
-import { DetailedMetro } from '../../common/interfaces/DetailedMetro';
+import { attachOrdinal } from '../../functions/getOrdinal';
+import { DetailedMetro } from '../../interfaces/DetailedMetro';
 
 export interface MetroCardsRowProps {
   selectedMetro: DetailedMetro;

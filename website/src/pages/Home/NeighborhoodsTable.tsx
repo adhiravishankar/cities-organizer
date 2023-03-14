@@ -3,8 +3,8 @@ import MaterialReactTable, { MRT_ColumnDef } from 'material-react-table';
 import { ReactNode, useMemo } from 'react';
 import { useNavigate } from 'react-router';
 
-import { Neighborhood } from '../../common/interfaces/Neighborhood';
-import { AppStore } from '../../common/stores/AppStore';
+import { Neighborhood } from '../../interfaces/Neighborhood';
+import { AppStore } from '../../stores/AppStore';
 
 export interface NeighborhoodsTableProps {
   store: AppStore;
