@@ -1,5 +1,4 @@
 import { MenuItem, Select, TextField } from '@mui/material';
-import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
 import { Button, Modal, Stack } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
@@ -15,7 +14,7 @@ export interface EditMetroProps {
   open: UseBooleanOutput;
 }
 
-export const EditMetro = observer<EditMetroProps>((props: EditMetroProps) => {
+export const EditMetro = (props: EditMetroProps) => {
   const MetrosStore = useContainer(MetrosContainer);
 
   const { id, open } = props;
@@ -54,4 +53,4 @@ export const EditMetro = observer<EditMetroProps>((props: EditMetroProps) => {
       </Modal.Body>
     </Modal>
   );
-});
+};

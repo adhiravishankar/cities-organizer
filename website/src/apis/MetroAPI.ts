@@ -1,5 +1,4 @@
 import ky, { KyResponse } from 'ky';
-import useSWR, { SWRResponse } from 'swr';
 
 import { fetcher } from './API';
 

@@ -16,6 +16,7 @@ export function createRouter() {
   const metroAPI = new MetroAPI();
   const cityAPI = new CitiesAPI();
   const neighborhoodAPI = new NeighborhoodAPI();
+
   return createBrowserRouter([
     {
       path: '/',

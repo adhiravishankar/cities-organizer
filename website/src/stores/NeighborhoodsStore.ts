@@ -1,20 +1,14 @@
 import { KyResponse } from 'ky';
 import { useState } from 'react';
-import { SWRResponse } from 'swr';
-import { createContainer, useContainer } from 'unstated-next';
+import { createContainer } from 'unstated-next';
 import { useMap } from 'usehooks-ts';
 
 import { NeighborhoodAPI } from '../apis/NeighborhoodAPI';
 import { DerivedNeighborhood } from '../interfaces/DerivedNeighborhood';
 import { DetailedNeighborhood } from '../interfaces/DetailedNeighborhood';
 import { Neighborhood } from '../interfaces/Neighborhood';
-import { CitiesContainer } from './CitiesStore';
-import { MetrosContainer } from './MetrosStore';
 
 export function useNeighborhoodsStore() {
-  const MetrosStore = useContainer(MetrosContainer);
-  const CitiesStore = useContainer(CitiesContainer);
-  
   const neighborhoodAPI = new NeighborhoodAPI();
 
   const [neighborhoods, setNeighborhoods] = useState<DerivedNeighborhood[]>([]);
@@ -38,8 +32,6 @@ export function useNeighborhoodsStore() {
     const response: KyResponse = await neighborhoodAPI.insertNeighborhood(neighborhood);
     if (response.ok) {
       const neighborhoodID = await response.text();
-      CitiesStore.setSelectedCityArea('');
-      MetrosStore.setSelectedMetroArea('');
     }
   }
 
@@ -51,6 +43,7 @@ export function useNeighborhoodsStore() {
   }
 
   return {
+    fetchNeighborhoods,
     insertNeighborhood,
     neighborhoods,
     selectedNeighborhood,

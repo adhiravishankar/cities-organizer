@@ -1,5 +1,5 @@
 import { Box, ImageList, ImageListItem, Paper, Tab, Tabs } from '@mui/material';
-import { Fragment, SyntheticEvent, useCallback, useState } from 'react';
+import { Fragment, SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import { useContainer } from 'unstated-next';
@@ -9,18 +9,26 @@ import { LabeledImageItem } from '../hooks/LabeledImageItem';
 import { NavBar } from '../hooks/NavBar';
 import { TabPanel } from '../hooks/TabPanel';
 import { Metro } from '../interfaces/Metro';
+import { CitiesContainer } from '../stores/CitiesStore';
 import { MetrosContainer } from '../stores/MetrosStore';
+import { NeighborhoodsContainer } from '../stores/NeighborhoodsStore';
 import { CitiesTable } from '../views/CitiesTable';
 import { MetrosTable } from '../views/MetrosTable';
 import { NeighborhoodsTable } from '../views/NeighborhoodsTable';
 
 export const Home = () => {
   const MetrosStore = useContainer(MetrosContainer);
+  const CitiesStore = useContainer(CitiesContainer);
+  const NeighborhoodsStore = useContainer(NeighborhoodsContainer);
   const metrosJSX: JSX.Element[] = [];
   const navigation = useNavigate();
   const onClickHandler = useCallback((id: string) => navigation('/metros/' + id), []);
 
   const [index, setIndex] = useState(0);
+
+  MetrosStore.fetchMetros().then(() => null);
+  CitiesStore.fetchCities().then(() => null);
+  NeighborhoodsStore.fetchNeighborhoods().then(() => null);
 
   const setTabIndex = (event: SyntheticEvent, newValue: number) => {
     setIndex(newValue);

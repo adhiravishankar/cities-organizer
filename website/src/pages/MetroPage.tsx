@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
 import { useLoaderData, useNavigate, useParams } from 'react-router';
 import { SWRResponse } from 'swr';
@@ -12,6 +11,7 @@ import { ImagesCard } from '../hooks/ImagesCard';
 import { LabeledImagesCard } from '../hooks/LabeledImagesCard';
 import { NavBarProps } from '../hooks/NavBar';
 import { City } from '../interfaces/City';
+import { DetailedMetro } from '../interfaces/DetailedMetro';
 import { LabeledImage } from '../interfaces/LabeledImage';
 import { Neighborhood } from '../interfaces/Neighborhood';
 import { AddPicsProps } from '../modals/AddPics';
@@ -27,7 +27,8 @@ type MetroParams = {
 export const MetroPage = () => {
   const ModalsContext = useContainer(ModalsContainer);
   const MetrosContext = useContainer(MetrosContainer);
-  const metroResponse: SWRResponse = useLoaderData();
+  const metroResponse: SWRResponse = useLoaderData() as SWRResponse;
+  const selectedMetro = metroResponse.data as DetailedMetro;
   const api = new API();
 
   const params = useParams<MetroParams>();
@@ -50,34 +51,34 @@ export const MetroPage = () => {
   const refresh = useCallback(() => navigation(0), []);
 
 
-  const neighborhoodImages: LabeledImage[] = (MetrosContext.selectedMetro.Neighborhoods === null || MetrosContext.selectedMetro.Neighborhoods === undefined) ? null :
-    MetrosContext.selectedMetro.Neighborhoods
+  const neighborhoodImages: LabeledImage[] = (selectedMetro.Neighborhoods === null || selectedMetro.Neighborhoods === undefined) ? null :
+    selectedMetro.Neighborhoods
       .map<LabeledImage>((neighborhood: Neighborhood) => { return { ID: neighborhood.ID, Label: neighborhood.Name, Source: neighborhood.FeaturedImage }; });
 
-  const cityImages: LabeledImage[] = (MetrosContext.selectedMetro.Cities === null || MetrosContext.selectedMetro.Cities === undefined) ? null :
-    MetrosContext.selectedMetro.Cities
+  const cityImages: LabeledImage[] = (selectedMetro.Cities === null || selectedMetro.Cities === undefined) ? null :
+    selectedMetro.Cities
       .map<LabeledImage>((city: City) => { return { ID: city.ID, Label: city.Name, Source: city.FeaturedImage }; });
 
-  const metroName = MetrosContext.selectedMetro.Metropolitan.Name;
+  const metroName = selectedMetro.Metropolitan.Name;
 
-  const breadCrumbsProps: BreadcrumbsProps = { active: 'metro', metroID: MetrosContext.selectedMetro.Metropolitan.ID, metro: metroName };
+  const breadCrumbsProps: BreadcrumbsProps = { active: 'metro', metroID: selectedMetro.Metropolitan.ID, metro: metroName };
   const editMetro = <EditMetro open={ editingModalOpen } id={ metro.ID } />;
   const addPicsProps: AddPicsProps = { fileUpload, refresh };
-  const navBarProps: NavBarProps = { editIcon: true, id: MetrosContext.selectedMetro.Metropolitan.ID, onEdit: editingModalOpen.setTrue, name: MetrosContext.selectedMetro.Metropolitan.Name };
+  const navBarProps: NavBarProps = { editIcon: true, id: selectedMetro.Metropolitan.ID, onEdit: editingModalOpen.setTrue, name: selectedMetro.Metropolitan.Name };
 
   return (
     <CardsPage
       breadcrumbs={ breadCrumbsProps }
-      notes={ MetrosContext.selectedMetro.Metropolitan.Notes }
+      notes={ selectedMetro.Metropolitan.Notes }
       editModal={ editMetro }
       addPicsProps={ addPicsProps }
       navBarProps={ navBarProps }
     >
-      <MetroCardsRow selectedMetro={ MetrosContext.selectedMetro } />
+      <MetroCardsRow selectedMetro={ selectedMetro } />
       <ImagesCard
         errorMessage="No images are currently attached."
         openAddPics={ ModalsContext.uploadPicsModal.setTrue }
-        pics={ MetrosContext.selectedMetro.Pics }
+        pics={ selectedMetro.Pics }
       />
       <LabeledImagesCard
         errorMessage="No cities in this metro currently."

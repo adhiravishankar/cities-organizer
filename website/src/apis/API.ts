@@ -1,17 +1,16 @@
-import ky from 'ky';
-import useSWR, { SWRResponse } from 'swr';
+import axios, { AxiosInstance } from 'axios';
 
 export const fetcher = url => fetch(url).then(r => r.json());
 
 export class API {
-  baseURL: string;
+  instance: AxiosInstance;
 
   constructor() {
-    this.baseURL = process.env.BASE_URL;
+    this.instance = axios.create({ baseURL: process.env.BASE_URL });
   }
 
-  async about(): Promise<SWRResponse> {
-    return useSWR(this.baseURL + '/about', fetcher);
+  async about() {
+    return this.instance.get('/about');
   }
 
   async uploadPic(id: string, picture: File): Promise<string> {

@@ -1,4 +1,5 @@
 import { RouterProvider } from 'react-router';
+import { Router } from './hooks/Router';
 
 import { createRouter } from './routes/routes';
 import { CitiesContainer } from './stores/CitiesStore';
@@ -8,14 +9,13 @@ import { NeighborhoodsContainer } from './stores/NeighborhoodsStore';
 
 
 export function App() {
-  const router = createRouter();
 
   return (
     <ModalsContainer.Provider>
       <MetrosContainer.Provider>
         <CitiesContainer.Provider>
           <NeighborhoodsContainer.Provider>
-            <RouterProvider router={ router } />
+            <Router />
           </NeighborhoodsContainer.Provider>
         </CitiesContainer.Provider>
       </MetrosContainer.Provider>

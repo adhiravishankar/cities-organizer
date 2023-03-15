@@ -1,5 +1,4 @@
 import { MenuItem, Select, TextField } from '@mui/material';
-import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
 import { Button, Modal, Stack } from 'react-bootstrap';
 import { Controller, useController, useForm } from 'react-hook-form';
@@ -16,7 +15,7 @@ export interface EditNeighborhoodProps {
   open: UseBooleanOutput;
 }
 
-export const EditNeighborhood = observer<EditNeighborhoodProps>((props: EditNeighborhoodProps) => {
+export const EditNeighborhood = (props: EditNeighborhoodProps) => {
   const NeighborhoodsStore = useContainer(NeighborhoodsContainer);
 
   const { id, open } = props;
@@ -50,4 +49,4 @@ export const EditNeighborhood = observer<EditNeighborhoodProps>((props: EditNeig
       </Modal.Body>
     </Modal>
   );
-});
+};

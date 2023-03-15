@@ -1,30 +1,19 @@
 import { KyResponse } from 'ky';
-import { useMemo, useState } from 'react';
-import { SWRResponse } from 'swr';
-import { createContainer, useContainer } from 'unstated-next';
+import { useState } from 'react';
+import { createContainer } from 'unstated-next';
 import { useMap } from 'usehooks-ts';
 
 import { CitiesAPI } from '../apis/CitiesAPI';
 import { City } from '../interfaces/City';
 import { DetailedCity } from '../interfaces/DetailedCity';
-import { MetrosContainer } from './MetrosStore';
 
 export function useCitiesStore() {
-  const MetrosStore = useContainer(MetrosContainer);
   const citiesAPI = new CitiesAPI();
 
   const [cities, setCities] = useState<City[]>([]);
   const [citiesMap, setCitiesMap] = useMap<string, City>();
   const [selectedCity, setSelectedCity] = useState<DetailedCity>(null);
   const [selectedCityArea, setSelectedCityArea] = useState<string>(null);
-  
-  const filteredCitiesMap = useMemo(() => {
-    const namesMap = new Map<string, string>();
-    citiesMap.forEach((city: City, key: string) => {
-      if (city.MetroID === MetrosStore.selectedMetroArea) namesMap.set(key, city.Name);
-    });
-    return namesMap;
-  }, [citiesMap]);
 
   async function fetchCities() {
     const response: SWRResponse = await citiesAPI.cities();
@@ -52,7 +41,6 @@ export function useCitiesStore() {
         Notes: notes,
       };
       setCitiesMap.set(cityID, city);
-      MetrosStore.setSelectedMetroArea('');
     }
   }
 
@@ -68,7 +56,6 @@ export function useCitiesStore() {
     cities,
     citiesMap,
     fetchCities,
-    filteredCitiesMap,
     insertCity,
     selectedCity,
     selectedCityArea,

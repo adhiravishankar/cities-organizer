@@ -1,11 +1,9 @@
 import { KyResponse } from 'ky';
 import { useMemo, useState } from 'react';
-import { SWRResponse } from 'swr';
 import { createContainer } from 'unstated-next';
 import { useMap } from 'usehooks-ts';
 
 import { MetroAPI } from '../apis/MetroAPI';
-import { DetailedMetro } from '../interfaces/DetailedMetro';
 import { Metro } from '../interfaces/Metro';
 
 export function useMetrosStore() {
@@ -13,7 +11,6 @@ export function useMetrosStore() {
 
   const [metros, setMetros] = useState<Metro[]>([]);
   const [metrosMap, setMetrosMap] = useMap<string, Metro>();
-  const [selectedMetro, setSelectedMetro] = useState<DetailedMetro>(null);
   const [selectedMetroArea, setSelectedMetroArea] = useState<string>(null);
 
   const metroNamesMap = useMemo(() => {
@@ -24,15 +21,10 @@ export function useMetrosStore() {
 
   async function fetchMetros() {
     const response: SWRResponse = await metroAPI.metros();
-    const data = response.data as Metro[];
+    const data = response.data as Metro[] ?? [];
     setMetros(data);
     setMetrosMap.reset();
     data.forEach((metro: Metro) => setMetrosMap.set(metro.ID, metro));
-  }
-
-  async function fetchMetro(id: string) {
-    const response: SWRResponse = await metroAPI.getMetro(id);
-    setSelectedMetro(response.data as DetailedMetro);
   }
 
   async function insertMetro(name: string, extendedName: string, shortName: string, metroSizeRank: number, population: number, featuredImage: string, notes: string) {
@@ -69,13 +61,11 @@ export function useMetrosStore() {
   }
 
   return {
-    fetchMetro,
     fetchMetros,
     insertMetro,
     metros,
     metroNamesMap,
     metrosMap,
-    selectedMetro,
     selectedMetroArea,
     setSelectedMetroArea,
     updateMetro,

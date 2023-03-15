@@ -1,5 +1,4 @@
 import ky, { KyResponse } from 'ky';
-import useSWR, { SWRResponse } from 'swr';
 
 import { Neighborhood } from '../interfaces/Neighborhood';
 import { fetcher } from './API';
